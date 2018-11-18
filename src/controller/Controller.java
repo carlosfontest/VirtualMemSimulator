@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.ConfigSO;
+import view.ControlPanel;
 
 /**
  *
@@ -64,5 +65,10 @@ public class Controller {
             JOptionPane.showMessageDialog(frame, "Introduzca bien los campos. No pueden haber ceros");
             return;
         }
+        
+        // Los campos fueron introducidos de manera exitosa, se abre el Panel de Control
+        ControlPanel controlP = new ControlPanel(this, tamPrincipal, tamSecundaria, tamPaginas);
+        frame.dispose();
+        controlP.setVisible(true);
     }
 }
