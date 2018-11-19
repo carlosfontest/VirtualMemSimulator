@@ -53,7 +53,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="72" green="f1" red="ff" type="rgb"/>
+          <Color blue="cc" green="cc" red="0" type="rgb"/>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Movimiento"/>
@@ -350,13 +350,11 @@
                                   </Group>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="fieldTamPrincipal" pref="210" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="separador1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="fieldTamPaginas" max="32767" attributes="0"/>
-                                          <Component id="separador3" max="32767" attributes="0"/>
-                                          <Component id="separador2" max="32767" attributes="0"/>
-                                          <Component id="fieldTamSecundaria" pref="210" max="32767" attributes="0"/>
-                                      </Group>
+                                      <Component id="separador1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fieldTamPaginas" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="separador3" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="separador2" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fieldTamSecundaria" alignment="0" pref="210" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -450,7 +448,7 @@
         <Component class="javax.swing.JButton" name="botonInstalarSO">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="ff" type="rgb"/>
+              <Color blue="cc" green="cc" red="0" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>

@@ -153,7 +153,7 @@ public class ControlPanel extends javax.swing.JFrame {
         });
         panelHerramientas.add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, -1, -1));
 
-        panelContenido.setBackground(new java.awt.Color(255, 241, 114));
+        panelContenido.setBackground(new java.awt.Color(0, 204, 204));
         panelContenido.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelContenidoMouseDragged(evt);
@@ -185,7 +185,7 @@ public class ControlPanel extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/MemoriaSecundaria.png"))); // NOI18N
         panelContenido.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 140, -1));
 
-        fieldTamPrincipal.setBackground(new java.awt.Color(255, 241, 114));
+        fieldTamPrincipal.setBackground(new java.awt.Color(0, 204, 204));
         fieldTamPrincipal.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
         fieldTamPrincipal.setForeground(new java.awt.Color(51, 51, 51));
         fieldTamPrincipal.setText("Tamaño del Proceso");
@@ -227,7 +227,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         panelContenido.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 27, 3, 160));
 
-        fieldTamPrincipal1.setBackground(new java.awt.Color(255, 241, 114));
+        fieldTamPrincipal1.setBackground(new java.awt.Color(0, 204, 204));
         fieldTamPrincipal1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
         fieldTamPrincipal1.setForeground(new java.awt.Color(51, 51, 51));
         fieldTamPrincipal1.setText("Nombre del Proceso");
@@ -899,12 +899,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder10ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonAcceder;
-    private javax.swing.JButton botonAcceder1;
     private javax.swing.JButton botonAcceder10;
-    private javax.swing.JButton botonAcceder2;
-    private javax.swing.JButton botonAcceder3;
-    private javax.swing.JButton botonAcceder4;
     private javax.swing.JButton botonAcceder5;
     private javax.swing.JButton botonAcceder6;
     private javax.swing.JButton botonAcceder7;

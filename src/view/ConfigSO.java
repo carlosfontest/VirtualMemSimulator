@@ -56,7 +56,7 @@ public class ConfigSO extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(600, 300));
 
-        jPanel1.setBackground(new java.awt.Color(255, 241, 114));
+        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -219,7 +219,7 @@ public class ConfigSO extends javax.swing.JFrame {
             }
         });
 
-        botonInstalarSO.setBackground(new java.awt.Color(255, 255, 102));
+        botonInstalarSO.setBackground(new java.awt.Color(0, 204, 204));
         botonInstalarSO.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         botonInstalarSO.setForeground(new java.awt.Color(51, 51, 51));
         botonInstalarSO.setText("Instalar SO");
@@ -354,12 +354,11 @@ public class ConfigSO extends javax.swing.JFrame {
                                         .addGap(7, 7, 7)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(fieldTamPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(separador1)
-                                        .addComponent(fieldTamPaginas)
-                                        .addComponent(separador3)
-                                        .addComponent(separador2)
-                                        .addComponent(fieldTamSecundaria, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))))
+                                    .addComponent(separador1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldTamPaginas, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(separador3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(separador2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldTamSecundaria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonCerrar)))
                 .addGap(12, 12, 12))
