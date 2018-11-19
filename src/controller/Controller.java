@@ -1,11 +1,20 @@
 package controller;
 
+import java.awt.Font;
+import java.awt.Label;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import model.Marco;
+import model.Proceso;
 import view.ConfigSO;
 import view.ControlPanel;
 
@@ -14,6 +23,13 @@ import view.ControlPanel;
  * @author Carlos Fontes & Rafael Quintero
  */
 public class Controller {
+    private JLabel labelInfo = new JLabel();
+    private HashMap<Integer, Proceso> procesos;
+    private Marco[] memoriaPrincipal;
+    private Marco[] memoriaSecundaria;
+    private int tamañoPagina;
+    private int tamañoMemPrincipal;
+    private int tamañoMemSecundaria;
     
     public void initSO() {
         ConfigSO configso = new ConfigSO(this);
@@ -56,14 +72,17 @@ public class Controller {
         int tamPrincipal = 0, tamSecundaria = 0, tamPaginas = 0;
         try {
             tamPrincipal = Integer.parseInt(frame.fieldTamPrincipal.getText());
+            this.tamañoMemPrincipal = tamPrincipal;
             tamSecundaria = Integer.parseInt(frame.fieldTamSecundaria.getText());
+            this.tamañoMemSecundaria = tamSecundaria;
             tamPaginas = Integer.parseInt(frame.fieldTamPaginas.getText());
+            this.tamañoPagina = tamPaginas;
         } catch (Exception e) {
         }
         
         // Verificamos los campos ingresados
-        if( frame.fieldTamPrincipal.getText() == "" || frame.fieldTamSecundaria.getText() == "" || frame.fieldTamPaginas.getText() == "" || tamPrincipal == 0 || tamPaginas == 0 || tamSecundaria == 0) {
-            JOptionPane.showMessageDialog(frame, "Introduzca bien los campos. No pueden haber ceros");
+        if( frame.fieldTamPrincipal.getText() == "" || frame.fieldTamSecundaria.getText() == "" || frame.fieldTamPaginas.getText() == "" || tamPrincipal == 0 || tamPaginas == 0 || tamSecundaria == 0 || tamPaginas > tamPrincipal) {
+            JOptionPane.showMessageDialog(frame, "Introduzca bien los campos. No pueden haber ceros, el tamaño de la página no puede ser mayor al tamaño de la memoria principal");
             return;
         }
         
@@ -71,5 +90,109 @@ public class Controller {
         ControlPanel controlP = new ControlPanel(this, tamPrincipal, tamSecundaria, tamPaginas);
         frame.dispose();
         controlP.setVisible(true);
+        this.initTables(controlP);
     }
+    
+    private void initTables(ControlPanel controlP) {
+        // Tamaño de cada columna
+        controlP.tablePrincipal.getTableHeader().setReorderingAllowed(false);
+        controlP.tablePrincipal.getTableHeader().setResizingAllowed(false);
+        controlP.tablePrincipal.getColumnModel().getColumn(0).setPreferredWidth(120);
+        controlP.tablePrincipal.getColumnModel().getColumn(1).setPreferredWidth(110);
+        controlP.tablePrincipal.getColumnModel().getColumn(2).setPreferredWidth(115);
+        controlP.tablePrincipal.getColumnModel().getColumn(3).setPreferredWidth(150);
+        controlP.tablePrincipal.getColumnModel().getColumn(4).setPreferredWidth(100);
+        // Altura de cada renglón
+        controlP.tablePrincipal.setRowHeight(20);
+        
+        // Tamaño de cada columna
+        controlP.tableSecundaria.getTableHeader().setReorderingAllowed(false);
+        controlP.tableSecundaria.getTableHeader().setResizingAllowed(false);
+        controlP.tableSecundaria.getColumnModel().getColumn(0).setPreferredWidth(130);
+        controlP.tableSecundaria.getColumnModel().getColumn(1).setPreferredWidth(115);
+        controlP.tableSecundaria.getColumnModel().getColumn(2).setPreferredWidth(150);
+        controlP.tableSecundaria.getColumnModel().getColumn(3).setPreferredWidth(110);
+        // Altura de cada renglón
+        controlP.tableSecundaria.setRowHeight(20);
+        
+        // Tamaño de cada columna
+        controlP.tableLista.getTableHeader().setReorderingAllowed(false);
+        controlP.tableLista.getTableHeader().setResizingAllowed(false);
+        controlP.tableLista.getColumnModel().getColumn(0).setPreferredWidth(100);
+        controlP.tableLista.getColumnModel().getColumn(1).setPreferredWidth(150);
+        controlP.tableLista.getColumnModel().getColumn(2).setPreferredWidth(115);
+        controlP.tableLista.getColumnModel().getColumn(3).setPreferredWidth(110);
+        controlP.tableLista.getColumnModel().getColumn(4).setPreferredWidth(130);
+        controlP.tableLista.getColumnModel().getColumn(5).setPreferredWidth(60);
+        controlP.tableLista.getColumnModel().getColumn(6).setPreferredWidth(60);
+        // Altura de cada renglón
+        controlP.tableLista.setRowHeight(20);
+    }
+    
+    public void clearTableSelection(JTable table1, JTable table2, JTable table3) {
+        table1.clearSelection();
+        table2.clearSelection();
+        table3.clearSelection();
+    }
+    
+    public void initDatosDelPanelDeControl(ControlPanel controlP) {
+        DefaultTableModel modeloPrincipal = (DefaultTableModel) controlP.tablePrincipal.getModel();
+        DefaultTableModel modeloSecundaria = (DefaultTableModel) controlP.tableSecundaria.getModel();
+        DefaultTableModel modeloProcesos = (DefaultTableModel) controlP.tableLista.getModel();
+        
+        // Iniciamos la tabla de memoria principal
+        int numMarcosPrincipal = (this.tamañoMemPrincipal/this.tamañoPagina);
+        for (int i = 0; i < numMarcosPrincipal; i++) {
+            modeloPrincipal.addRow(new Object[]{
+                "0x"+Integer.toHexString(i*this.tamañoPagina), i + 1
+            });
+        }
+        
+        // Iniciamos la tabla de memoria secundaria
+        int numEspaciosSecundaria = (this.tamañoMemSecundaria/this.tamañoPagina);
+        for (int i = 0; i < numEspaciosSecundaria; i++) {
+            modeloSecundaria.addRow(new Object[]{
+                i + 1
+            });
+        }
+        
+        // Iniciamos la tabla de procesos
+        controlP.jPanel1.setVisible(false);
+        this.labelInfo.setFont(new Font("Calibri Light", 1, 36));
+        this.labelInfo.setText("No hay procesos creados todavía..");
+        this.labelInfo.setBounds(570, 80, 600, 80);
+        this.labelInfo.setVisible(true);
+        controlP.panelContenido.add(this.labelInfo);
+        
+        
+        DecimalFormat formatea = new DecimalFormat("###,###.##");
+        
+        // Iniciamos estadísticas
+        controlP.labelProcesosCreados.setText("0");
+        controlP.labelProcesosVivos.setText("0");
+        controlP.labelMarcosPagina.setText(formatea.format(numMarcosPrincipal));
+        controlP.labelTamañoPagina.setText(formatea.format(this.tamañoPagina));
+        controlP.labelEspaciosSecundaria.setText(formatea.format(numEspaciosSecundaria));
+        
+        // Iniciamos labels de tablas
+        controlP.labelTamTotalPrincipal.setText(formatea.format(this.tamañoMemPrincipal));
+        controlP.labelTamUsadaPrincipal.setText("0");
+        controlP.labelTamDisponiblePrincipal.setText(formatea.format(this.tamañoMemPrincipal));
+        controlP.labelTamTotalSecundaria.setText(formatea.format(this.tamañoMemSecundaria));
+        controlP.labelTamUsadaSecundaria.setText("0");
+        controlP.labelTamDisponibleSecundaria.setText(formatea.format(this.tamañoMemSecundaria));
+        controlP.progressPrincipal.setValue(83);
+        controlP.progressSecundaria.setValue(0);
+        
+        // Iniciamos los textFields de crearProcesos
+        controlP.fieldNombreProceso.setText("Proceso #1");
+        controlP.fieldTamañoProceso.setText("4096");
+    }
+    
+    public void aparecerTablaProcesos(ControlPanel controlP) {
+        controlP.jPanel1.setVisible(true);
+        this.labelInfo.setVisible(false);
+    }
+    
+    
 }

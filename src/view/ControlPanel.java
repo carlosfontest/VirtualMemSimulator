@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 
 /**
@@ -19,6 +20,7 @@ public class ControlPanel extends javax.swing.JFrame {
     public ControlPanel(Controller controlador, int tamPrincipal, int tamSecundaria, int tamPaginas) {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        this.jPanel1.setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("images/MemorySlot.png")).getImage());
         this.controlador = controlador;
@@ -26,14 +28,7 @@ public class ControlPanel extends javax.swing.JFrame {
         this.tamSecundaria = tamSecundaria;
         this.tamPaginas = tamPaginas;
         
-        try {
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JDialog.setDefaultLookAndFeelDecorated(true);
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        this.controlador.initDatosDelPanelDeControl(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,22 +41,19 @@ public class ControlPanel extends javax.swing.JFrame {
         botonMinimizar = new javax.swing.JLabel();
         botonInfo = new javax.swing.JLabel();
         panelContenido = new javax.swing.JPanel();
-        botonAcceder5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fieldTamPrincipal = new javax.swing.JTextField();
+        fieldTamañoProceso = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        fieldTamPrincipal1 = new javax.swing.JTextField();
+        fieldNombreProceso = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        tablePrincipal = new javax.swing.JTable();
+        progressSecundaria = new javax.swing.JProgressBar();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -69,26 +61,22 @@ public class ControlPanel extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tableSecundaria = new javax.swing.JTable();
         botonAcceder6 = new javax.swing.JButton();
-        botonAcceder7 = new javax.swing.JButton();
-        botonAcceder8 = new javax.swing.JButton();
-        botonAcceder9 = new javax.swing.JButton();
-        botonAcceder10 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        progressPrincipal = new javax.swing.JProgressBar();
         labelTamUsadaSecundaria = new javax.swing.JLabel();
-        labelTamTotalPrincipal1 = new javax.swing.JLabel();
+        labelEspaciosSecundaria = new javax.swing.JLabel();
         labelTamDisponiblePrincipal1 = new javax.swing.JLabel();
-        labelTamTotalSecundaria1 = new javax.swing.JLabel();
+        labelTamTotalSecundaria = new javax.swing.JLabel();
         labelTamUsadaPrincipal = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        labelTamDisponiblePrincipal3 = new javax.swing.JLabel();
+        labelTamDisponiblePrincipal = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         labelTamDisponibleSecundaria = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
@@ -98,14 +86,21 @@ public class ControlPanel extends javax.swing.JFrame {
         labelTamDisponiblePrincipal4 = new javax.swing.JLabel();
         labelTamDisponiblePrincipal5 = new javax.swing.JLabel();
         labelTamDisponiblePrincipal6 = new javax.swing.JLabel();
-        labelTamTotalPrincipal2 = new javax.swing.JLabel();
-        labelTamTotalPrincipal3 = new javax.swing.JLabel();
-        labelTamTotalPrincipal4 = new javax.swing.JLabel();
-        labelTamTotalPrincipal5 = new javax.swing.JLabel();
-        labelTamTotalPrincipal6 = new javax.swing.JLabel();
+        labelTamTotalPrincipal = new javax.swing.JLabel();
+        labelProcesosCreados = new javax.swing.JLabel();
+        labelProcesosVivos = new javax.swing.JLabel();
+        labelMarcosPagina = new javax.swing.JLabel();
+        labelTamañoPagina = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableLista = new javax.swing.JTable();
+        botonAcceder10 = new javax.swing.JButton();
+        botonAcceder7 = new javax.swing.JButton();
+        botonAcceder9 = new javax.swing.JButton();
+        botonAcceder5 = new javax.swing.JButton();
+        botonAcceder8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1200, 600));
         setMinimumSize(new java.awt.Dimension(1200, 600));
         setUndecorated(true);
 
@@ -151,9 +146,9 @@ public class ControlPanel extends javax.swing.JFrame {
                 botonInfoMouseClicked(evt);
             }
         });
-        panelHerramientas.add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, -1, -1));
+        panelHerramientas.add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 8, -1, 50));
 
-        panelContenido.setBackground(new java.awt.Color(0, 204, 204));
+        panelContenido.setBackground(new java.awt.Color(128, 172, 123));
         panelContenido.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelContenidoMouseDragged(evt);
@@ -164,52 +159,39 @@ public class ControlPanel extends javax.swing.JFrame {
                 panelContenidoMousePressed(evt);
             }
         });
-        panelContenido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        botonAcceder5.setBackground(new java.awt.Color(255, 51, 51));
-        botonAcceder5.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        botonAcceder5.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder5.setText("Eliminar");
-        botonAcceder5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder5.setFocusPainted(false);
-        botonAcceder5.setFocusable(false);
-        botonAcceder5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder5ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(botonAcceder5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1044, 162, 130, 27));
+        panelContenido.setLayout(null);
 
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/MemoriaSecundaria.png"))); // NOI18N
-        panelContenido.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 140, -1));
+        panelContenido.add(jLabel2);
+        jLabel2.setBounds(620, 220, 140, 21);
 
-        fieldTamPrincipal.setBackground(new java.awt.Color(0, 204, 204));
-        fieldTamPrincipal.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
-        fieldTamPrincipal.setForeground(new java.awt.Color(51, 51, 51));
-        fieldTamPrincipal.setText("Tamaño del Proceso");
-        fieldTamPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tamaño del Proceso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri Light", 1, 10), new java.awt.Color(0, 0, 0))); // NOI18N
-        fieldTamPrincipal.setSelectionColor(new java.awt.Color(102, 102, 102));
-        fieldTamPrincipal.addFocusListener(new java.awt.event.FocusAdapter() {
+        fieldTamañoProceso.setBackground(new java.awt.Color(128, 172, 123));
+        fieldTamañoProceso.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        fieldTamañoProceso.setForeground(new java.awt.Color(51, 51, 51));
+        fieldTamañoProceso.setText("Tamaño del Proceso");
+        fieldTamañoProceso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tamaño del Proceso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri Light", 1, 10), new java.awt.Color(0, 0, 0))); // NOI18N
+        fieldTamañoProceso.setSelectionColor(new java.awt.Color(102, 102, 102));
+        fieldTamañoProceso.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                fieldTamPrincipalFocusGained(evt);
+                fieldTamañoProcesoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldTamPrincipalFocusLost(evt);
+                fieldTamañoProcesoFocusLost(evt);
             }
         });
-        fieldTamPrincipal.addActionListener(new java.awt.event.ActionListener() {
+        fieldTamañoProceso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldTamPrincipalActionPerformed(evt);
+                fieldTamañoProcesoActionPerformed(evt);
             }
         });
-        fieldTamPrincipal.addKeyListener(new java.awt.event.KeyAdapter() {
+        fieldTamañoProceso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                fieldTamPrincipalKeyTyped(evt);
+                fieldTamañoProcesoKeyTyped(evt);
             }
         });
-        panelContenido.add(fieldTamPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 104, 160, 50));
+        panelContenido.add(fieldTamañoProceso);
+        fieldTamañoProceso.setBounds(30, 101, 160, 50);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -225,37 +207,40 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 160, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 27, 3, 160));
+        panelContenido.add(jPanel3);
+        jPanel3.setBounds(220, 27, 3, 160);
 
-        fieldTamPrincipal1.setBackground(new java.awt.Color(0, 204, 204));
-        fieldTamPrincipal1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
-        fieldTamPrincipal1.setForeground(new java.awt.Color(51, 51, 51));
-        fieldTamPrincipal1.setText("Nombre del Proceso");
-        fieldTamPrincipal1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre del Proceso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri Light", 1, 10), new java.awt.Color(0, 0, 0))); // NOI18N
-        fieldTamPrincipal1.setSelectionColor(new java.awt.Color(102, 102, 102));
-        fieldTamPrincipal1.addFocusListener(new java.awt.event.FocusAdapter() {
+        fieldNombreProceso.setBackground(new java.awt.Color(128, 172, 123));
+        fieldNombreProceso.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        fieldNombreProceso.setForeground(new java.awt.Color(51, 51, 51));
+        fieldNombreProceso.setText("Nombre del Proceso");
+        fieldNombreProceso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre del Proceso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri Light", 1, 10), new java.awt.Color(0, 0, 0))); // NOI18N
+        fieldNombreProceso.setSelectionColor(new java.awt.Color(102, 102, 102));
+        fieldNombreProceso.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                fieldTamPrincipal1FocusGained(evt);
+                fieldNombreProcesoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                fieldTamPrincipal1FocusLost(evt);
+                fieldNombreProcesoFocusLost(evt);
             }
         });
-        fieldTamPrincipal1.addActionListener(new java.awt.event.ActionListener() {
+        fieldNombreProceso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldTamPrincipal1ActionPerformed(evt);
+                fieldNombreProcesoActionPerformed(evt);
             }
         });
-        fieldTamPrincipal1.addKeyListener(new java.awt.event.KeyAdapter() {
+        fieldNombreProceso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                fieldTamPrincipal1KeyTyped(evt);
+                fieldNombreProcesoKeyTyped(evt);
             }
         });
-        panelContenido.add(fieldTamPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 160, 50));
+        panelContenido.add(fieldNombreProceso);
+        fieldNombreProceso.setBounds(30, 47, 160, 50);
 
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/CrearNuevoProceso.png"))); // NOI18N
-        panelContenido.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, -1));
+        panelContenido.add(jLabel3);
+        jLabel3.setBounds(30, 20, 140, 21);
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setForeground(new java.awt.Color(51, 51, 51));
@@ -271,55 +256,18 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 165, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
+        panelContenido.add(jPanel4);
+        jPanel4.setBounds(480, 30, 3, 165);
 
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/ListaProcesos.png"))); // NOI18N
-        panelContenido.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 120, -1));
+        panelContenido.add(jLabel4);
+        jLabel4.setBounds(500, 20, 120, 21);
 
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamDisponible.png"))); // NOI18N
-        panelContenido.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, -1));
-
-        jTable1.setBackground(new java.awt.Color(51, 51, 51));
-        jTable1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 11)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(220, 220, 220));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Tamaño", "Páginas", "Estado", "# MP", "# MS"
-            }
-        ));
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(120, 120, 120));
-        jScrollPane1.setViewportView(jTable1);
-
-        panelContenido.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 540, 140));
+        panelContenido.add(jLabel5);
+        jLabel5.setBounds(250, 480, 120, 18);
 
         jPanel5.setBackground(new java.awt.Color(51, 51, 51));
         jPanel5.setForeground(new java.awt.Color(51, 51, 51));
@@ -335,55 +283,52 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 290, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 228, -1, 290));
-        panelContenido.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
+        panelContenido.add(jPanel5);
+        jPanel5.setBounds(600, 228, 3, 290);
+        panelContenido.add(jToggleButton1);
+        jToggleButton1.setBounds(8, 0, 0, 1);
 
-        jTable2.setBackground(new java.awt.Color(51, 51, 51));
-        jTable2.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 11)); // NOI18N
-        jTable2.setForeground(new java.awt.Color(220, 220, 220));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablePrincipal.setBackground(new java.awt.Color(81, 81, 81));
+        tablePrincipal.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        tablePrincipal.setForeground(new java.awt.Color(220, 220, 220));
+        tablePrincipal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Dir. Física", "# Marco", "ID Proceso", "Nombre Proceso", "# Página"
             }
-        ));
-        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable2.setGridColor(new java.awt.Color(120, 120, 120));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        panelContenido.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 550, 200));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablePrincipal.setFocusable(false);
+        tablePrincipal.setGridColor(new java.awt.Color(120, 120, 120));
+        tablePrincipal.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tablePrincipal.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablePrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tablePrincipalMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablePrincipal);
 
-        jProgressBar1.setBackground(new java.awt.Color(204, 204, 204));
-        jProgressBar1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
-        jProgressBar1.setForeground(new java.awt.Color(51, 51, 51));
-        jProgressBar1.setValue(65);
-        jProgressBar1.setStringPainted(true);
-        panelContenido.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 480, 170, 30));
+        panelContenido.add(jScrollPane2);
+        jScrollPane2.setBounds(30, 260, 550, 200);
+
+        progressSecundaria.setBackground(new java.awt.Color(204, 204, 204));
+        progressSecundaria.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
+        progressSecundaria.setForeground(new java.awt.Color(81, 81, 81));
+        progressSecundaria.setValue(65);
+        progressSecundaria.setStringPainted(true);
+        panelContenido.add(progressSecundaria);
+        progressSecundaria.setBounds(980, 480, 170, 30);
 
         jPanel6.setBackground(new java.awt.Color(51, 51, 51));
         jPanel6.setForeground(new java.awt.Color(51, 51, 51));
@@ -399,7 +344,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 228, 424, 3));
+        panelContenido.add(jPanel6);
+        jPanel6.setBounds(760, 228, 424, 3);
 
         jPanel7.setBackground(new java.awt.Color(51, 51, 51));
         jPanel7.setForeground(new java.awt.Color(51, 51, 51));
@@ -415,7 +361,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 27, 52, 3));
+        panelContenido.add(jPanel7);
+        jPanel7.setBounds(170, 27, 52, 3);
 
         jPanel8.setBackground(new java.awt.Color(51, 51, 51));
         jPanel8.setForeground(new java.awt.Color(51, 51, 51));
@@ -431,7 +378,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 27, 147, 3));
+        panelContenido.add(jPanel8);
+        jPanel8.setBounds(336, 27, 147, 3);
 
         jPanel9.setBackground(new java.awt.Color(51, 51, 51));
         jPanel9.setForeground(new java.awt.Color(51, 51, 51));
@@ -447,7 +395,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 228, 443, 3));
+        panelContenido.add(jPanel9);
+        jPanel9.setBounds(157, 228, 443, 3);
 
         jPanel10.setBackground(new java.awt.Color(51, 51, 51));
         jPanel10.setForeground(new java.awt.Color(51, 51, 51));
@@ -463,57 +412,50 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 290, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1181, 230, -1, -1));
+        panelContenido.add(jPanel10);
+        jPanel10.setBounds(1181, 230, 3, 290);
 
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Estadisticas.png"))); // NOI18N
-        panelContenido.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 80, -1));
+        panelContenido.add(jLabel6);
+        jLabel6.setBounds(250, 20, 80, 21);
 
-        jTable3.setBackground(new java.awt.Color(51, 51, 51));
-        jTable3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 11)); // NOI18N
-        jTable3.setForeground(new java.awt.Color(220, 220, 220));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tableSecundaria.setBackground(new java.awt.Color(81, 81, 81));
+        tableSecundaria.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        tableSecundaria.setForeground(new java.awt.Color(220, 220, 220));
+        tableSecundaria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Espacio Disco", "ID Proceso", "Nombre Proceso", "# Página"
+                "# Espacio Disco", "ID Proceso", "Nombre Proceso", "# Página"
             }
-        ));
-        jTable3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable3.setGridColor(new java.awt.Color(120, 120, 120));
-        jScrollPane3.setViewportView(jTable3);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        panelContenido.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 550, 200));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableSecundaria.setFocusable(false);
+        tableSecundaria.setGridColor(new java.awt.Color(120, 120, 120));
+        tableSecundaria.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tableSecundaria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableSecundaria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableSecundariaMousePressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tableSecundaria);
+
+        panelContenido.add(jScrollPane3);
+        jScrollPane3.setBounds(620, 260, 550, 200);
 
         botonAcceder6.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder6.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        botonAcceder6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         botonAcceder6.setForeground(new java.awt.Color(255, 255, 255));
         botonAcceder6.setText("Crear proceso");
         botonAcceder6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -525,67 +467,8 @@ public class ControlPanel extends javax.swing.JFrame {
                 botonAcceder6ActionPerformed(evt);
             }
         });
-        panelContenido.add(botonAcceder6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 130, 30));
-
-        botonAcceder7.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder7.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        botonAcceder7.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder7.setText("Listo");
-        botonAcceder7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder7.setFocusPainted(false);
-        botonAcceder7.setFocusable(false);
-        botonAcceder7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder7ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(botonAcceder7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1044, 50, 130, 27));
-
-        botonAcceder8.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder8.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        botonAcceder8.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder8.setText("Susp/Listo");
-        botonAcceder8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder8.setFocusPainted(false);
-        botonAcceder8.setFocusable(false);
-        botonAcceder8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder8ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(botonAcceder8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1044, 106, 130, 27));
-
-        botonAcceder9.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder9.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        botonAcceder9.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder9.setText("Susp/Bloqueado");
-        botonAcceder9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder9.setFocusPainted(false);
-        botonAcceder9.setFocusable(false);
-        botonAcceder9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder9ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(botonAcceder9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1044, 134, 130, 27));
-
-        botonAcceder10.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder10.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        botonAcceder10.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder10.setText("Bloquear");
-        botonAcceder10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder10.setFocusPainted(false);
-        botonAcceder10.setFocusable(false);
-        botonAcceder10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder10ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(botonAcceder10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1044, 78, 130, 27));
+        panelContenido.add(botonAcceder6);
+        botonAcceder6.setBounds(60, 158, 130, 33);
 
         jPanel11.setBackground(new java.awt.Color(51, 51, 51));
         jPanel11.setForeground(new java.awt.Color(51, 51, 51));
@@ -601,7 +484,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 27, 564, -1));
+        panelContenido.add(jPanel11);
+        jPanel11.setBounds(620, 27, 564, 3);
 
         jPanel12.setBackground(new java.awt.Color(51, 51, 51));
         jPanel12.setForeground(new java.awt.Color(51, 51, 51));
@@ -617,81 +501,96 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 165, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(1181, 30, -1, 165));
+        panelContenido.add(jPanel12);
+        jPanel12.setBounds(1181, 30, 3, 165);
 
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/MemoriaPrincipal.png"))); // NOI18N
-        panelContenido.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 130, -1));
+        panelContenido.add(jLabel7);
+        jLabel7.setBounds(30, 220, 130, 21);
 
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamUsada.png"))); // NOI18N
-        panelContenido.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 90, -1));
+        panelContenido.add(jLabel8);
+        jLabel8.setBounds(140, 480, 90, 18);
 
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamTotal.png"))); // NOI18N
-        panelContenido.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 90, -1));
+        panelContenido.add(jLabel9);
+        jLabel9.setBounds(620, 480, 90, 18);
 
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamUsada.png"))); // NOI18N
-        panelContenido.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, -1));
+        panelContenido.add(jLabel10);
+        jLabel10.setBounds(730, 480, 90, 18);
 
-        jProgressBar2.setBackground(new java.awt.Color(204, 204, 204));
-        jProgressBar2.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
-        jProgressBar2.setForeground(new java.awt.Color(51, 51, 51));
-        jProgressBar2.setValue(65);
-        jProgressBar2.setStringPainted(true);
-        panelContenido.add(jProgressBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 480, 170, 30));
+        progressPrincipal.setBackground(new java.awt.Color(204, 204, 204));
+        progressPrincipal.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 12)); // NOI18N
+        progressPrincipal.setForeground(new java.awt.Color(81, 81, 81));
+        progressPrincipal.setValue(65);
+        progressPrincipal.setStringPainted(true);
+        panelContenido.add(progressPrincipal);
+        progressPrincipal.setBounds(390, 480, 170, 30);
 
         labelTamUsadaSecundaria.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamUsadaSecundaria.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
+        labelTamUsadaSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
         labelTamUsadaSecundaria.setForeground(new java.awt.Color(51, 51, 51));
         labelTamUsadaSecundaria.setText("jLabel11");
-        panelContenido.add(labelTamUsadaSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(733, 500, 100, -1));
+        panelContenido.add(labelTamUsadaSecundaria);
+        labelTamUsadaSecundaria.setBounds(733, 500, 100, 27);
 
-        labelTamTotalPrincipal1.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 3, 16)); // NOI18N
-        labelTamTotalPrincipal1.setForeground(new java.awt.Color(81, 81, 81));
-        labelTamTotalPrincipal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTamTotalPrincipal1.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 165, 70, -1));
+        labelEspaciosSecundaria.setBackground(new java.awt.Color(51, 51, 51));
+        labelEspaciosSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelEspaciosSecundaria.setForeground(new java.awt.Color(81, 81, 81));
+        labelEspaciosSecundaria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelEspaciosSecundaria.setText("8000");
+        panelContenido.add(labelEspaciosSecundaria);
+        labelEspaciosSecundaria.setBounds(400, 136, 70, 27);
 
         labelTamDisponiblePrincipal1.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal1.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         labelTamDisponiblePrincipal1.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal1.setText("# Espacios en MS");
-        panelContenido.add(labelTamDisponiblePrincipal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 140, -1));
+        panelContenido.add(labelTamDisponiblePrincipal1);
+        labelTamDisponiblePrincipal1.setBounds(250, 140, 140, 17);
 
-        labelTamTotalSecundaria1.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalSecundaria1.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
-        labelTamTotalSecundaria1.setForeground(new java.awt.Color(51, 51, 51));
-        labelTamTotalSecundaria1.setText("1000000");
-        panelContenido.add(labelTamTotalSecundaria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(623, 500, 90, -1));
+        labelTamTotalSecundaria.setBackground(new java.awt.Color(51, 51, 51));
+        labelTamTotalSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelTamTotalSecundaria.setForeground(new java.awt.Color(51, 51, 51));
+        labelTamTotalSecundaria.setText("1000000");
+        panelContenido.add(labelTamTotalSecundaria);
+        labelTamTotalSecundaria.setBounds(623, 500, 90, 27);
 
         labelTamUsadaPrincipal.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamUsadaPrincipal.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
+        labelTamUsadaPrincipal.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
         labelTamUsadaPrincipal.setForeground(new java.awt.Color(51, 51, 51));
         labelTamUsadaPrincipal.setText("25");
-        panelContenido.add(labelTamUsadaPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 500, 90, -1));
+        panelContenido.add(labelTamUsadaPrincipal);
+        labelTamUsadaPrincipal.setBounds(143, 500, 90, 27);
 
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamTotal.png"))); // NOI18N
-        panelContenido.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 90, -1));
+        panelContenido.add(jLabel11);
+        jLabel11.setBounds(30, 480, 90, 18);
 
-        labelTamDisponiblePrincipal3.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
-        labelTamDisponiblePrincipal3.setForeground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal3.setText("jLabel11");
-        panelContenido.add(labelTamDisponiblePrincipal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 500, 100, -1));
+        labelTamDisponiblePrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        labelTamDisponiblePrincipal.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelTamDisponiblePrincipal.setForeground(new java.awt.Color(51, 51, 51));
+        labelTamDisponiblePrincipal.setText("jLabel11");
+        panelContenido.add(labelTamDisponiblePrincipal);
+        labelTamDisponiblePrincipal.setBounds(253, 500, 100, 27);
 
         jLabel12.setForeground(new java.awt.Color(51, 51, 51));
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/TamDisponible.png"))); // NOI18N
-        panelContenido.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 480, 120, -1));
+        panelContenido.add(jLabel12);
+        jLabel12.setBounds(840, 480, 120, 18);
 
         labelTamDisponibleSecundaria.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponibleSecundaria.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
+        labelTamDisponibleSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
         labelTamDisponibleSecundaria.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponibleSecundaria.setText("jLabel11");
-        panelContenido.add(labelTamDisponibleSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(845, 500, 100, -1));
+        panelContenido.add(labelTamDisponibleSecundaria);
+        labelTamDisponibleSecundaria.setBounds(845, 500, 100, 27);
 
         jPanel13.setBackground(new java.awt.Color(51, 51, 51));
         jPanel13.setForeground(new java.awt.Color(51, 51, 51));
@@ -707,7 +606,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2, 540));
+        panelContenido.add(jPanel13);
+        jPanel13.setBounds(0, 0, 2, 540);
 
         jPanel14.setBackground(new java.awt.Color(51, 51, 51));
         jPanel14.setForeground(new java.awt.Color(51, 51, 51));
@@ -723,7 +623,8 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1198, 0, -1, -1));
+        panelContenido.add(jPanel14);
+        jPanel14.setBounds(1198, 0, 2, 540);
 
         jPanel15.setBackground(new java.awt.Color(51, 51, 51));
         jPanel15.setForeground(new java.awt.Color(51, 51, 51));
@@ -739,79 +640,232 @@ public class ControlPanel extends javax.swing.JFrame {
             .addGap(0, 2, Short.MAX_VALUE)
         );
 
-        panelContenido.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 1200, 2));
+        panelContenido.add(jPanel15);
+        jPanel15.setBounds(0, 538, 1200, 2);
 
         labelTamDisponiblePrincipal2.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal2.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         labelTamDisponiblePrincipal2.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal2.setText("# Procesos Vivos");
-        panelContenido.add(labelTamDisponiblePrincipal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 130, -1));
+        panelContenido.add(labelTamDisponiblePrincipal2);
+        labelTamDisponiblePrincipal2.setBounds(250, 80, 130, 17);
 
         labelTamDisponiblePrincipal4.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal4.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         labelTamDisponiblePrincipal4.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal4.setText("# Procesos Creados");
-        panelContenido.add(labelTamDisponiblePrincipal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 140, -1));
+        panelContenido.add(labelTamDisponiblePrincipal4);
+        labelTamDisponiblePrincipal4.setBounds(250, 50, 140, 17);
 
         labelTamDisponiblePrincipal5.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal5.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         labelTamDisponiblePrincipal5.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal5.setText("# Marcos de página");
-        panelContenido.add(labelTamDisponiblePrincipal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 140, -1));
+        panelContenido.add(labelTamDisponiblePrincipal5);
+        labelTamDisponiblePrincipal5.setBounds(250, 110, 140, 17);
 
         labelTamDisponiblePrincipal6.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal6.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         labelTamDisponiblePrincipal6.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal6.setText("Tamaño de Página");
-        panelContenido.add(labelTamDisponiblePrincipal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 140, -1));
+        panelContenido.add(labelTamDisponiblePrincipal6);
+        labelTamDisponiblePrincipal6.setBounds(250, 170, 140, 17);
 
-        labelTamTotalPrincipal2.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal2.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 18)); // NOI18N
-        labelTamTotalPrincipal2.setForeground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal2.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 500, 90, -1));
+        labelTamTotalPrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        labelTamTotalPrincipal.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelTamTotalPrincipal.setForeground(new java.awt.Color(51, 51, 51));
+        labelTamTotalPrincipal.setText("8000");
+        panelContenido.add(labelTamTotalPrincipal);
+        labelTamTotalPrincipal.setBounds(33, 500, 90, 27);
 
-        labelTamTotalPrincipal3.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal3.setFont(new java.awt.Font("Microsoft YaHei UI Light", 3, 16)); // NOI18N
-        labelTamTotalPrincipal3.setForeground(new java.awt.Color(81, 81, 81));
-        labelTamTotalPrincipal3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTamTotalPrincipal3.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 46, 70, -1));
+        labelProcesosCreados.setBackground(new java.awt.Color(51, 51, 51));
+        labelProcesosCreados.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelProcesosCreados.setForeground(new java.awt.Color(81, 81, 81));
+        labelProcesosCreados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelProcesosCreados.setText("8000");
+        panelContenido.add(labelProcesosCreados);
+        labelProcesosCreados.setBounds(400, 46, 70, 27);
 
-        labelTamTotalPrincipal4.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal4.setFont(new java.awt.Font("Microsoft YaHei UI Light", 3, 16)); // NOI18N
-        labelTamTotalPrincipal4.setForeground(new java.awt.Color(81, 81, 81));
-        labelTamTotalPrincipal4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTamTotalPrincipal4.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 75, 70, -1));
+        labelProcesosVivos.setBackground(new java.awt.Color(51, 51, 51));
+        labelProcesosVivos.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelProcesosVivos.setForeground(new java.awt.Color(81, 81, 81));
+        labelProcesosVivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelProcesosVivos.setText("8000");
+        panelContenido.add(labelProcesosVivos);
+        labelProcesosVivos.setBounds(400, 76, 70, 27);
 
-        labelTamTotalPrincipal5.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal5.setFont(new java.awt.Font("Microsoft YaHei UI Light", 3, 16)); // NOI18N
-        labelTamTotalPrincipal5.setForeground(new java.awt.Color(81, 81, 81));
-        labelTamTotalPrincipal5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTamTotalPrincipal5.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 105, 70, -1));
+        labelMarcosPagina.setBackground(new java.awt.Color(51, 51, 51));
+        labelMarcosPagina.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelMarcosPagina.setForeground(new java.awt.Color(81, 81, 81));
+        labelMarcosPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelMarcosPagina.setText("8000");
+        panelContenido.add(labelMarcosPagina);
+        labelMarcosPagina.setBounds(400, 106, 70, 27);
 
-        labelTamTotalPrincipal6.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamTotalPrincipal6.setFont(new java.awt.Font("Microsoft YaHei UI Light", 3, 16)); // NOI18N
-        labelTamTotalPrincipal6.setForeground(new java.awt.Color(81, 81, 81));
-        labelTamTotalPrincipal6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTamTotalPrincipal6.setText("8000");
-        panelContenido.add(labelTamTotalPrincipal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 135, 70, -1));
+        labelTamañoPagina.setBackground(new java.awt.Color(51, 51, 51));
+        labelTamañoPagina.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        labelTamañoPagina.setForeground(new java.awt.Color(81, 81, 81));
+        labelTamañoPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTamañoPagina.setText("8000");
+        panelContenido.add(labelTamañoPagina);
+        labelTamañoPagina.setBounds(400, 166, 70, 27);
+
+        tableLista.setBackground(new java.awt.Color(81, 81, 81));
+        tableLista.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        tableLista.setForeground(new java.awt.Color(220, 220, 220));
+        tableLista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nombre", "Tamaño [MB]", "# Páginas", "Estado", "# MP", "# MS"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableLista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableLista.setFocusable(false);
+        tableLista.setGridColor(new java.awt.Color(120, 120, 120));
+        tableLista.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tableLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableLista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tableListaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableLista);
+
+        botonAcceder10.setBackground(new java.awt.Color(51, 51, 51));
+        botonAcceder10.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        botonAcceder10.setForeground(new java.awt.Color(255, 255, 255));
+        botonAcceder10.setText("Bloq.");
+        botonAcceder10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonAcceder10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder10.setFocusPainted(false);
+        botonAcceder10.setFocusable(false);
+        botonAcceder10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAcceder10ActionPerformed(evt);
+            }
+        });
+
+        botonAcceder7.setBackground(new java.awt.Color(51, 51, 51));
+        botonAcceder7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        botonAcceder7.setForeground(new java.awt.Color(255, 255, 255));
+        botonAcceder7.setText("Listo");
+        botonAcceder7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonAcceder7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder7.setFocusPainted(false);
+        botonAcceder7.setFocusable(false);
+        botonAcceder7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAcceder7ActionPerformed(evt);
+            }
+        });
+
+        botonAcceder9.setBackground(new java.awt.Color(51, 51, 51));
+        botonAcceder9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        botonAcceder9.setForeground(new java.awt.Color(255, 255, 255));
+        botonAcceder9.setText("Sus/Listo");
+        botonAcceder9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonAcceder9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder9.setFocusPainted(false);
+        botonAcceder9.setFocusable(false);
+        botonAcceder9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAcceder9ActionPerformed(evt);
+            }
+        });
+
+        botonAcceder5.setBackground(new java.awt.Color(255, 0, 52));
+        botonAcceder5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        botonAcceder5.setForeground(new java.awt.Color(255, 255, 255));
+        botonAcceder5.setText("Eliminar");
+        botonAcceder5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonAcceder5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder5.setFocusPainted(false);
+        botonAcceder5.setFocusable(false);
+        botonAcceder5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAcceder5ActionPerformed(evt);
+            }
+        });
+
+        botonAcceder8.setBackground(new java.awt.Color(51, 51, 51));
+        botonAcceder8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        botonAcceder8.setForeground(new java.awt.Color(255, 255, 255));
+        botonAcceder8.setText("Sus/Bloq");
+        botonAcceder8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonAcceder8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder8.setFocusPainted(false);
+        botonAcceder8.setFocusable(false);
+        botonAcceder8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAcceder8ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botonAcceder7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(botonAcceder8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botonAcceder5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonAcceder7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonAcceder8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addComponent(botonAcceder5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+
+        panelContenido.add(jPanel1);
+        jPanel1.setBounds(500, 50, 676, 139);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelHerramientas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelContenido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
         );
 
         pack();
@@ -824,6 +878,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private void panelHerramientasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelHerramientasMousePressed
         x = evt.getX();
         y = evt.getY();
+        this.controlador.clearTableSelection(this.tableLista, this.tablePrincipal, this.tableSecundaria);
     }//GEN-LAST:event_panelHerramientasMousePressed
 
     private void botonCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseClicked
@@ -842,48 +897,51 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_panelContenidoMouseDragged
 
     private void panelContenidoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelContenidoMousePressed
+        this.controlador.clearTableSelection(this.tableLista, this.tablePrincipal, this.tableSecundaria);
     }//GEN-LAST:event_panelContenidoMousePressed
 
     private void botonAcceder5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder5ActionPerformed
+        
     }//GEN-LAST:event_botonAcceder5ActionPerformed
 
-    private void fieldTamPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipalFocusGained
-        if(fieldTamPrincipal.getText().equals("Tamaño Memoria Principal [KB]") == true){
-            fieldTamPrincipal.setText("");
+    private void fieldTamañoProcesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoFocusGained
+        if(fieldTamañoProceso.getText().equals("Tamaño Memoria Principal [KB]") == true){
+            fieldTamañoProceso.setText("");
         }
-    }//GEN-LAST:event_fieldTamPrincipalFocusGained
+    }//GEN-LAST:event_fieldTamañoProcesoFocusGained
 
-    private void fieldTamPrincipalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipalFocusLost
-        if(fieldTamPrincipal.getText().trim().equals("") == true){
-            fieldTamPrincipal.setText("Tamaño Memoria Principal [KB]");
+    private void fieldTamañoProcesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoFocusLost
+        if(fieldTamañoProceso.getText().trim().equals("") == true){
+            fieldTamañoProceso.setText("Tamaño Memoria Principal [KB]");
         }
-    }//GEN-LAST:event_fieldTamPrincipalFocusLost
+    }//GEN-LAST:event_fieldTamañoProcesoFocusLost
 
-    private void fieldTamPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTamPrincipalActionPerformed
+    private void fieldTamañoProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoActionPerformed
 
-    }//GEN-LAST:event_fieldTamPrincipalActionPerformed
+    }//GEN-LAST:event_fieldTamañoProcesoActionPerformed
 
-    private void fieldTamPrincipalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldTamPrincipalKeyTyped
+    private void fieldTamañoProcesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoKeyTyped
         char tecla = evt.getKeyChar();
 //        if(tecla == KeyEvent.VK_ENTER){
 //            botonInstalarSO.doClick();
 //        }
         controlador.validarSoloNumeros(evt, this);
-    }//GEN-LAST:event_fieldTamPrincipalKeyTyped
+    }//GEN-LAST:event_fieldTamañoProcesoKeyTyped
 
-    private void fieldTamPrincipal1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipal1FocusGained
-    }//GEN-LAST:event_fieldTamPrincipal1FocusGained
+    private void fieldNombreProcesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreProcesoFocusGained
+    }//GEN-LAST:event_fieldNombreProcesoFocusGained
 
-    private void fieldTamPrincipal1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipal1FocusLost
-    }//GEN-LAST:event_fieldTamPrincipal1FocusLost
+    private void fieldNombreProcesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreProcesoFocusLost
+    }//GEN-LAST:event_fieldNombreProcesoFocusLost
 
-    private void fieldTamPrincipal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTamPrincipal1ActionPerformed
-    }//GEN-LAST:event_fieldTamPrincipal1ActionPerformed
+    private void fieldNombreProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreProcesoActionPerformed
+    }//GEN-LAST:event_fieldNombreProcesoActionPerformed
 
-    private void fieldTamPrincipal1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldTamPrincipal1KeyTyped
-    }//GEN-LAST:event_fieldTamPrincipal1KeyTyped
+    private void fieldNombreProcesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNombreProcesoKeyTyped
+    }//GEN-LAST:event_fieldNombreProcesoKeyTyped
 
     private void botonAcceder6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder6ActionPerformed
+        this.controlador.aparecerTablaProcesos(this);
     }//GEN-LAST:event_botonAcceder6ActionPerformed
 
     private void botonAcceder7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder7ActionPerformed
@@ -898,6 +956,21 @@ public class ControlPanel extends javax.swing.JFrame {
     private void botonAcceder10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder10ActionPerformed
     }//GEN-LAST:event_botonAcceder10ActionPerformed
 
+    private void tablePrincipalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePrincipalMousePressed
+        this.tableLista.clearSelection();
+        this.tableSecundaria.clearSelection();
+    }//GEN-LAST:event_tablePrincipalMousePressed
+
+    private void tableSecundariaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSecundariaMousePressed
+        this.tableLista.clearSelection();
+        this.tablePrincipal.clearSelection();
+    }//GEN-LAST:event_tableSecundariaMousePressed
+
+    private void tableListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableListaMousePressed
+        this.tablePrincipal.clearSelection();
+        this.tableSecundaria.clearSelection();
+    }//GEN-LAST:event_tableListaMousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAcceder10;
     private javax.swing.JButton botonAcceder5;
@@ -908,8 +981,8 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JLabel botonCerrar;
     private javax.swing.JLabel botonInfo;
     private javax.swing.JLabel botonMinimizar;
-    public javax.swing.JTextField fieldTamPrincipal;
-    public javax.swing.JTextField fieldTamPrincipal1;
+    public javax.swing.JTextField fieldNombreProceso;
+    public javax.swing.JTextField fieldTamañoProceso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -922,6 +995,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -935,32 +1009,32 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JToggleButton jToggleButton1;
+    public javax.swing.JLabel labelEspaciosSecundaria;
+    public javax.swing.JLabel labelMarcosPagina;
+    public javax.swing.JLabel labelProcesosCreados;
+    public javax.swing.JLabel labelProcesosVivos;
+    public javax.swing.JLabel labelTamDisponiblePrincipal;
     private javax.swing.JLabel labelTamDisponiblePrincipal1;
     private javax.swing.JLabel labelTamDisponiblePrincipal2;
-    private javax.swing.JLabel labelTamDisponiblePrincipal3;
     private javax.swing.JLabel labelTamDisponiblePrincipal4;
     private javax.swing.JLabel labelTamDisponiblePrincipal5;
     private javax.swing.JLabel labelTamDisponiblePrincipal6;
-    private javax.swing.JLabel labelTamDisponibleSecundaria;
-    private javax.swing.JLabel labelTamTotalPrincipal1;
-    private javax.swing.JLabel labelTamTotalPrincipal2;
-    private javax.swing.JLabel labelTamTotalPrincipal3;
-    private javax.swing.JLabel labelTamTotalPrincipal4;
-    private javax.swing.JLabel labelTamTotalPrincipal5;
-    private javax.swing.JLabel labelTamTotalPrincipal6;
-    private javax.swing.JLabel labelTamTotalSecundaria1;
-    private javax.swing.JLabel labelTamUsadaPrincipal;
-    private javax.swing.JLabel labelTamUsadaSecundaria;
-    private javax.swing.JPanel panelContenido;
+    public javax.swing.JLabel labelTamDisponibleSecundaria;
+    public javax.swing.JLabel labelTamTotalPrincipal;
+    public javax.swing.JLabel labelTamTotalSecundaria;
+    public javax.swing.JLabel labelTamUsadaPrincipal;
+    public javax.swing.JLabel labelTamUsadaSecundaria;
+    public javax.swing.JLabel labelTamañoPagina;
+    public javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelHerramientas;
+    public javax.swing.JProgressBar progressPrincipal;
+    public javax.swing.JProgressBar progressSecundaria;
+    public javax.swing.JTable tableLista;
+    public javax.swing.JTable tablePrincipal;
+    public javax.swing.JTable tableSecundaria;
     // End of variables declaration//GEN-END:variables
 }

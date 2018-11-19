@@ -28,7 +28,7 @@ public class ConfigSO extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        botonAux = new javax.swing.JToggleButton();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -49,6 +49,9 @@ public class ConfigSO extends javax.swing.JFrame {
         separador3 = new javax.swing.JSeparator();
         fieldTamPaginas = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 300));
@@ -56,7 +59,7 @@ public class ConfigSO extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(600, 300));
 
-        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(128, 172, 123));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -78,7 +81,7 @@ public class ConfigSO extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Nombre.png"))); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
-        jPanel1.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 0));
+        jPanel1.add(botonAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 0));
 
         jPanel13.setBackground(new java.awt.Color(51, 51, 51));
         jPanel13.setForeground(new java.awt.Color(51, 51, 51));
@@ -194,6 +197,11 @@ public class ConfigSO extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
 
         botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/EquisBlanca.png"))); // NOI18N
         botonCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,7 +227,7 @@ public class ConfigSO extends javax.swing.JFrame {
             }
         });
 
-        botonInstalarSO.setBackground(new java.awt.Color(0, 204, 204));
+        botonInstalarSO.setBackground(new java.awt.Color(128, 172, 123));
         botonInstalarSO.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         botonInstalarSO.setForeground(new java.awt.Color(51, 51, 51));
         botonInstalarSO.setText("Instalar SO");
@@ -239,7 +247,7 @@ public class ConfigSO extends javax.swing.JFrame {
         fieldTamPrincipal.setBackground(new java.awt.Color(51, 51, 51));
         fieldTamPrincipal.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
         fieldTamPrincipal.setForeground(new java.awt.Color(255, 255, 255));
-        fieldTamPrincipal.setText("Tamaño Memoria Principal [KB]");
+        fieldTamPrincipal.setText("25600");
         fieldTamPrincipal.setBorder(null);
         fieldTamPrincipal.setSelectionColor(new java.awt.Color(102, 102, 102));
         fieldTamPrincipal.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -271,7 +279,7 @@ public class ConfigSO extends javax.swing.JFrame {
         fieldTamSecundaria.setBackground(new java.awt.Color(51, 51, 51));
         fieldTamSecundaria.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
         fieldTamSecundaria.setForeground(new java.awt.Color(255, 255, 255));
-        fieldTamSecundaria.setText("Tamaño Memoria Secundaria [KB]");
+        fieldTamSecundaria.setText("61440");
         fieldTamSecundaria.setBorder(null);
         fieldTamSecundaria.setSelectionColor(new java.awt.Color(102, 102, 102));
         fieldTamSecundaria.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -299,7 +307,7 @@ public class ConfigSO extends javax.swing.JFrame {
         fieldTamPaginas.setBackground(new java.awt.Color(51, 51, 51));
         fieldTamPaginas.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
         fieldTamPaginas.setForeground(new java.awt.Color(255, 255, 255));
-        fieldTamPaginas.setText("Tamaño Páginas [KB]");
+        fieldTamPaginas.setText("1024");
         fieldTamPaginas.setBorder(null);
         fieldTamPaginas.setSelectionColor(new java.awt.Color(102, 102, 102));
         fieldTamPaginas.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -322,6 +330,15 @@ public class ConfigSO extends javax.swing.JFrame {
         });
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/PAGE.png"))); // NOI18N
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("[MB]");
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("[MB]");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("[MB]");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -353,12 +370,22 @@ public class ConfigSO extends javax.swing.JFrame {
                                         .addComponent(jLabel10)
                                         .addGap(7, 7, 7)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(fieldTamPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                                     .addComponent(separador1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldTamPaginas, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(separador3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(separador2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldTamSecundaria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))))
+                                    .addComponent(separador3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(fieldTamPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(fieldTamSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(fieldTamPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(53, 53, 53)
+                                        .addComponent(jLabel3)))
+                                .addGap(32, 32, 32)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonCerrar)))
                 .addGap(12, 12, 12))
@@ -373,20 +400,25 @@ public class ConfigSO extends javax.swing.JFrame {
                     .addComponent(botonCerrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldTamPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fieldTamPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separador1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(fieldTamSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(separador2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(separador2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldTamPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fieldTamPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separador3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,6 +451,14 @@ public class ConfigSO extends javax.swing.JFrame {
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         x = evt.getX();
         y = evt.getY();
+        
+        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("")) ) {
+            this.fieldTamPaginas.setText("1024");
+            this.fieldTamPrincipal.setText("25600");
+            this.fieldTamSecundaria.setText("61440");
+        }
+        
+        this.botonAux.requestFocus();
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
@@ -438,18 +478,18 @@ public class ConfigSO extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInfoMouseClicked
 
     private void botonInstalarSOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInstalarSOActionPerformed
-        controlador.instalarSO(this);
+        this.controlador.instalarSO(this);
     }//GEN-LAST:event_botonInstalarSOActionPerformed
 
     private void fieldTamPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipalFocusGained
-        if(fieldTamPrincipal.getText().equals("Tamaño Memoria Principal [KB]") == true){
+        if(fieldTamPrincipal.getText().equals("25600") == true){
             fieldTamPrincipal.setText("");
         }
     }//GEN-LAST:event_fieldTamPrincipalFocusGained
 
     private void fieldTamPrincipalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPrincipalFocusLost
         if(fieldTamPrincipal.getText().trim().equals("") == true){
-            fieldTamPrincipal.setText("Tamaño Memoria Principal [KB]");
+            fieldTamPrincipal.setText("25600");
         }
     }//GEN-LAST:event_fieldTamPrincipalFocusLost
 
@@ -466,14 +506,14 @@ public class ConfigSO extends javax.swing.JFrame {
 
     private void fieldTamSecundariaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamSecundariaFocusGained
         System.out.println("asd");
-        if(fieldTamSecundaria.getText().equals("Tamaño Memoria Secundaria [KB]") == true){
+        if(fieldTamSecundaria.getText().equals("61440") == true){
             fieldTamSecundaria.setText("");
         }
     }//GEN-LAST:event_fieldTamSecundariaFocusGained
 
     private void fieldTamSecundariaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamSecundariaFocusLost
         if(fieldTamSecundaria.getText().trim().equals("") == true){
-            fieldTamSecundaria.setText("Tamaño Memoria Secundaria [KB]");
+            fieldTamSecundaria.setText("61440");
         }
     }//GEN-LAST:event_fieldTamSecundariaFocusLost
 
@@ -489,14 +529,14 @@ public class ConfigSO extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldTamSecundariaKeyTyped
 
     private void fieldTamPaginasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPaginasFocusGained
-        if(fieldTamPaginas.getText().equals("Tamaño Páginas [KB]") == true){
+        if(fieldTamPaginas.getText().equals("1024") == true){
             fieldTamPaginas.setText("");
         }
     }//GEN-LAST:event_fieldTamPaginasFocusGained
 
     private void fieldTamPaginasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamPaginasFocusLost
         if(fieldTamPaginas.getText().trim().equals("") == true){
-            fieldTamPaginas.setText("Tamaño Páginas [KB]");
+            fieldTamPaginas.setText("1024");
         }
     }//GEN-LAST:event_fieldTamPaginasFocusLost
 
@@ -511,7 +551,18 @@ public class ConfigSO extends javax.swing.JFrame {
         controlador.validarSoloNumeros(evt, this);
     }//GEN-LAST:event_fieldTamPaginasKeyTyped
 
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("")) ) {
+            this.fieldTamPaginas.setText("1024");
+            this.fieldTamPrincipal.setText("25600");
+            this.fieldTamSecundaria.setText("61440");
+        }
+        
+        this.botonAux.requestFocus();
+    }//GEN-LAST:event_jPanel2MousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton botonAux;
     private javax.swing.JLabel botonCerrar;
     private javax.swing.JLabel botonInfo;
     private javax.swing.JButton botonInstalarSO;
@@ -519,8 +570,11 @@ public class ConfigSO extends javax.swing.JFrame {
     public javax.swing.JTextField fieldTamPaginas;
     public javax.swing.JTextField fieldTamPrincipal;
     public javax.swing.JTextField fieldTamSecundaria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -533,7 +587,6 @@ public class ConfigSO extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JSeparator separador1;
     private javax.swing.JSeparator separador2;
     private javax.swing.JSeparator separador3;
