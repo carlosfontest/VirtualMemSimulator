@@ -155,7 +155,7 @@ public class Controller {
         int numMarcosPrincipal = (this.tamañoMemPrincipal/this.tamañoPagina);
         for (int i = 0; i < numMarcosPrincipal; i++) {
             modeloPrincipal.addRow(new Object[]{
-                "0x"+Integer.toHexString(i*this.tamañoPagina), i
+                "0x"+Integer.toHexString(i*this.tamañoPagina), i + 1
             });
         }
         
