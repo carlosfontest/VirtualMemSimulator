@@ -50,7 +50,7 @@ public class ControlPanel extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        botonAux = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablePrincipal = new javax.swing.JTable();
         progressSecundaria = new javax.swing.JProgressBar();
@@ -99,6 +99,7 @@ public class ControlPanel extends javax.swing.JFrame {
         botonAcceder9 = new javax.swing.JButton();
         botonAcceder5 = new javax.swing.JButton();
         botonAcceder8 = new javax.swing.JButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 600));
@@ -285,8 +286,8 @@ public class ControlPanel extends javax.swing.JFrame {
 
         panelContenido.add(jPanel5);
         jPanel5.setBounds(600, 228, 3, 290);
-        panelContenido.add(jToggleButton1);
-        jToggleButton1.setBounds(8, 0, 0, 1);
+        panelContenido.add(botonAux);
+        botonAux.setBounds(8, 0, 0, 1);
 
         tablePrincipal.setBackground(new java.awt.Color(81, 81, 81));
         tablePrincipal.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
@@ -853,6 +854,14 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(jPanel1);
         jPanel1.setBounds(500, 50, 676, 139);
 
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+        panelContenido.add(jToggleButton2);
+        jToggleButton2.setBounds(10, 0, 20, 0);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -879,6 +888,7 @@ public class ControlPanel extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
         this.controlador.clearTableSelection(this.tableLista, this.tablePrincipal, this.tableSecundaria);
+        this.botonAux.requestFocus();
     }//GEN-LAST:event_panelHerramientasMousePressed
 
     private void botonCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseClicked
@@ -898,6 +908,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void panelContenidoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelContenidoMousePressed
         this.controlador.clearTableSelection(this.tableLista, this.tablePrincipal, this.tableSecundaria);
+        this.botonAux.requestFocus();
     }//GEN-LAST:event_panelContenidoMousePressed
 
     private void botonAcceder5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder5ActionPerformed
@@ -905,9 +916,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder5ActionPerformed
 
     private void fieldTamañoProcesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoFocusGained
-        if(fieldTamañoProceso.getText().equals("Tamaño Memoria Principal [KB]") == true){
-            fieldTamañoProceso.setText("");
-        }
+        this.fieldTamañoProceso.selectAll();
     }//GEN-LAST:event_fieldTamañoProcesoFocusGained
 
     private void fieldTamañoProcesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoFocusLost
@@ -929,6 +938,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldTamañoProcesoKeyTyped
 
     private void fieldNombreProcesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreProcesoFocusGained
+        this.fieldNombreProceso.selectAll();
     }//GEN-LAST:event_fieldNombreProcesoFocusGained
 
     private void fieldNombreProcesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNombreProcesoFocusLost
@@ -941,7 +951,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNombreProcesoKeyTyped
 
     private void botonAcceder6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder6ActionPerformed
-        this.controlador.aparecerTablaProcesos(this);
+        this.controlador.crearProceso(this);
     }//GEN-LAST:event_botonAcceder6ActionPerformed
 
     private void botonAcceder7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder7ActionPerformed
@@ -971,6 +981,10 @@ public class ControlPanel extends javax.swing.JFrame {
         this.tableSecundaria.clearSelection();
     }//GEN-LAST:event_tableListaMousePressed
 
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAcceder10;
     private javax.swing.JButton botonAcceder5;
@@ -978,6 +992,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JButton botonAcceder7;
     private javax.swing.JButton botonAcceder8;
     private javax.swing.JButton botonAcceder9;
+    private javax.swing.JToggleButton botonAux;
     private javax.swing.JLabel botonCerrar;
     private javax.swing.JLabel botonInfo;
     private javax.swing.JLabel botonMinimizar;
@@ -1012,7 +1027,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
     public javax.swing.JLabel labelEspaciosSecundaria;
     public javax.swing.JLabel labelMarcosPagina;
     public javax.swing.JLabel labelProcesosCreados;

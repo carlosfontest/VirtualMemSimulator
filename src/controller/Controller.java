@@ -23,13 +23,18 @@ import view.ControlPanel;
  * @author Carlos Fontes & Rafael Quintero
  */
 public class Controller {
-    private JLabel labelInfo = new JLabel();
+    private JLabel labelInfo;
     private HashMap<Integer, Proceso> procesos;
     private Marco[] memoriaPrincipal;
     private Marco[] memoriaSecundaria;
-    private int tamañoPagina;
-    private int tamañoMemPrincipal;
-    private int tamañoMemSecundaria;
+    public static int tamañoPagina;
+    public static int tamañoMemPrincipal;
+    public static int tamañoMemSecundaria;
+
+    public Controller() {
+        this.labelInfo = new JLabel();
+        this.procesos = new HashMap<>();
+    }
     
     public void initSO() {
         ConfigSO configso = new ConfigSO(this);
@@ -91,6 +96,10 @@ public class Controller {
         frame.dispose();
         controlP.setVisible(true);
         this.initTables(controlP);
+        
+        // Inicialiamos las memorias
+        this.memoriaPrincipal = new Marco[tamPrincipal/tamPaginas];
+        this.memoriaSecundaria = new Marco[tamSecundaria/tamPaginas];
     }
     
     private void initTables(ControlPanel controlP) {
@@ -189,9 +198,49 @@ public class Controller {
         controlP.fieldTamañoProceso.setText("4096");
     }
     
-    public void aparecerTablaProcesos(ControlPanel controlP) {
+    private void aparecerTablaProcesos(ControlPanel controlP) {
         controlP.jPanel1.setVisible(true);
         this.labelInfo.setVisible(false);
+    }
+    
+    public void crearProceso(ControlPanel controlP) {
+        this.aparecerTablaProcesos(controlP);
+        
+        // Obtenemos el nombre y el tamaño de los textFields
+        String nombreProceso = controlP.fieldNombreProceso.getText();
+        int tamañoProceso = Integer.parseInt(controlP.fieldTamañoProceso.getText());
+        // Generamos el random del tiempo que se va a ejecutar
+        Random random = new Random();
+        int tiempo = random.nextInt(5) + 1;
+        // Agregamos el proceso al HashMap
+        Proceso procesoNuevo = new Proceso(this.procesos.size(), nombreProceso, tiempo, tamañoProceso);
+        this.procesos.put(this.procesos.size(), procesoNuevo);
+        // Agregamos el proceso a la tabla de procesos
+        DecimalFormat formatea = new DecimalFormat("###,###.##");
+        DefaultTableModel modelo = (DefaultTableModel) controlP.tableLista.getModel();
+        modelo.addRow(new Object[]{
+            procesoNuevo.getID(), procesoNuevo.getNombre(), formatea.format(procesoNuevo.getTamaño()), procesoNuevo.getCantPaginas(), procesoNuevo.getEstado(), this.getPaginasEnPrincipal(procesoNuevo), this.getPaginasEnSecundaria(procesoNuevo)
+        });
+        // Aumentamos el número de procesos creados
+        controlP.labelProcesosCreados.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
+        // Aumentamos el número de procesos vivos
+        controlP.labelProcesosVivos.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
+        // Llenamos los textFields de crear procesos
+        controlP.fieldNombreProceso.setText("Proceso #" + (this.procesos.size() + 1) );
+        controlP.fieldTamañoProceso.setText("4096");
+
+        
+        
+    }
+    
+    private int getPaginasEnPrincipal(Proceso proceso) {
+        
+        return 0;
+    }
+    
+    private int getPaginasEnSecundaria(Proceso proceso) {
+        
+        return proceso.getCantPaginas() - this.getPaginasEnPrincipal(proceso);
     }
     
     
