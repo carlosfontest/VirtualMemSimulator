@@ -389,6 +389,7 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="tablePrincipal">
               <Properties>
+                <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="51" green="51" red="51" type="rgb"/>
                 </Property>
@@ -401,12 +402,12 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="0">
                     <Column editable="true" title="Dir. F&#xed;sica" type="java.lang.Object"/>
-                    <Column editable="true" title="# Marco" type="java.lang.Object"/>
-                    <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="# Marco" type="java.lang.Integer"/>
+                    <Column editable="true" title="ID Proceso" type="java.lang.Integer"/>
                     <Column editable="true" title="Nombre Proceso" type="java.lang.Object"/>
-                    <Column editable="true" title="# P&#xe1;g." type="java.lang.Object"/>
-                    <Column editable="true" title="Tam. P&#xe1;g. [MB]" type="java.lang.Object"/>
-                    <Column editable="true" title="Tam. Frag. [MB]" type="java.lang.Object"/>
+                    <Column editable="true" title="# P&#xe1;g." type="java.lang.Integer"/>
+                    <Column editable="true" title="Tam. P&#xe1;g. [MB]" type="java.lang.Integer"/>
+                    <Column editable="true" title="Tam. Frag. [MB]" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -677,10 +678,10 @@
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="0">
-                    <Column editable="true" title="# Espacio Disco" type="java.lang.Object"/>
-                    <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="# Espacio Disco" type="java.lang.Integer"/>
+                    <Column editable="true" title="ID Proceso" type="java.lang.Integer"/>
                     <Column editable="true" title="Nombre Proceso" type="java.lang.Object"/>
-                    <Column editable="true" title="# P&#xe1;gina" type="java.lang.Object"/>
+                    <Column editable="true" title="# P&#xe1;gina" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -1429,6 +1430,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="tableLista">
                   <Properties>
+                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="51" green="51" red="51" type="rgb"/>
                     </Property>
@@ -1440,13 +1442,13 @@
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
-                        <Column editable="false" title="ID" type="java.lang.Object"/>
+                        <Column editable="false" title="ID" type="java.lang.Integer"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                        <Column editable="false" title="Tama&#xf1;o [MB]" type="java.lang.Object"/>
-                        <Column editable="false" title="# P&#xe1;ginas" type="java.lang.Object"/>
+                        <Column editable="false" title="Tama&#xf1;o [MB]" type="java.lang.Integer"/>
+                        <Column editable="false" title="# P&#xe1;ginas" type="java.lang.Integer"/>
                         <Column editable="false" title="Estado" type="java.lang.Object"/>
-                        <Column editable="false" title="# MP" type="java.lang.Object"/>
-                        <Column editable="false" title="# MS" type="java.lang.Object"/>
+                        <Column editable="false" title="# MP" type="java.lang.Integer"/>
+                        <Column editable="false" title="# MS" type="java.lang.Integer"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

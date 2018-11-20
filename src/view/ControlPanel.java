@@ -289,6 +289,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(botonAux);
         botonAux.setBounds(8, 0, 0, 1);
 
+        tablePrincipal.setAutoCreateRowSorter(true);
         tablePrincipal.setBackground(new java.awt.Color(81, 81, 81));
         tablePrincipal.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         tablePrincipal.setForeground(new java.awt.Color(220, 220, 220));
@@ -299,7 +300,15 @@ public class ControlPanel extends javax.swing.JFrame {
             new String [] {
                 "Dir. Física", "# Marco", "ID Proceso", "Nombre Proceso", "# Pág.", "Tam. Pág. [MB]", "Tam. Frag. [MB]"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablePrincipal.setFocusable(false);
         tablePrincipal.setGridColor(new java.awt.Color(120, 120, 120));
@@ -423,7 +432,15 @@ public class ControlPanel extends javax.swing.JFrame {
             new String [] {
                 "# Espacio Disco", "ID Proceso", "Nombre Proceso", "# Página"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tableSecundaria.setFocusable(false);
         tableSecundaria.setGridColor(new java.awt.Color(120, 120, 120));
@@ -695,6 +712,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(labelTamañoPagina);
         labelTamañoPagina.setBounds(400, 166, 70, 27);
 
+        tableLista.setAutoCreateRowSorter(true);
         tableLista.setBackground(new java.awt.Color(81, 81, 81));
         tableLista.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         tableLista.setForeground(new java.awt.Color(220, 220, 220));
@@ -706,9 +724,16 @@ public class ControlPanel extends javax.swing.JFrame {
                 "ID", "Nombre", "Tamaño [MB]", "# Páginas", "Estado", "# MP", "# MS"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
