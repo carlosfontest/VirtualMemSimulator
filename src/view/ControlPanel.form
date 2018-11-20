@@ -400,13 +400,13 @@
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="0">
-                    <Column editable="false" title="Dir. F&#xed;sica" type="java.lang.Object"/>
-                    <Column editable="false" title="# Marco" type="java.lang.Object"/>
-                    <Column editable="false" title="ID Proceso" type="java.lang.Object"/>
-                    <Column editable="false" title="Nombre Proceso" type="java.lang.Object"/>
-                    <Column editable="false" title="# P&#xe1;g." type="java.lang.Object"/>
-                    <Column editable="false" title="Tam. P&#xe1;g. [MB]" type="java.lang.Object"/>
-                    <Column editable="false" title="Tam. Frag. [MB]" type="java.lang.Object"/>
+                    <Column editable="true" title="Dir. F&#xed;sica" type="java.lang.Object"/>
+                    <Column editable="true" title="# Marco" type="java.lang.Object"/>
+                    <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="Nombre Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="# P&#xe1;g." type="java.lang.Object"/>
+                    <Column editable="true" title="Tam. P&#xe1;g. [MB]" type="java.lang.Object"/>
+                    <Column editable="true" title="Tam. Frag. [MB]" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -677,10 +677,10 @@
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="0">
-                    <Column editable="false" title="# Espacio Disco" type="java.lang.Object"/>
-                    <Column editable="false" title="ID Proceso" type="java.lang.Object"/>
-                    <Column editable="false" title="Nombre Proceso" type="java.lang.Object"/>
-                    <Column editable="false" title="# P&#xe1;gina" type="java.lang.Object"/>
+                    <Column editable="true" title="# Espacio Disco" type="java.lang.Object"/>
+                    <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="Nombre Proceso" type="java.lang.Object"/>
+                    <Column editable="true" title="# P&#xe1;gina" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -299,15 +299,7 @@ public class ControlPanel extends javax.swing.JFrame {
             new String [] {
                 "Dir. Física", "# Marco", "ID Proceso", "Nombre Proceso", "# Pág.", "Tam. Pág. [MB]", "Tam. Frag. [MB]"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablePrincipal.setFocusable(false);
         tablePrincipal.setGridColor(new java.awt.Color(120, 120, 120));
@@ -431,15 +423,7 @@ public class ControlPanel extends javax.swing.JFrame {
             new String [] {
                 "# Espacio Disco", "ID Proceso", "Nombre Proceso", "# Página"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tableSecundaria.setFocusable(false);
         tableSecundaria.setGridColor(new java.awt.Color(120, 120, 120));

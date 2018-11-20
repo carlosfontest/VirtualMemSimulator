@@ -47,7 +47,18 @@ public class Proceso {
             this.paginas[this.cantPaginas - 1] = new Pagina(this.cantPaginas, tamañoPagIncompleta);
         }
     }
-
+    
+    public void verPaginas() {
+        System.out.println("\nSoy el proceso " + this.nombre);
+        System.out.println("-------------------------------");
+        for (int i = 0; i < this.paginas.length; i++) {
+            System.out.println("Soy la página N° " + this.paginas[i].getNumPagina() + " peso " + this.paginas[i].getTamaño() + " y tengo fragmentación de " + this.paginas[i].getTamañoFragmentacion());
+        }
+        System.out.println("-------------------------------");
+    }
+    
+    
+    
     public int getCantPaginas() {
         return cantPaginas;
     }
@@ -75,17 +86,6 @@ public class Proceso {
     public Pagina[] getPaginas() {
         return paginas;
     }
-    
-    public void verPaginas() {
-        System.out.println("\nSoy el proceso " + this.nombre);
-        System.out.println("-------------------------------");
-        for (int i = 0; i < this.paginas.length; i++) {
-            System.out.println("Soy la página N° " + this.paginas[i].getNumPagina() + " y tengo fragmentación de " + this.paginas[i].getTamañoFragmentacion());
-        }
-        System.out.println("-------------------------------");
-    }
-    
-    
     
     
     
