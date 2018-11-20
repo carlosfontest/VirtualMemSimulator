@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,17 +28,19 @@ import view.ControlPanel;
 public class Controller {
     private JLabel labelInfo;
     private HashMap<Integer, Proceso> procesos;
+    public static Queue<Proceso> colaMemoriaPrincipal;
+    public static Queue<Proceso> colaMemoriaSecundaria;
     private Marco[] memoriaPrincipal;
     private Marco[] memoriaSecundaria;
     public static int tamañoPagina;
     public static int tamañoMemPrincipal;
     public static int tamañoMemSecundaria;
-    private ArrayList<Long> elevacionesDeDos;
 
     public Controller() {
         this.labelInfo = new JLabel();
         this.procesos = new HashMap<>();
-        this.elevacionesDeDos = new ArrayList<>();
+        this.colaMemoriaPrincipal = new LinkedList<>();
+        this.colaMemoriaSecundaria = new LinkedList<>();
     }
     
     public void initSO() {
@@ -108,17 +112,6 @@ public class Controller {
         frame.dispose();
         controlP.setVisible(true);
         this.initTables(controlP);
-    }
-    
-    private boolean buscarEnElevaciones(long num) {
-        boolean esta = false;
-        for (long n : this.elevacionesDeDos) {
-            if (num == n) {
-                esta = true;
-            }
-        }
-        
-        return esta;
     }
     
     private void initTables(ControlPanel controlP) {
@@ -240,7 +233,7 @@ public class Controller {
         Random random = new Random();
         int tiempo = random.nextInt(5) + 1;
         // Agregamos el proceso al HashMap
-        Proceso procesoNuevo = new Proceso(this.procesos.size(), nombreProceso, tiempo, tamañoProceso);
+        Proceso procesoNuevo = new Proceso(this.procesos.size(), nombreProceso, (double)tiempo, tamañoProceso);
         this.procesos.put(this.procesos.size(), procesoNuevo);
         // Agregamos el proceso a la tabla de procesos
         DecimalFormat formatea = new DecimalFormat("###,###.##");

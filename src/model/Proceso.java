@@ -1,5 +1,8 @@
 package model;
 import controller.Controller;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  *
@@ -10,14 +13,16 @@ public class Proceso {
     private String nombre;
     private String estado;
     private int cantPaginas;
-    private int tiempoEjecucion;
+    private Double tiempoMaxEjecucion;
+    private Double tiempoEjecucion;
     private int tamaño;
     private Pagina[] paginas;
 
-    public Proceso(int ID, String nombre, int tiempoEjecucion, int tamaño) {
+    public Proceso(int ID, String nombre, Double tiempoMaxEjecucion, int tamaño) {
         this.ID = ID;
         this.nombre = nombre;
-        this.tiempoEjecucion = tiempoEjecucion;
+        this.tiempoMaxEjecucion = tiempoMaxEjecucion;
+        this.tiempoEjecucion = 0.0;
         this.tamaño = tamaño;
         this.estado = "Ejecución";
         this.cantPaginas = (int)Math.ceil((float)this.tamaño/Controller.tamañoPagina);
@@ -25,7 +30,44 @@ public class Proceso {
         
         // Creamos las páginas del proceso
         this.crearPaginas();
-        this.verPaginas();
+        //this.verPaginas();
+        
+        // Creamos el timer para saber los ciclos de ejecución
+        System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion/0.5);
+        
+        
+        
+        Timer timer = new Timer(1000, new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Si se está ejecutando hay que sacarlo de memoria principal
+                if(getEstado().equals("Ejecución")) {
+                    // Subimos 0.5seg al tiempo de ejecución
+                    añadirCicloDeEjecución();
+                    // Verificamos si se acabo el tiempo
+                    if(getTiempoEjecucion() >= getTiempoMaxEjecucion()) {
+                        // Eliminar Proceso
+                        setEstado("Eliminado");
+                        System.out.println("Se terminó el tiempo de ejecución de " + getNombre());
+                        return;
+                    }
+                    // Si hay algún proceso queriendo ejecutarse
+                    if(Controller.colaMemoriaSecundaria.peek() != null) {
+                        // Pasarlo a memoria secundaria
+                        // Pasar proceso que se quiere ejecutar a memoria principal
+                        // TODO
+                        System.out.println("Se pasa proceso " + getNombre() + " a MS");
+                    } else {
+                        System.out.println("Se mantiene " + getNombre() + " en MP");
+                    }
+                }
+            }
+        }); 
+        timer.start();
+    }
+    
+    public void añadirCicloDeEjecución() {
+        this.tiempoEjecucion = this.tiempoEjecucion + 0.5;
     }
     
     private void crearPaginas() {
@@ -57,8 +99,6 @@ public class Proceso {
         System.out.println("-------------------------------");
     }
     
-    
-    
     public int getCantPaginas() {
         return cantPaginas;
     }
@@ -75,7 +115,7 @@ public class Proceso {
         return nombre;
     }
 
-    public int getTiempoEjecucion() {
+    public Double getTiempoEjecucion() {
         return tiempoEjecucion;
     }
 
@@ -86,6 +126,46 @@ public class Proceso {
     public Pagina[] getPaginas() {
         return paginas;
     }
+
+    public Double getTiempoMaxEjecucion() {
+        return tiempoMaxEjecucion;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setCantPaginas(int cantPaginas) {
+        this.cantPaginas = cantPaginas;
+    }
+
+    public void setTiempoMaxEjecucion(Double tiempoMaxEjecucion) {
+        this.tiempoMaxEjecucion = tiempoMaxEjecucion;
+    }
+
+    public void setTiempoEjecucion(Double tiempoEjecucion) {
+        this.tiempoEjecucion = tiempoEjecucion;
+    }
+
+    public void setTamaño(int tamaño) {
+        this.tamaño = tamaño;
+    }
+
+    public void setPaginas(Pagina[] paginas) {
+        this.paginas = paginas;
+    }
+    
+    
+    
+    
     
     
     

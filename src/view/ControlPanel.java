@@ -3,10 +3,6 @@ package view;
 import controller.Controller;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.UIManager;
 
 /**
  *
@@ -1005,7 +1001,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // this.controlador.setTimeout(() -> this.imprimir(), 2000); 
+               
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
