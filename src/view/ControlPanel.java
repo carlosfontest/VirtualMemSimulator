@@ -120,7 +120,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelHerramientas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/ControlPanel.png"))); // NOI18N
-        panelHerramientas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        panelHerramientas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/EquisBlanca.png"))); // NOI18N
         botonCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -129,7 +129,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 botonCerrarMouseClicked(evt);
             }
         });
-        panelHerramientas.add(botonCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 14, -1, -1));
+        panelHerramientas.add(botonCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, -1, 80));
 
         botonMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/MinimizarBlanca.png"))); // NOI18N
         botonMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -138,7 +138,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 botonMinimizarMouseClicked(evt);
             }
         });
-        panelHerramientas.add(botonMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 14, -1, -1));
+        panelHerramientas.add(botonMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 0, -1, 80));
 
         botonInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/info.png"))); // NOI18N
         botonInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -147,9 +147,9 @@ public class ControlPanel extends javax.swing.JFrame {
                 botonInfoMouseClicked(evt);
             }
         });
-        panelHerramientas.add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 8, -1, 50));
+        panelHerramientas.add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, 80));
 
-        panelContenido.setBackground(new java.awt.Color(128, 172, 123));
+        panelContenido.setBackground(new java.awt.Color(203, 155, 66));
         panelContenido.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelContenidoMouseDragged(evt);
@@ -167,7 +167,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(jLabel2);
         jLabel2.setBounds(620, 220, 140, 21);
 
-        fieldTamañoProceso.setBackground(new java.awt.Color(128, 172, 123));
+        fieldTamañoProceso.setBackground(new java.awt.Color(203, 155, 66));
         fieldTamañoProceso.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         fieldTamañoProceso.setForeground(new java.awt.Color(51, 51, 51));
         fieldTamañoProceso.setText("Tamaño del Proceso");
@@ -211,7 +211,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(jPanel3);
         jPanel3.setBounds(220, 27, 3, 160);
 
-        fieldNombreProceso.setBackground(new java.awt.Color(128, 172, 123));
+        fieldNombreProceso.setBackground(new java.awt.Color(203, 155, 66));
         fieldNombreProceso.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         fieldNombreProceso.setForeground(new java.awt.Color(51, 51, 51));
         fieldNombreProceso.setText("Nombre del Proceso");
@@ -297,11 +297,11 @@ public class ControlPanel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Dir. Física", "# Marco", "ID Proceso", "Nombre Proceso", "# Página"
+                "Dir. Física", "# Marco", "ID Proceso", "Nombre Proceso", "# Pág.", "Tam. Pág. [MB]", "Tam. Frag. [MB]"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -311,7 +311,7 @@ public class ControlPanel extends javax.swing.JFrame {
         tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablePrincipal.setFocusable(false);
         tablePrincipal.setGridColor(new java.awt.Color(120, 120, 120));
-        tablePrincipal.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tablePrincipal.setSelectionBackground(new java.awt.Color(203, 155, 107));
         tablePrincipal.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tablePrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -443,7 +443,7 @@ public class ControlPanel extends javax.swing.JFrame {
         tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tableSecundaria.setFocusable(false);
         tableSecundaria.setGridColor(new java.awt.Color(120, 120, 120));
-        tableSecundaria.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tableSecundaria.setSelectionBackground(new java.awt.Color(203, 155, 107));
         tableSecundaria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableSecundaria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -549,11 +549,11 @@ public class ControlPanel extends javax.swing.JFrame {
         labelEspaciosSecundaria.setBounds(400, 136, 70, 27);
 
         labelTamDisponiblePrincipal1.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal1.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        labelTamDisponiblePrincipal1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal1.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal1.setText("# Espacios en MS");
         panelContenido.add(labelTamDisponiblePrincipal1);
-        labelTamDisponiblePrincipal1.setBounds(250, 140, 140, 17);
+        labelTamDisponiblePrincipal1.setBounds(250, 140, 140, 23);
 
         labelTamTotalSecundaria.setBackground(new java.awt.Color(51, 51, 51));
         labelTamTotalSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
@@ -645,32 +645,32 @@ public class ControlPanel extends javax.swing.JFrame {
         jPanel15.setBounds(0, 538, 1200, 2);
 
         labelTamDisponiblePrincipal2.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal2.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        labelTamDisponiblePrincipal2.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal2.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal2.setText("# Procesos Vivos");
         panelContenido.add(labelTamDisponiblePrincipal2);
-        labelTamDisponiblePrincipal2.setBounds(250, 80, 130, 17);
+        labelTamDisponiblePrincipal2.setBounds(250, 80, 130, 23);
 
         labelTamDisponiblePrincipal4.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal4.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        labelTamDisponiblePrincipal4.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal4.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal4.setText("# Procesos Creados");
         panelContenido.add(labelTamDisponiblePrincipal4);
-        labelTamDisponiblePrincipal4.setBounds(250, 50, 140, 17);
+        labelTamDisponiblePrincipal4.setBounds(250, 50, 140, 23);
 
         labelTamDisponiblePrincipal5.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal5.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        labelTamDisponiblePrincipal5.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal5.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal5.setText("# Marcos de página");
         panelContenido.add(labelTamDisponiblePrincipal5);
-        labelTamDisponiblePrincipal5.setBounds(250, 110, 140, 17);
+        labelTamDisponiblePrincipal5.setBounds(250, 110, 140, 23);
 
         labelTamDisponiblePrincipal6.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal6.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        labelTamDisponiblePrincipal6.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal6.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal6.setText("Tamaño de Página");
         panelContenido.add(labelTamDisponiblePrincipal6);
-        labelTamDisponiblePrincipal6.setBounds(250, 170, 140, 17);
+        labelTamDisponiblePrincipal6.setBounds(250, 170, 140, 23);
 
         labelTamTotalPrincipal.setBackground(new java.awt.Color(51, 51, 51));
         labelTamTotalPrincipal.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
@@ -733,7 +733,7 @@ public class ControlPanel extends javax.swing.JFrame {
         tableLista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tableLista.setFocusable(false);
         tableLista.setGridColor(new java.awt.Color(120, 120, 120));
-        tableLista.setSelectionBackground(new java.awt.Color(128, 172, 123));
+        tableLista.setSelectionBackground(new java.awt.Color(203, 155, 107));
         tableLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tableLista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -872,7 +872,7 @@ public class ControlPanel extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelHerramientas, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
         );

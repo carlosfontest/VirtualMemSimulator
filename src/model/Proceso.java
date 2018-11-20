@@ -80,7 +80,7 @@ public class Proceso {
         System.out.println("\nSoy el proceso " + this.nombre);
         System.out.println("-------------------------------");
         for (int i = 0; i < this.paginas.length; i++) {
-            System.out.println("Soy la página N° " + this.paginas[i].getNumPagina() + " y peso " + this.paginas[i].getTamaño());
+            System.out.println("Soy la página N° " + this.paginas[i].getNumPagina() + " y tengo fragmentación de " + this.paginas[i].getTamañoFragmentacion());
         }
         System.out.println("-------------------------------");
     }

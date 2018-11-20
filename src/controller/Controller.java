@@ -106,11 +106,13 @@ public class Controller {
         // Tamaño de cada columna
         controlP.tablePrincipal.getTableHeader().setReorderingAllowed(false);
         controlP.tablePrincipal.getTableHeader().setResizingAllowed(false);
-        controlP.tablePrincipal.getColumnModel().getColumn(0).setPreferredWidth(120);
-        controlP.tablePrincipal.getColumnModel().getColumn(1).setPreferredWidth(110);
-        controlP.tablePrincipal.getColumnModel().getColumn(2).setPreferredWidth(115);
-        controlP.tablePrincipal.getColumnModel().getColumn(3).setPreferredWidth(150);
-        controlP.tablePrincipal.getColumnModel().getColumn(4).setPreferredWidth(100);
+        controlP.tablePrincipal.getColumnModel().getColumn(0).setPreferredWidth(65);
+        controlP.tablePrincipal.getColumnModel().getColumn(1).setPreferredWidth(50);
+        controlP.tablePrincipal.getColumnModel().getColumn(2).setPreferredWidth(70);
+        controlP.tablePrincipal.getColumnModel().getColumn(3).setPreferredWidth(110);
+        controlP.tablePrincipal.getColumnModel().getColumn(4).setPreferredWidth(40);
+        controlP.tablePrincipal.getColumnModel().getColumn(5).setPreferredWidth(92);
+        controlP.tablePrincipal.getColumnModel().getColumn(6).setPreferredWidth(96);
         // Altura de cada renglón
         controlP.tablePrincipal.setRowHeight(20);
         
@@ -169,7 +171,7 @@ public class Controller {
         controlP.jPanel1.setVisible(false);
         this.labelInfo.setFont(new Font("Calibri Light", 1, 36));
         this.labelInfo.setText("No hay procesos creados todavía..");
-        this.labelInfo.setBounds(570, 80, 600, 80);
+        this.labelInfo.setBounds(550, 80, 600, 80);
         this.labelInfo.setVisible(true);
         controlP.panelContenido.add(this.labelInfo);
         
@@ -190,7 +192,7 @@ public class Controller {
         controlP.labelTamTotalSecundaria.setText(formatea.format(this.tamañoMemSecundaria));
         controlP.labelTamUsadaSecundaria.setText("0");
         controlP.labelTamDisponibleSecundaria.setText(formatea.format(this.tamañoMemSecundaria));
-        controlP.progressPrincipal.setValue(83);
+        controlP.progressPrincipal.setValue(0);
         controlP.progressSecundaria.setValue(0);
         
         // Iniciamos los textFields de crearProcesos
@@ -224,7 +226,7 @@ public class Controller {
         // Aumentamos el número de procesos creados
         controlP.labelProcesosCreados.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
         // Aumentamos el número de procesos vivos
-        controlP.labelProcesosVivos.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
+        controlP.labelProcesosVivos.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosVivos.getText()) + 1));
         // Llenamos los textFields de crear procesos
         controlP.fieldNombreProceso.setText("Proceso #" + (this.procesos.size() + 1) );
         controlP.fieldTamañoProceso.setText("4096");

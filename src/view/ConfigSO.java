@@ -59,7 +59,7 @@ public class ConfigSO extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(600, 300));
 
-        jPanel1.setBackground(new java.awt.Color(128, 172, 123));
+        jPanel1.setBackground(new java.awt.Color(203, 155, 66));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -227,7 +227,7 @@ public class ConfigSO extends javax.swing.JFrame {
             }
         });
 
-        botonInstalarSO.setBackground(new java.awt.Color(128, 172, 123));
+        botonInstalarSO.setBackground(new java.awt.Color(203, 155, 66));
         botonInstalarSO.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         botonInstalarSO.setForeground(new java.awt.Color(51, 51, 51));
         botonInstalarSO.setText("Instalar SO");
