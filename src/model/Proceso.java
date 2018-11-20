@@ -43,7 +43,7 @@ public class Proceso {
                 // Si se está ejecutando hay que sacarlo de memoria principal
                 if(getEstado().equals("Ejecución")) {
                     // Subimos 0.5seg al tiempo de ejecución
-                    añadirCicloDeEjecución();
+                    setTiempoEjecucion(getTiempoEjecucion() + 0.5);
                     // Verificamos si se acabo el tiempo
                     if(getTiempoEjecucion() >= getTiempoMaxEjecucion()) {
                         // Eliminar Proceso
@@ -64,10 +64,6 @@ public class Proceso {
             }
         }); 
         timer.start();
-    }
-    
-    public void añadirCicloDeEjecución() {
-        this.tiempoEjecucion = this.tiempoEjecucion + 0.5;
     }
     
     private void crearPaginas() {
