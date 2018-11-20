@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.Icon;
@@ -30,10 +31,12 @@ public class Controller {
     public static int tamañoPagina;
     public static int tamañoMemPrincipal;
     public static int tamañoMemSecundaria;
+    private ArrayList<Long> elevacionesDeDos;
 
     public Controller() {
         this.labelInfo = new JLabel();
         this.procesos = new HashMap<>();
+        this.elevacionesDeDos = new ArrayList<>();
     }
     
     public void initSO() {
@@ -86,20 +89,36 @@ public class Controller {
         }
         
         // Verificamos los campos ingresados
-        if( frame.fieldTamPrincipal.getText() == "" || frame.fieldTamSecundaria.getText() == "" || frame.fieldTamPaginas.getText() == "" || tamPrincipal == 0 || tamPaginas == 0 || tamSecundaria == 0 || tamPaginas > tamPrincipal) {
-            JOptionPane.showMessageDialog(frame, "Introduzca bien los campos. No pueden haber ceros, el tamaño de la página no puede ser mayor al tamaño de la memoria principal");
+        if( frame.fieldTamPrincipal.getText() == "" || frame.fieldTamSecundaria.getText() == "" || frame.fieldTamPaginas.getText() == "" || tamPrincipal == 0 || tamPaginas == 0 || tamSecundaria == 0 || tamPaginas > tamPrincipal) { 
+            JOptionPane.showMessageDialog(frame, "Introduzca bien los campos. No pueden haber ceros, el tamaño de la página no puede ser mayor al tamaño de la memoria principal.");
             return;
         }
+        // Verificamos que el valor del tamaño de la página entre exacto en la memoria principal y en la secundaria
+        if( !(this.tamañoMemPrincipal % this.tamañoPagina == 0) || !(this.tamañoMemSecundaria % this.tamañoPagina == 0) ) {
+            JOptionPane.showMessageDialog(frame, "El tamaño de la página tiene que entrar n número de veces de manera exacta en las memorias");
+            return;
+        }
+        
+        // Inicialiamos las memorias
+        this.memoriaPrincipal = new Marco[tamPrincipal/tamPaginas];
+        this.memoriaSecundaria = new Marco[tamSecundaria/tamPaginas];
         
         // Los campos fueron introducidos de manera exitosa, se abre el Panel de Control
         ControlPanel controlP = new ControlPanel(this, tamPrincipal, tamSecundaria, tamPaginas);
         frame.dispose();
         controlP.setVisible(true);
         this.initTables(controlP);
+    }
+    
+    private boolean buscarEnElevaciones(long num) {
+        boolean esta = false;
+        for (long n : this.elevacionesDeDos) {
+            if (num == n) {
+                esta = true;
+            }
+        }
         
-        // Inicialiamos las memorias
-        this.memoriaPrincipal = new Marco[tamPrincipal/tamPaginas];
-        this.memoriaSecundaria = new Marco[tamSecundaria/tamPaginas];
+        return esta;
     }
     
     private void initTables(ControlPanel controlP) {
@@ -154,14 +173,20 @@ public class Controller {
         // Iniciamos la tabla de memoria principal
         int numMarcosPrincipal = (this.tamañoMemPrincipal/this.tamañoPagina);
         for (int i = 0; i < numMarcosPrincipal; i++) {
+            Marco marco = new Marco("0x"+Integer.toHexString(i*this.tamañoPagina), i + 1, null, true);
+            // Agregamos el marco a memoria principal
+            this.memoriaPrincipal[i] = marco;
             modeloPrincipal.addRow(new Object[]{
-                "0x"+Integer.toHexString(i*this.tamañoPagina), i + 1
+                marco.getDirFisica(), marco.getNumMarco()
             });
         }
         
         // Iniciamos la tabla de memoria secundaria
         int numEspaciosSecundaria = (this.tamañoMemSecundaria/this.tamañoPagina);
         for (int i = 0; i < numEspaciosSecundaria; i++) {
+            Marco marco = new Marco(String.valueOf(i + 1), i + 1, null, false);
+            // Agregamos el marco a memoria secundaria
+            this.memoriaSecundaria[i] = marco;
             modeloSecundaria.addRow(new Object[]{
                 i + 1
             });
@@ -243,6 +268,18 @@ public class Controller {
     private int getPaginasEnSecundaria(Proceso proceso) {
         
         return proceso.getCantPaginas() - this.getPaginasEnPrincipal(proceso);
+    }
+    
+    public void setTimeout(Runnable runnable, int delay) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            }
+            catch (Exception e){
+                System.err.println(e);
+            }
+        }).start();
     }
     
     

@@ -11,6 +11,7 @@ public class Pagina {
     private int tamaño;
     private boolean fragmentacion;
     private int tamañoFragmentacion;
+    private boolean inMemoriaPrincipal;
 
     public Pagina(int numPagina, int tamaño) {
         this.numPagina = numPagina;
