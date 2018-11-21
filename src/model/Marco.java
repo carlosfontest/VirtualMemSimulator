@@ -32,6 +32,23 @@ public class Marco {
     public boolean isInMemoriaPrincipal() {
         return inMemoriaPrincipal;
     }
+
+    public void setDirFisica(String dirFisica) {
+        this.dirFisica = dirFisica;
+    }
+
+    public void setNumMarco(int numMarco) {
+        this.numMarco = numMarco;
+    }
+
+    public void setPagina(Pagina pagina) {
+        this.pagina = pagina;
+    }
+
+    public void setInMemoriaPrincipal(boolean inMemoriaPrincipal) {
+        this.inMemoriaPrincipal = inMemoriaPrincipal;
+    }
+    
     
     
     

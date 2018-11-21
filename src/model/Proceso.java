@@ -33,11 +33,11 @@ public class Proceso {
         //this.verPaginas();
         
         // Creamos el timer para saber los ciclos de ejecución
-        System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion/0.5);
+        //System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion/0.5);
         
         
         
-        Timer timer = new Timer(1000, new ActionListener () {
+        Timer timer = new Timer(500, new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 // Si se está ejecutando hay que sacarlo de memoria principal
@@ -48,7 +48,7 @@ public class Proceso {
                     if(getTiempoEjecucion() >= getTiempoMaxEjecucion()) {
                         // Eliminar Proceso
                         setEstado("Eliminado");
-                        System.out.println("Se terminó el tiempo de ejecución de " + getNombre());
+                        //System.out.println("Se terminó el tiempo de ejecución de " + getNombre());
                         return;
                     }
                     // Si hay algún proceso queriendo ejecutarse
@@ -56,9 +56,9 @@ public class Proceso {
                         // Pasarlo a memoria secundaria
                         // Pasar proceso que se quiere ejecutar a memoria principal
                         // TODO
-                        System.out.println("Se pasa proceso " + getNombre() + " a MS");
+                        //System.out.println("Se pasa proceso " + getNombre() + " a MS");
                     } else {
-                        System.out.println("Se mantiene " + getNombre() + " en MP");
+                        //System.out.println("Se mantiene " + getNombre() + " en MP");
                     }
                 }
             }
