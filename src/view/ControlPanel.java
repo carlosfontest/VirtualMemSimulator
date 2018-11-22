@@ -78,13 +78,11 @@ public class ControlPanel extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
-        labelTamDisponiblePrincipal2 = new javax.swing.JLabel();
         labelTamDisponiblePrincipal4 = new javax.swing.JLabel();
         labelTamDisponiblePrincipal5 = new javax.swing.JLabel();
         labelTamDisponiblePrincipal6 = new javax.swing.JLabel();
         labelTamTotalPrincipal = new javax.swing.JLabel();
         labelProcesosCreados = new javax.swing.JLabel();
-        labelProcesosVivos = new javax.swing.JLabel();
         labelMarcosPagina = new javax.swing.JLabel();
         labelTamañoPagina = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -544,14 +542,14 @@ public class ControlPanel extends javax.swing.JFrame {
         labelEspaciosSecundaria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelEspaciosSecundaria.setText("8000");
         panelContenido.add(labelEspaciosSecundaria);
-        labelEspaciosSecundaria.setBounds(400, 136, 70, 27);
+        labelEspaciosSecundaria.setBounds(400, 126, 70, 27);
 
         labelTamDisponiblePrincipal1.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal1.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal1.setText("# Espacios en MS");
         panelContenido.add(labelTamDisponiblePrincipal1);
-        labelTamDisponiblePrincipal1.setBounds(250, 140, 140, 23);
+        labelTamDisponiblePrincipal1.setBounds(250, 130, 140, 23);
 
         labelTamTotalSecundaria.setBackground(new java.awt.Color(51, 51, 51));
         labelTamTotalSecundaria.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
@@ -642,13 +640,6 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(jPanel15);
         jPanel15.setBounds(0, 538, 1200, 2);
 
-        labelTamDisponiblePrincipal2.setBackground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal2.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        labelTamDisponiblePrincipal2.setForeground(new java.awt.Color(51, 51, 51));
-        labelTamDisponiblePrincipal2.setText("# Procesos Vivos");
-        panelContenido.add(labelTamDisponiblePrincipal2);
-        labelTamDisponiblePrincipal2.setBounds(250, 80, 130, 23);
-
         labelTamDisponiblePrincipal4.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal4.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         labelTamDisponiblePrincipal4.setForeground(new java.awt.Color(51, 51, 51));
@@ -661,7 +652,7 @@ public class ControlPanel extends javax.swing.JFrame {
         labelTamDisponiblePrincipal5.setForeground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal5.setText("# Marcos de página");
         panelContenido.add(labelTamDisponiblePrincipal5);
-        labelTamDisponiblePrincipal5.setBounds(250, 110, 140, 23);
+        labelTamDisponiblePrincipal5.setBounds(250, 90, 140, 23);
 
         labelTamDisponiblePrincipal6.setBackground(new java.awt.Color(51, 51, 51));
         labelTamDisponiblePrincipal6.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
@@ -685,21 +676,13 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(labelProcesosCreados);
         labelProcesosCreados.setBounds(400, 46, 70, 27);
 
-        labelProcesosVivos.setBackground(new java.awt.Color(51, 51, 51));
-        labelProcesosVivos.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
-        labelProcesosVivos.setForeground(new java.awt.Color(81, 81, 81));
-        labelProcesosVivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelProcesosVivos.setText("8000");
-        panelContenido.add(labelProcesosVivos);
-        labelProcesosVivos.setBounds(400, 76, 70, 27);
-
         labelMarcosPagina.setBackground(new java.awt.Color(51, 51, 51));
         labelMarcosPagina.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
         labelMarcosPagina.setForeground(new java.awt.Color(81, 81, 81));
         labelMarcosPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMarcosPagina.setText("8000");
         panelContenido.add(labelMarcosPagina);
-        labelMarcosPagina.setBounds(400, 106, 70, 27);
+        labelMarcosPagina.setBounds(400, 86, 70, 27);
 
         labelTamañoPagina.setBackground(new java.awt.Color(51, 51, 51));
         labelTamañoPagina.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
@@ -1051,10 +1034,8 @@ public class ControlPanel extends javax.swing.JFrame {
     public javax.swing.JLabel labelEspaciosSecundaria;
     public javax.swing.JLabel labelMarcosPagina;
     public javax.swing.JLabel labelProcesosCreados;
-    public javax.swing.JLabel labelProcesosVivos;
     public javax.swing.JLabel labelTamDisponiblePrincipal;
     private javax.swing.JLabel labelTamDisponiblePrincipal1;
-    private javax.swing.JLabel labelTamDisponiblePrincipal2;
     private javax.swing.JLabel labelTamDisponiblePrincipal4;
     private javax.swing.JLabel labelTamDisponiblePrincipal5;
     private javax.swing.JLabel labelTamDisponiblePrincipal6;

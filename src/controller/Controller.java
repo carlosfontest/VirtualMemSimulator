@@ -203,7 +203,6 @@ public class Controller {
         
         // Iniciamos estadísticas
         controlP.labelProcesosCreados.setText("0");
-        controlP.labelProcesosVivos.setText("0");
         controlP.labelMarcosPagina.setText(formatea.format(numMarcosPrincipal));
         controlP.labelTamañoPagina.setText(formatea.format(this.tamañoPagina));
         controlP.labelEspaciosSecundaria.setText(formatea.format(numEspaciosSecundaria));
@@ -250,8 +249,6 @@ public class Controller {
         });
         // Aumentamos el número de procesos creados
         controlP.labelProcesosCreados.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
-        // Aumentamos el número de procesos vivos
-        controlP.labelProcesosVivos.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosVivos.getText()) + 1));
         // Llenamos los textFields de crear procesos
         controlP.fieldNombreProceso.setText("Proceso #" + (this.procesos.size() + 1) );
         controlP.fieldTamañoProceso.setText("4096");
