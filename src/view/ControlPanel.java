@@ -910,7 +910,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_panelContenidoMousePressed
 
     private void botonAcceder5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder5ActionPerformed
-        
+        this.controlador.eliminarProceso(this);
     }//GEN-LAST:event_botonAcceder5ActionPerformed
 
     private void fieldTamañoProcesoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamañoProcesoFocusGained

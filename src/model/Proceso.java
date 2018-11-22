@@ -9,6 +9,7 @@ import javax.swing.Timer;
  * @author Carlos Fontes & Rafael Quintero
  */
 public class Proceso {
+    private final double clockTime = 0.5;
     private int ID;
     private String nombre;
     private String estado;
@@ -43,18 +44,21 @@ public class Proceso {
     public void startTimer(){
         Proceso proceso = this;
         
-        Timer timer = new Timer(500, new ActionListener () {
+        Timer timer = new Timer((int)(clockTime * 1000), new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 // Si se está ejecutando hay que sacarlo de memoria principal
-                if(!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID ) {
+                if(!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID && proceso.getEstado().equals("Ejecución") ) {
                     // Subimos 0.5seg al tiempo de ejecución
-                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + 0.5);
+                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + clockTime);
                     // Verificamos si se acabo el tiempo
                     if(proceso.getTiempoEjecucion() >= proceso.getTiempoMaxEjecucion()) {
                         // Eliminar Proceso
                         Controller.colaProcesos.poll();
                         proceso.setEstado("Eliminado");
+                        Controller.eliminarProceso(proceso);
+                        proceso.setCantPagMP(0);
+                        proceso.setCantPagMS(0);
                         System.out.println("Se terminó el tiempo de ejecución de " + proceso.getNombre());
                         return;
                     } else {
