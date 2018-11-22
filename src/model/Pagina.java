@@ -12,8 +12,10 @@ public class Pagina {
     private boolean fragmentacion;
     private int tamañoFragmentacion;
     private boolean inMemoriaPrincipal;
+    private int IDProceso;
 
-    public Pagina(int numPagina, int tamaño) {
+    public Pagina(int numPagina, int tamaño, int IDProceso) {
+        this.IDProceso = IDProceso;
         this.numPagina = numPagina;
         this.tamaño = tamaño;
         // Si hay fragmentacion
@@ -41,6 +43,40 @@ public class Pagina {
     public int getTamañoFragmentacion() {
         return tamañoFragmentacion;
     }
+
+    public boolean isInMemoriaPrincipal() {
+        return inMemoriaPrincipal;
+    }
+
+    public int getIDProceso() {
+        return IDProceso;
+    }
+
+    public void setNumPagina(int numPagina) {
+        this.numPagina = numPagina;
+    }
+
+    public void setTamaño(int tamaño) {
+        this.tamaño = tamaño;
+    }
+
+    public void setFragmentacion(boolean fragmentacion) {
+        this.fragmentacion = fragmentacion;
+    }
+
+    public void setTamañoFragmentacion(int tamañoFragmentacion) {
+        this.tamañoFragmentacion = tamañoFragmentacion;
+    }
+
+    public void setInMemoriaPrincipal(boolean inMemoriaPrincipal) {
+        this.inMemoriaPrincipal = inMemoriaPrincipal;
+    }
+
+    public void setIDProceso(int IDProceso) {
+        this.IDProceso = IDProceso;
+    }
+    
+    
     
     
     
