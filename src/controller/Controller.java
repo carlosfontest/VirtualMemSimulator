@@ -31,7 +31,7 @@ import view.ControlPanel;
 public class Controller {
     private JLabel labelInfo;
     private static HashMap<Integer, Proceso> procesos;
-    public static Queue<Pagina> colaMemoriaPrincipal ;
+    public static Queue<Proceso> colaMemoriaPrincipal ;
     public static Queue<Proceso> colaProcesos;
     public static Marco[] memoriaSecundaria;
     public static Marco[] memoriaPrincipal;
@@ -253,8 +253,8 @@ public class Controller {
         
         // Meter en la memoria principal para que se ejecute
         // Si la mitad de las paginas del proceso entran en MP
-        System.out.println(Math.ceil((double)7 / 2));
-        if( Math.ceil((double)procesoNuevo.getPaginas().length / 2) <= this.memoriaPrincipal.length - this.cantMarcosOcupados) {
+        if (Math.ceil((double) procesoNuevo.getPaginas().length / 2) <= this.memoriaPrincipal.length - this.cantMarcosOcupados) {
+            colaMemoriaPrincipal.offer(procesoNuevo);
             //System.out.println("Caben al menos la mitad de las páginas del " + procesoNuevo.getNombre());
             int marcosDispon = this.memoriaPrincipal.length - this.cantMarcosOcupados;
             
@@ -288,9 +288,9 @@ public class Controller {
                     if(this.memoriaSecundaria[i].getPagina() == null && (procesoNuevo.getPaginas().length - contAux - cantPagsMS) < cantPagsMS) {
                         // Si encontramos el espacio vacío de la MS y aun tengo paginas que meter
                         System.out.println("----------------------------");
-                        this.memoriaSecundaria[i].setPagina( procesoNuevo.getPaginas()[contPaginasPuestas ] );
-                        this.memoriaPrincipal[i].getPagina().setIDProceso(procesoNuevo.getID());
-                        this.memoriaPrincipal[i].getPagina().setInMemoriaPrincipal(false);
+                        this.memoriaSecundaria[i].setPagina(procesoNuevo.getPaginas()[contPaginasPuestas]);
+                        this.memoriaSecundaria[i].getPagina().setIDProceso(procesoNuevo.getID());
+                        this.memoriaSecundaria[i].getPagina().setInMemoriaPrincipal(false);
                         contPaginasPuestas++;
                         contAux--;
                     }
@@ -328,15 +328,103 @@ public class Controller {
             
         } else {
             // Sacar de la memoria principal y meter el nuevo proceso
-            System.out.println("NO caben al menos la mitad de las páginas del " + procesoNuevo.getNombre());
-            // Verificamos si algun proceso tiene más de la mitad de sus páginas
-            for (int i = 0; i < this.memoriaPrincipal.length; i++) {
-                if(this.memoriaPrincipal[i].getPagina() != null) {
-                    // RECORDAR AL AGREGAR SETEAR AL PROCESO EL NUMERO DE PAGINAS EN MP Y EN MS
-                    // RECORDAR AL AGREGAR SETEAR AL PROCESO EL NUMERO DE PAGINAS EN MP Y EN MS
-                    // RECORDAR AL AGREGAR SETEAR AL PROCESO EL NUMERO DE PAGINAS EN MP Y EN MS
+            int marcosDispon = this.memoriaPrincipal.length - this.cantMarcosOcupados;
+            int cantPagsNecesitoEnMP = (int) Math.ceil((double) procesoNuevo.getPaginas().length / 2);
+            int cantPagsNecesitoEnMS = procesoNuevo.getPaginas().length - cantPagsNecesitoEnMP;
+            // Verificamos si hay espacio en memoria virtual para meter el proceso
+            if (procesoNuevo.getPaginas().length > (marcosDispon + (memoriaSecundaria.length - cantEspaciosOcupadosMS))) {
+                JOptionPane.showMessageDialog(null, "No hay espacio para crear ese proceso.");
+                return;
+            }
+            // Se agrega el proceso a la cola de MP
+            colaMemoriaPrincipal.offer(procesoNuevo); // AYUDAAAAAAAAAAAAAAAAA
+            // Se verifica en la cola de MP los procesos y se ve cuantas páginas de cada uno de los procesos hay
+            // que quitar para que entren las que necesito en MP
+            // Verificar si hay espacios vacios en MP y meter las páginas que se puedan
+            int numPagg = 0;
+            if (cantMarcosOcupados < this.memoriaPrincipal.length) {
+                int espaciosVacios = this.memoriaPrincipal.length - cantMarcosOcupados;
+                int numPag = 0;
+                for (numPag = 0; numPag < espaciosVacios; numPag++) {
+                    for (int j = 0; j < memoriaPrincipal.length; j++) {
+                        if (memoriaPrincipal[j].getPagina() == null) {
+                            memoriaPrincipal[j].setPagina(procesoNuevo.getPaginas()[numPag]);
+                            procesoNuevo.getPaginas()[numPag].setInMemoriaPrincipal(true);
+                            procesoNuevo.setCantPagMP(procesoNuevo.getCantPagMP() + 1);
+                            cantPagsNecesitoEnMP--;
+                            cantMarcosOcupados++;
+                            break;
+                        }
+                    }
+                }
+                numPagg = numPag;
+            }
+
+            // Verifico que procesos voy a quitar
+            boolean ready = false;
+            // Recorro todos los procesos que están en la cola de MP
+            for (Proceso pro : colaMemoriaPrincipal) {
+                // Verifico si ya se pusieron todas las páginas en MP
+                if (ready) {
+                    break;
+                }
+                // Recorro todas las páginas de el proceso
+                for (int i = 0; i < pro.getPaginas().length; i++) {
+                    // Si la página está en MP la saco y meto la del proceso nuevo
+                    if (pro.getPaginas()[i].isInMemoriaPrincipal()) {
+                        if (cantPagsNecesitoEnMP <= 0) {
+                            ready = true;
+                            break;
+                        }
+                        cantPagsNecesitoEnMP--;
+                        pro.getPaginas()[i].setInMemoriaPrincipal(false);
+                        // Meto la página en MS y la saco de MP
+                        for (int j = 0; j < memoriaSecundaria.length; j++) {
+                            if (memoriaSecundaria[j].getPagina() == null) {
+                                memoriaSecundaria[j].setPagina(pro.getPaginas()[i]);
+                                cantEspaciosOcupadosMS++; 
+                                // Aumentamos y disminuimos la cantidad de paginas en MP y MS
+                                procesos.get(pro.getPaginas()[i].getIDProceso()).setCantPagMP(procesos.get(pro.getPaginas()[i].getIDProceso()).getCantPagMP() - 1);
+                                procesos.get(pro.getPaginas()[i].getIDProceso()).setCantPagMS(procesos.get(pro.getPaginas()[i].getIDProceso()).getCantPagMS() + 1);
+                                actualizarMemorias();
+                                // Si no están la mitad de las paginas en MP
+                                if( procesos.get(pro.getPaginas()[i].getIDProceso()).getCantPagMP() >= (int) Math.ceil((double) pro.getPaginas().length / 2) ) {
+                                    procesos.get(pro.getPaginas()[i].getIDProceso()).setEstado("Suspendido/Listo");
+                                    actualizarMemorias();
+                                } else {
+                                    procesos.get(pro.getPaginas()[i].getIDProceso()).setEstado("Listo");
+                                    actualizarMemorias();
+                                }
+                                break;
+                            }
+                        }
+                        for (int j = 0; j < memoriaPrincipal.length; j++) {
+                            // Si son del mismo proceso y el mismo numero de pagina
+                            // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
+                            if (memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
+                                memoriaPrincipal[j].setPagina(procesoNuevo.getPaginas()[numPagg]);
+                                procesoNuevo.getPaginas()[numPagg].setInMemoriaPrincipal(true);
+                                numPagg++;
+                                actualizarMemorias();
+                            }
+                        }
+
+                        
+                    }
                 }
             }
+
+            for (int i = 0; i < memoriaSecundaria.length; i++) {
+                if (memoriaSecundaria[i].getPagina() == null && cantPagsNecesitoEnMS > 0) {
+                    memoriaSecundaria[i].setPagina(procesoNuevo.getPaginas()[numPagg]);
+                    procesoNuevo.getPaginas()[numPagg - 1].setInMemoriaPrincipal(false);
+                    cantPagsNecesitoEnMS--;
+                    numPagg++;
+                    cantEspaciosOcupadosMS++;
+                }
+            }
+
+            actualizarMemorias();
         }
         
         // Agregamos el proceso a la tabla de procesos
@@ -350,17 +438,17 @@ public class Controller {
 //        System.out.println("MEMORIA PRINCIPAL");
 //        for (int i = 0; i < this.memoriaPrincipal.length; i++) {
 //            if(this.memoriaPrincipal[i].getPagina() != null) {
-//                System.out.println(this.memoriaPrincipal[i].getPagina().getNumPagina());
+//                System.out.println(this.memoriaPrincipal[i].getPagina().getNumPagina() + " " + procesos.get(this.memoriaPrincipal[i].getPagina().getIDProceso()).getNombre());
 //            } else {
 //                System.out.println("nada");
 //            }
-//            
+//
 //        }
 //
 //        System.out.println("MEMORIA SECUNDARIA");
 //        for (int i = 0; i < this.memoriaSecundaria.length; i++) {
 //            if(this.memoriaSecundaria[i].getPagina() != null) {
-//                System.out.println(this.memoriaSecundaria[i].getPagina().getNumPagina());
+//                System.out.println(this.memoriaSecundaria[i].getPagina().getNumPagina() + " " + procesos.get(this.memoriaSecundaria[i].getPagina().getIDProceso()).getNombre());
 //            } else {
 //                System.out.println("nada");
 //            }
@@ -405,7 +493,6 @@ public class Controller {
         
         // Actualizamos los tamaños de las memorias
         DecimalFormat formatea = new DecimalFormat("###,###.##");
-        
         controlPanel.labelTamUsadaPrincipal.setText(formatea.format(cantMarcosOcupados * tamañoPagina));
         controlPanel.labelTamDisponiblePrincipal.setText(formatea.format(tamañoMemPrincipal - (cantMarcosOcupados * tamañoPagina)));
         controlPanel.labelTamUsadaSecundaria.setText(formatea.format(cantEspaciosOcupadosMS * tamañoPagina));
@@ -416,7 +503,15 @@ public class Controller {
         
         // Actualizamos la tabla de procesos
         for (int i = 0; i < controlPanel.tableLista.getRowCount(); i++) {
-            controlPanel.tableLista.setValueAt("<html><font color=\"blue\">" + procesos.get(i).getEstado() + "</font></html>", i, 4);
+            if (procesos.get(i).getEstado().equals("Eliminado")) {
+                controlPanel.tableLista.setValueAt("<html><font color=\"blue\">" + procesos.get(i).getEstado() + "</font></html>", i, 4);
+                controlPanel.tableLista.setValueAt(procesos.get(i).getCantPagMP(), i, 5);
+                controlPanel.tableLista.setValueAt(procesos.get(i).getCantPagMS(), i, 6);
+            } else {
+                controlPanel.tableLista.setValueAt(procesos.get(i).getEstado(), i, 4);
+                controlPanel.tableLista.setValueAt(procesos.get(i).getCantPagMP(), i, 5);
+                controlPanel.tableLista.setValueAt(procesos.get(i).getCantPagMS(), i, 6);
+            }
         }
         
     }
@@ -439,37 +534,14 @@ public class Controller {
             JOptionPane.showMessageDialog(controlP, "Seleccione el proceso que desea eliminar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         // Obtenemos el ID del proceso
         int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
         Proceso proceso = this.procesos.get(ID);
-        proceso.setEstado("Eliminado");
-        // Modificamos variables
-        this.cantMarcosOcupados = this.cantMarcosOcupados - proceso.getCantPagMP();
-        this.cantEspaciosOcupadosMS = this.cantEspaciosOcupadosMS - proceso.getCantPagMS();
-        // Ponemos el tiempo maximo de ejecución
-        proceso.setTiempoEjecucion(proceso.getTiempoMaxEjecucion());
-        // Borramos el proceso de las memorias
-        // MP
-        for (int i = 0; i < this.memoriaPrincipal.length; i++) {
-            // Encontramos el proceso en MP
-            if(this.memoriaPrincipal[i].getPagina() != null) {
-                if(this.memoriaPrincipal[i].getPagina().getIDProceso() == ID ) {
-                    this.memoriaPrincipal[i].setPagina(null);
-                }
-            }
+        if (!proceso.getEstado().equals("Eliminado")) {
+            // Ponemos el tiempo máximo de ejecución
+            proceso.setTiempoEjecucion(proceso.getTiempoMaxEjecucion());
         }
-        // MS
-        for (int i = 0; i < this.memoriaSecundaria.length; i++) {
-            // Encontramos el proceso en MS
-            if(this.memoriaSecundaria[i].getPagina() != null) {
-                if(this.memoriaSecundaria[i].getPagina().getIDProceso() == ID ) {
-                    this.memoriaSecundaria[i].setPagina(null);
-                }
-            }
-        }
-        
-        this.actualizarMemorias();
-        
     }
     
     public static void eliminarProceso(Proceso proceso) {
