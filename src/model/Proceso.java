@@ -33,32 +33,37 @@ public class Proceso {
         //this.verPaginas();
         
         // Creamos el timer para saber los ciclos de ejecución
-        //System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion/0.5);
-        
-        
+        System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion/0.5);
+    }
+    
+    public void startTimer(){
+        Proceso proceso = this;
         
         Timer timer = new Timer(500, new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 // Si se está ejecutando hay que sacarlo de memoria principal
-                if(getEstado().equals("Ejecución")) {
+                if(!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID ) {
                     // Subimos 0.5seg al tiempo de ejecución
-                    setTiempoEjecucion(getTiempoEjecucion() + 0.5);
+                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + 0.5);
                     // Verificamos si se acabo el tiempo
-                    if(getTiempoEjecucion() >= getTiempoMaxEjecucion()) {
+                    if(proceso.getTiempoEjecucion() >= proceso.getTiempoMaxEjecucion()) {
                         // Eliminar Proceso
-                        setEstado("Eliminado");
-                        //System.out.println("Se terminó el tiempo de ejecución de " + getNombre());
+                        Controller.colaProcesos.poll();
+                        proceso.setEstado("Eliminado");
+                        System.out.println("Se terminó el tiempo de ejecución de " + proceso.getNombre());
                         return;
+                    } else {
+                        Controller.colaProcesos.offer(Controller.colaProcesos.poll());
                     }
                     // Si hay algún proceso queriendo ejecutarse
-                    if(Controller.colaMemoriaSecundaria.peek() != null) {
+                    if(Controller.colaProcesos.peek().ID != proceso.ID) {
                         // Pasarlo a memoria secundaria
                         // Pasar proceso que se quiere ejecutar a memoria principal
                         // TODO
                         //System.out.println("Se pasa proceso " + getNombre() + " a MS");
                     } else {
-                        //System.out.println("Se mantiene " + getNombre() + " en MP");
+                        System.out.println("Se ejecuta el " + proceso.getNombre());
                     }
                 }
             }

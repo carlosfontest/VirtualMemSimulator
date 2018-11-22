@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Marco;
+import model.Pagina;
 import model.Proceso;
 import view.ConfigSO;
 import view.ControlPanel;
@@ -28,10 +29,10 @@ import view.ControlPanel;
 public class Controller {
     private JLabel labelInfo;
     private HashMap<Integer, Proceso> procesos;
-    public static Queue<Proceso> colaMemoriaPrincipal;
-    public static Queue<Proceso> colaMemoriaSecundaria;
-    private Marco[] memoriaPrincipal;
+    public static Queue<Pagina> colaMemoriaPrincipal ;
+    public static Queue<Proceso> colaProcesos;
     private Marco[] memoriaSecundaria;
+    private Marco[] memoriaPrincipal;
     private int cantMarcosOcupados;
     public static int tamañoPagina;
     public static int tamañoMemPrincipal;
@@ -41,7 +42,7 @@ public class Controller {
         this.labelInfo = new JLabel();
         this.procesos = new HashMap<>();
         this.colaMemoriaPrincipal = new LinkedList<>();
-        this.colaMemoriaSecundaria = new LinkedList<>();
+        this.colaProcesos = new LinkedList<>();
         this.cantMarcosOcupados = 0;
     }
     
@@ -105,7 +106,7 @@ public class Controller {
             return;
         }
         
-        // Inicialiamos las memorias
+        // Inicializamos las memorias
         this.memoriaPrincipal = new Marco[tamPrincipal/tamPaginas];
         this.memoriaSecundaria = new Marco[tamSecundaria/tamPaginas];
         
@@ -227,7 +228,6 @@ public class Controller {
     
     public void crearProceso(ControlPanel controlP) {
         this.aparecerTablaProcesos(controlP);
-        
         // Obtenemos el nombre y el tamaño de los textFields
         String nombreProceso = controlP.fieldNombreProceso.getText();
         int tamañoProceso = Integer.parseInt(controlP.fieldTamañoProceso.getText());
@@ -237,6 +237,9 @@ public class Controller {
         // Agregamos el proceso al HashMap
         Proceso procesoNuevo = new Proceso(this.procesos.size(), nombreProceso, (double)tiempo, tamañoProceso);
         this.procesos.put(this.procesos.size(), procesoNuevo);
+        // Agregar proceso a la cola
+        Controller.colaProcesos.offer(procesoNuevo);
+        procesoNuevo.startTimer();
         // Agregamos el proceso a la tabla de procesos
         DecimalFormat formatea = new DecimalFormat("###,###.##");
         DefaultTableModel modelo = (DefaultTableModel) controlP.tableLista.getModel();
@@ -311,27 +314,28 @@ public class Controller {
         } else {
             // Sacar de la memoria principal y meter el nuevo proceso
             System.out.println("NO caben al menos la mitad de las páginas del " + procesoNuevo.getNombre());
-        }
-        
-        
-        System.out.println("MEMORIA PRINCIPAL");
-        for (int i = 0; i < this.memoriaPrincipal.length; i++) {
-            if(this.memoriaPrincipal[i].getPagina() != null) {
-                System.out.println(this.memoriaPrincipal[i].getPagina().getNumPagina());
-            } else {
-                System.out.println("nada");
-            }
             
         }
-
-        System.out.println("MEMORIA SECUNDARIA");
-        for (int i = 0; i < this.memoriaSecundaria.length; i++) {
-            if(this.memoriaSecundaria[i].getPagina() != null) {
-                System.out.println(this.memoriaSecundaria[i].getPagina().getNumPagina());
-            } else {
-                System.out.println("nada");
-            }
-        }
+        
+        
+//        System.out.println("MEMORIA PRINCIPAL");
+//        for (int i = 0; i < this.memoriaPrincipal.length; i++) {
+//            if(this.memoriaPrincipal[i].getPagina() != null) {
+//                System.out.println(this.memoriaPrincipal[i].getPagina().getNumPagina());
+//            } else {
+//                System.out.println("nada");
+//            }
+//            
+//        }
+//
+//        System.out.println("MEMORIA SECUNDARIA");
+//        for (int i = 0; i < this.memoriaSecundaria.length; i++) {
+//            if(this.memoriaSecundaria[i].getPagina() != null) {
+//                System.out.println(this.memoriaSecundaria[i].getPagina().getNumPagina());
+//            } else {
+//                System.out.println("nada");
+//            }
+//        }
         
         
     }
