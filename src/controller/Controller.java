@@ -33,6 +33,7 @@ public class Controller {
     private Marco[] memoriaPrincipal;
     private Marco[] memoriaSecundaria;
     private int cantMarcosOcupados;
+    private int cantEspaciosOcupadosMS;
     public static int tamañoPagina;
     public static int tamañoMemPrincipal;
     public static int tamañoMemSecundaria;
@@ -43,6 +44,7 @@ public class Controller {
         this.colaMemoriaPrincipal = new LinkedList<>();
         this.colaMemoriaSecundaria = new LinkedList<>();
         this.cantMarcosOcupados = 0;
+        this.cantEspaciosOcupadosMS = 0;
     }
     
     public void initSO() {
@@ -265,6 +267,10 @@ public class Controller {
                 cantPagsMP = procesoNuevo.getPaginas().length - cantPagsMS;
                 // Aumentamos los marcos ocupados
                 this.cantMarcosOcupados = this.cantMarcosOcupados + cantPagsMP;
+                this.cantEspaciosOcupadosMS = this.cantEspaciosOcupadosMS + cantPagsMS;
+                // Seteamos la cantidad de paginas en cada memoria
+                procesoNuevo.setCantPagMP(cantPagsMP);
+                procesoNuevo.setCantPagMS(cantPagsMS);
                 // Agregamos al array de MP y MS
                 int contPaginasPuestas = 0;
                 // A la MP
@@ -272,6 +278,8 @@ public class Controller {
                     if(this.memoriaPrincipal[i].getPagina() == null && contPaginasPuestas < cantPagsMP) {
                         // Si encontramos el espacio vacío de la MP y aun tengo paginas que meter
                         this.memoriaPrincipal[i].setPagina( procesoNuevo.getPaginas()[contPaginasPuestas] );
+                        this.memoriaPrincipal[i].getPagina().setIDProceso(procesoNuevo.getID());
+                        this.memoriaPrincipal[i].getPagina().setInMemoriaPrincipal(true);
                         contPaginasPuestas++;
                     }
                 }
@@ -282,18 +290,26 @@ public class Controller {
                         // Si encontramos el espacio vacío de la MS y aun tengo paginas que meter
                         System.out.println("----------------------------");
                         this.memoriaSecundaria[i].setPagina( procesoNuevo.getPaginas()[contPaginasPuestas ] );
+                        this.memoriaPrincipal[i].getPagina().setIDProceso(procesoNuevo.getID());
+                        this.memoriaPrincipal[i].getPagina().setInMemoriaPrincipal(false);
                         contPaginasPuestas++;
                         contAux--;
                     }
                 }
+                
+                this.actualizarMemorias(controlP);
                 
             } else {
                 // Caben todas en MP
                 System.out.println("Caben todas en MP las páginas del " + procesoNuevo.getNombre());
                 cantPagsMS = 0;
                 cantPagsMP = procesoNuevo.getPaginas().length;
+                // Seteamos la cantidad de paginas en cada memoria
+                procesoNuevo.setCantPagMP(cantPagsMP);
+                procesoNuevo.setCantPagMS(cantPagsMS);
                 // Aumentamos los marcos ocupados
                 this.cantMarcosOcupados = this.cantMarcosOcupados + cantPagsMP;
+                this.cantEspaciosOcupadosMS = this.cantEspaciosOcupadosMS + cantPagsMS;
                 // Agregamos a la Memoria Principal
                 int contPaginasPuestas = 0;
                 // A la MP
@@ -301,9 +317,12 @@ public class Controller {
                     if(this.memoriaPrincipal[i].getPagina() == null && contPaginasPuestas < cantPagsMP) {
                         // Si encontramos el espacio vacío de la MP y aun tengo paginas que meter
                         this.memoriaPrincipal[i].setPagina( procesoNuevo.getPaginas()[contPaginasPuestas] );
+                        this.memoriaPrincipal[i].getPagina().setIDProceso(procesoNuevo.getID());
+                        this.memoriaPrincipal[i].getPagina().setInMemoriaPrincipal(true);
                         contPaginasPuestas++;
                     }
                 }
+                this.actualizarMemorias(controlP);
             }
             
             
@@ -311,6 +330,13 @@ public class Controller {
         } else {
             // Sacar de la memoria principal y meter el nuevo proceso
             System.out.println("NO caben al menos la mitad de las páginas del " + procesoNuevo.getNombre());
+            // Verificamos si algun proceso tiene más de la mitad de sus páginas
+            for (int i = 0; i < this.memoriaPrincipal.length; i++) {
+                if(this.memoriaPrincipal[i].getPagina() != null) {
+                    
+                }
+            }
+            
         }
         
         
@@ -335,6 +361,48 @@ public class Controller {
         
         
     }
+    
+    public void actualizarMemorias(ControlPanel controlP) {
+        // Actualizamos MP
+        for (int i = 0; i < controlP.tablePrincipal.getRowCount(); i++) {
+            if(this.memoriaPrincipal[i].getPagina() != null) {
+                int ID = this.memoriaPrincipal[i].getPagina().getIDProceso();
+                Proceso proceso = this.procesos.get(ID);
+                controlP.tablePrincipal.setValueAt(ID, i, 2);
+                controlP.tablePrincipal.setValueAt(proceso.getNombre(), i, 3);
+                controlP.tablePrincipal.setValueAt(this.memoriaPrincipal[i].getPagina().getNumPagina(), i, 4);
+                controlP.tablePrincipal.setValueAt(this.memoriaPrincipal[i].getPagina().getTamaño(), i, 5);
+                controlP.tablePrincipal.setValueAt(this.memoriaPrincipal[i].getPagina().getTamañoFragmentacion(), i, 6);
+            }
+        }
+        // Actualizamos MS
+        for (int i = 0; i < controlP.tableSecundaria.getRowCount(); i++) {
+            if(this.memoriaSecundaria[i].getPagina() != null) {
+                int ID = this.memoriaSecundaria[i].getPagina().getIDProceso();
+                Proceso proceso = this.procesos.get(ID);
+                controlP.tableSecundaria.setValueAt(ID, i, 1);
+                controlP.tableSecundaria.setValueAt(proceso.getNombre(), i, 2);
+                controlP.tableSecundaria.setValueAt(this.memoriaSecundaria[i].getPagina().getNumPagina(), i, 3);
+            }
+        }
+        
+        // Actualizamos los tamaños de las memorias
+        DecimalFormat formatea = new DecimalFormat("###,###.##");
+        
+        controlP.labelTamUsadaPrincipal.setText(formatea.format(this.cantMarcosOcupados * tamañoPagina));
+        controlP.labelTamDisponiblePrincipal.setText(formatea.format(tamañoMemPrincipal - (this.cantMarcosOcupados * tamañoPagina)));
+        controlP.labelTamUsadaSecundaria.setText(formatea.format(this.cantEspaciosOcupadosMS * tamañoPagina));
+        controlP.labelTamDisponibleSecundaria.setText(formatea.format(tamañoMemSecundaria - (this.cantEspaciosOcupadosMS * tamañoPagina)));
+
+        controlP.progressPrincipal.setValue( ((this.cantMarcosOcupados * tamañoPagina) * 100) / tamañoMemPrincipal );
+        controlP.progressSecundaria.setValue( ((this.cantEspaciosOcupadosMS * tamañoPagina) * 100) / tamañoMemSecundaria );
+        
+    }
+    
+    
+    
+    
+    
     
     private int getPaginasEnPrincipal(Proceso proceso) {
         

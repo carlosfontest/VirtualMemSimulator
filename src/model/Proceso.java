@@ -13,6 +13,8 @@ public class Proceso {
     private String nombre;
     private String estado;
     private int cantPaginas;
+    private int cantPagMP;
+    private int cantPagMS;
     private Double tiempoMaxEjecucion;
     private Double tiempoEjecucion;
     private int tamaño;
@@ -27,6 +29,8 @@ public class Proceso {
         this.estado = "Ejecución";
         this.cantPaginas = (int)Math.ceil((float)this.tamaño/Controller.tamañoPagina);
         this.paginas = new Pagina[cantPaginas];
+        this.cantPagMP = 0;
+        this.cantPagMS = 0;
         
         // Creamos las páginas del proceso
         this.crearPaginas();
@@ -78,11 +82,11 @@ public class Proceso {
         }
         // Creamos las páginas completas
         for (int i = 0; i < paginasCompletas; i++) {
-            this.paginas[i] = new Pagina(i + 1, Controller.tamañoPagina);
+            this.paginas[i] = new Pagina(i + 1, Controller.tamañoPagina, this.ID);
         }
         // Creamos la página incompleta en la última posición en caso de haber páginsa incompletas
         if(paginasIncompletas == 1) {
-            this.paginas[this.cantPaginas - 1] = new Pagina(this.cantPaginas, tamañoPagIncompleta);
+            this.paginas[this.cantPaginas - 1] = new Pagina(this.cantPaginas, tamañoPagIncompleta, this.ID);
         }
     }
     
@@ -158,6 +162,24 @@ public class Proceso {
     public void setPaginas(Pagina[] paginas) {
         this.paginas = paginas;
     }
+
+    public void setCantPagMP(int cantPagMP) {
+        this.cantPagMP = cantPagMP;
+    }
+
+    public void setCantPagMS(int cantPagMS) {
+        this.cantPagMS = cantPagMS;
+    }
+
+    public int getCantPagMP() {
+        return cantPagMP;
+    }
+
+    public int getCantPagMS() {
+        return cantPagMS;
+    }
+    
+    
     
     
     
