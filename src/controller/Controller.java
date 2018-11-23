@@ -41,6 +41,7 @@ public class Controller {
     public static int tamañoPagina;
     public static int tamañoMemPrincipal;
     public static int tamañoMemSecundaria;
+    public static boolean changing;
     private static ControlPanel controlPanel;
 
     public Controller() {
@@ -53,6 +54,7 @@ public class Controller {
     }
 
     public void initSO() {
+        changing = false;
         ConfigSO configso = new ConfigSO(this);
         configso.setVisible(true);
     }
@@ -243,7 +245,7 @@ public class Controller {
         Proceso procesoNuevo = new Proceso(this.procesos.size(), nombreProceso, (double) tiempo, tamañoProceso);
         this.procesos.put(this.procesos.size(), procesoNuevo);
         // Agregar proceso a la cola
-        Controller.colaProcesos.offer(procesoNuevo);
+        this.putFirst(procesoNuevo);
         procesoNuevo.startTimer();
         // Aumentamos el número de procesos creados
         controlP.labelProcesosCreados.setText(String.valueOf(Integer.parseInt(controlP.labelProcesosCreados.getText()) + 1));
@@ -476,6 +478,7 @@ public class Controller {
         int numPagg = 0;
         // Si hay espacio en MP
         if (cantMarcosOcupados < this.memoriaPrincipal.length) {
+            System.out.println("cantMarcosOcupados : " + cantMarcosOcupados);
             int espaciosVacios = this.memoriaPrincipal.length - cantMarcosOcupados;
             int numPag = 0;
             for (numPag = 0; numPag < espaciosVacios; numPag++) {
@@ -490,6 +493,7 @@ public class Controller {
                     }
                 }
             }
+            System.out.println("numPag original es : " + numPag);
             numPagg = numPag;
         }
 
@@ -546,5 +550,19 @@ public class Controller {
             }
         }
         actualizarMemorias();
+    }
+    
+    public void putFirst(Proceso nuevo){
+        changing = true;
+        Queue<Proceso> colaAux = new LinkedList<>();
+        
+        colaAux.offer(nuevo);
+                
+        while(!colaProcesos.isEmpty()){
+            colaAux.offer(colaProcesos.poll());
+        }
+        
+        colaProcesos = colaAux;
+        changing = false;
     }
 }
