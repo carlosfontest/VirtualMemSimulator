@@ -566,6 +566,14 @@ public class Controller {
         colaAux.offer(nuevo);
                 
         while(!colaProcesos.isEmpty()){
+            Proceso proceso = colaProcesos.peek();
+            if(proceso.getEstado().equals("Ejecución")){
+                if(proceso.getCantPagMP() < proceso.getMitad()){
+                    proceso.setEstado("Suspendido/Listo");
+                }else{
+                    proceso.setEstado("Listo");
+                }
+            }
             colaAux.offer(colaProcesos.poll());
         }
         

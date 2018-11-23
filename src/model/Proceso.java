@@ -11,7 +11,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 2;
+    private final double clockTime = 0.5;
     private int ID;
     private String nombre;
     private String estado;
@@ -29,7 +29,11 @@ public class Proceso {
         this.tiempoMaxEjecucion = tiempoMaxEjecucion;
         this.tiempoEjecucion = 0.0;
         this.tamaño = tamaño;
-        this.estado = "Listo";
+        if (Controller.colaProcesos.isEmpty()) {
+            this.estado = "Ejecución";
+        } else {
+            this.estado = "Listo";
+        }
         this.cantPaginas = (int) Math.ceil((float) this.tamaño / Controller.tamañoPagina);
         this.paginas = new Pagina[cantPaginas];
         this.cantPagMP = 0;
@@ -50,28 +54,17 @@ public class Proceso {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 // Si me toca ejecutarme
-                if (!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID) {
-                    // Se ejecuta
-                    if (proceso.getEstado().equals("Suspendido/Listo")) {
-                        // Hay que reemplazar del primero de MP
-                        proceso.reemplazar();
-                    } else if (!proceso.getEstado().equals("Listo") || !proceso.getEstado().equals("Ejecución")) {
-                        System.out.println("ERROR: El proceso " + proceso.getID() + " entra en timer-proceso en el estado " + proceso.getEstado());
-                    }
-
-                    // Si pasa acá, estaba listo o suspendido/listo, se ejecuta el proceso
-                    proceso.setEstado("Ejecución");
-                    Controller.actualizarMemorias();
-
+                if (proceso.estado.equals("Ejecución") && !Controller.changing) {
                     // Se aumenta un ciclo del tiempo de Ejecución
-                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + clockTime);
+                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + 0.5);
                     System.out.println("Se ejecuta el proceso " + proceso.getID());
 
                     if (proceso.getTiempoEjecucion() >= proceso.getTiempoMaxEjecucion()) {
                         // Eliminar Proceso
                         Controller.colaProcesos.poll();
-                        proceso.setEstado("Eliminado");
                         Controller.eliminarProceso(proceso);
+                        proceso.setEstado("Eliminado");
+                        Controller.actualizarMemorias();
                         proceso.setCantPagMP(0);
                         proceso.setCantPagMS(0);
                         System.out.println("Se terminó el tiempo de ejecución de " + proceso.getNombre());
@@ -79,9 +72,18 @@ public class Proceso {
                     } else {
                         // Se pone de último el primero de la cola, es decir, este proceso se encola
                         Controller.colaProcesos.offer(Controller.colaProcesos.poll());
+                        if(Controller.colaProcesos.size() != 1){                        
+                            proceso.setEstado("Listo");
+                        }
                     }
+                } else if (!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID) {
+                    if (proceso.getEstado().equals("Suspendido/Listo")) {
+                        // Hay que reemplazar del primero de MP
+                        proceso.reemplazar();
+                    }
+                    proceso.setEstado("Ejecución");
                 }
-
+                Controller.actualizarMemorias();
             }
         });
         timer.start();
