@@ -159,11 +159,11 @@ public class Controller {
         // Tamaño de cada columna
         controlP.tableLista.getTableHeader().setReorderingAllowed(false);
         controlP.tableLista.getTableHeader().setResizingAllowed(false);
-        controlP.tableLista.getColumnModel().getColumn(0).setPreferredWidth(100);
-        controlP.tableLista.getColumnModel().getColumn(1).setPreferredWidth(150);
+        controlP.tableLista.getColumnModel().getColumn(0).setPreferredWidth(50);
+        controlP.tableLista.getColumnModel().getColumn(1).setPreferredWidth(130);
         controlP.tableLista.getColumnModel().getColumn(2).setPreferredWidth(115);
-        controlP.tableLista.getColumnModel().getColumn(3).setPreferredWidth(110);
-        controlP.tableLista.getColumnModel().getColumn(4).setPreferredWidth(130);
+        controlP.tableLista.getColumnModel().getColumn(3).setPreferredWidth(100);
+        controlP.tableLista.getColumnModel().getColumn(4).setPreferredWidth(180);
         controlP.tableLista.getColumnModel().getColumn(5).setPreferredWidth(60);
         controlP.tableLista.getColumnModel().getColumn(6).setPreferredWidth(60);
         // Altura de cada renglón
@@ -207,7 +207,7 @@ public class Controller {
         controlP.jPanel1.setVisible(false);
         this.labelInfo.setFont(new Font("Calibri Light", 1, 36));
         this.labelInfo.setText("No hay procesos creados todavía..");
-        this.labelInfo.setBounds(550, 80, 600, 80);
+        this.labelInfo.setBounds(550, 120, 600, 80);
         this.labelInfo.setVisible(true);
         controlP.panelContenido.add(this.labelInfo);
 
@@ -240,6 +240,10 @@ public class Controller {
     }
 
     public void crearProceso(ControlPanel controlP) {
+        if(controlP.fieldNombreProceso.getText().equals("") || controlP.fieldTamañoProceso.getText().equals("")) {
+            JOptionPane.showMessageDialog(controlP, "Ingrese datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.aparecerTablaProcesos(controlP);
         // Obtenemos el nombre y el tamaño de los textFields
         String nombreProceso = controlP.fieldNombreProceso.getText();
