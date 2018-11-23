@@ -78,8 +78,6 @@ public class Pagina {
         this.IDProceso = IDProceso;
     }
     
-    
-    
     public void crearSetInMemoriaP(boolean inMemoriaP){
         this.inMemoriaPrincipal = inMemoriaP;
     }

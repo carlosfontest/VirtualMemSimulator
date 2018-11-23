@@ -89,10 +89,8 @@ public class ControlPanel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableLista = new javax.swing.JTable();
         botonAcceder10 = new javax.swing.JButton();
-        botonAcceder7 = new javax.swing.JButton();
         botonAcceder9 = new javax.swing.JButton();
         botonAcceder5 = new javax.swing.JButton();
-        botonAcceder8 = new javax.swing.JButton();
         jToggleButton2 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,7 +98,7 @@ public class ControlPanel extends javax.swing.JFrame {
         setUndecorated(true);
 
         panelHerramientas.setBackground(new java.awt.Color(51, 51, 51));
-        panelHerramientas.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        panelHerramientas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelHerramientas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelHerramientasMouseDragged(evt);
@@ -117,7 +115,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelHerramientas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/EquisBlanca.png"))); // NOI18N
-        botonCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botonCerrarMouseClicked(evt);
@@ -126,7 +124,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelHerramientas.add(botonCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, -1, 80));
 
         botonMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/MinimizarBlanca.png"))); // NOI18N
-        botonMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botonMinimizarMouseClicked(evt);
@@ -135,7 +133,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelHerramientas.add(botonMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 0, -1, 80));
 
         botonInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/info.png"))); // NOI18N
-        botonInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonInfo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botonInfoMouseClicked(evt);
@@ -303,7 +301,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablePrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablePrincipal.setFocusable(false);
         tablePrincipal.setGridColor(new java.awt.Color(120, 120, 120));
         tablePrincipal.setSelectionBackground(new java.awt.Color(203, 155, 107));
@@ -435,7 +433,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableSecundaria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tableSecundaria.setFocusable(false);
         tableSecundaria.setGridColor(new java.awt.Color(120, 120, 120));
         tableSecundaria.setSelectionBackground(new java.awt.Color(203, 155, 107));
@@ -455,7 +453,7 @@ public class ControlPanel extends javax.swing.JFrame {
         botonAcceder6.setForeground(new java.awt.Color(255, 255, 255));
         botonAcceder6.setText("Crear proceso");
         botonAcceder6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonAcceder6.setFocusPainted(false);
         botonAcceder6.setFocusable(false);
         botonAcceder6.addActionListener(new java.awt.event.ActionListener() {
@@ -718,7 +716,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableLista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tableLista.setFocusable(false);
         tableLista.setGridColor(new java.awt.Color(120, 120, 120));
         tableLista.setSelectionBackground(new java.awt.Color(203, 155, 107));
@@ -733,9 +731,9 @@ public class ControlPanel extends javax.swing.JFrame {
         botonAcceder10.setBackground(new java.awt.Color(51, 51, 51));
         botonAcceder10.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         botonAcceder10.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder10.setText("Bloq.");
+        botonAcceder10.setText("Listo / Bloquear");
         botonAcceder10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonAcceder10.setFocusPainted(false);
         botonAcceder10.setFocusable(false);
         botonAcceder10.addActionListener(new java.awt.event.ActionListener() {
@@ -744,26 +742,12 @@ public class ControlPanel extends javax.swing.JFrame {
             }
         });
 
-        botonAcceder7.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        botonAcceder7.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder7.setText("Listo");
-        botonAcceder7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder7.setFocusPainted(false);
-        botonAcceder7.setFocusable(false);
-        botonAcceder7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder7ActionPerformed(evt);
-            }
-        });
-
         botonAcceder9.setBackground(new java.awt.Color(51, 51, 51));
         botonAcceder9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         botonAcceder9.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder9.setText("Sus/Listo");
+        botonAcceder9.setText("Suspender");
         botonAcceder9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonAcceder9.setFocusPainted(false);
         botonAcceder9.setFocusable(false);
         botonAcceder9.addActionListener(new java.awt.event.ActionListener() {
@@ -777,26 +761,12 @@ public class ControlPanel extends javax.swing.JFrame {
         botonAcceder5.setForeground(new java.awt.Color(255, 255, 255));
         botonAcceder5.setText("Eliminar");
         botonAcceder5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonAcceder5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         botonAcceder5.setFocusPainted(false);
         botonAcceder5.setFocusable(false);
         botonAcceder5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAcceder5ActionPerformed(evt);
-            }
-        });
-
-        botonAcceder8.setBackground(new java.awt.Color(51, 51, 51));
-        botonAcceder8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        botonAcceder8.setForeground(new java.awt.Color(255, 255, 255));
-        botonAcceder8.setText("Sus/Bloq");
-        botonAcceder8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonAcceder8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonAcceder8.setFocusPainted(false);
-        botonAcceder8.setFocusable(false);
-        botonAcceder8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAcceder8ActionPerformed(evt);
             }
         });
 
@@ -809,16 +779,10 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botonAcceder7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(botonAcceder8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botonAcceder5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(botonAcceder5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -826,13 +790,9 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonAcceder7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botonAcceder10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonAcceder8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botonAcceder9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(botonAcceder5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -840,7 +800,7 @@ public class ControlPanel extends javax.swing.JFrame {
         );
 
         panelContenido.add(jPanel1);
-        jPanel1.setBounds(500, 50, 676, 139);
+        jPanel1.setBounds(500, 50, 682, 139);
 
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -942,16 +902,12 @@ public class ControlPanel extends javax.swing.JFrame {
         this.controlador.crearProceso(this);
     }//GEN-LAST:event_botonAcceder6ActionPerformed
 
-    private void botonAcceder7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder7ActionPerformed
-    }//GEN-LAST:event_botonAcceder7ActionPerformed
-
-    private void botonAcceder8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder8ActionPerformed
-    }//GEN-LAST:event_botonAcceder8ActionPerformed
-
     private void botonAcceder9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder9ActionPerformed
+        this.controlador.suspenderProceso(this);
     }//GEN-LAST:event_botonAcceder9ActionPerformed
 
     private void botonAcceder10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder10ActionPerformed
+        this.controlador.bloquearProceso(this);
     }//GEN-LAST:event_botonAcceder10ActionPerformed
 
     private void tablePrincipalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePrincipalMousePressed
@@ -977,8 +933,6 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JButton botonAcceder10;
     private javax.swing.JButton botonAcceder5;
     private javax.swing.JButton botonAcceder6;
-    private javax.swing.JButton botonAcceder7;
-    private javax.swing.JButton botonAcceder8;
     private javax.swing.JButton botonAcceder9;
     private javax.swing.JToggleButton botonAux;
     private javax.swing.JLabel botonCerrar;

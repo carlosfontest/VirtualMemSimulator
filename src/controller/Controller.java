@@ -92,6 +92,12 @@ public class Controller {
     }
 
     public void instalarSO(ConfigSO frame) {
+        System.out.println("                                        _                       _                \n" +
+" ___  _____  _____     __ _ _ __   __ _| |   ___ ___  _ __     (_) ___  ___  ___ \n" +
+"/ __|/ _ \\ \\/ / _ \\   / _` | '_ \\ / _` | |  / __/ _ \\| '_ \\    | |/ _ \\/ __|/ _ \\\n" +
+"\\__ \\  __/>  < (_) | | (_| | | | | (_| | | | (_| (_) | | | |   | | (_) \\__ \\  __/\n" +
+"|___/\\___/_/\\_\\___/   \\__,_|_| |_|\\__,_|_|  \\___\\___/|_| |_|  _/ |\\___/|___/\\___|\n" +
+"                                                             |__/                ");
         int tamPrincipal = 0, tamSecundaria = 0, tamPaginas = 0;
         try {
             tamPrincipal = Integer.parseInt(frame.fieldTamPrincipal.getText());
@@ -259,7 +265,7 @@ public class Controller {
         if (procesoNuevo.getMitad() <= this.memoriaPrincipal.length - this.cantMarcosOcupados) {
             this.crearSiMitad(procesoNuevo);
         } else {
-        // Si hay que reemplazar en MP, se saca de la memoria principal y se mete el nuevo proceso
+            // Si hay que reemplazar en MP, se saca de la memoria principal y se mete el nuevo proceso
             this.crearConReemplazo(procesoNuevo);
         }
 
@@ -269,7 +275,7 @@ public class Controller {
         modelo.addRow(new Object[]{
             procesoNuevo.getID(), procesoNuevo.getNombre(), formatea.format(procesoNuevo.getTamaño()), procesoNuevo.getCantPaginas(), procesoNuevo.getEstado(), procesoNuevo.getCantPagMP(), procesoNuevo.getCantPagMS()
         });
-        
+
         System.out.println("ESPACIOS OCUPADOS " + cantEspaciosOcupadosMS);
     }
 
@@ -353,6 +359,12 @@ public class Controller {
         // Obtenemos el ID del proceso
         int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
         Proceso proceso = this.procesos.get(ID);
+
+        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede eliminar un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (!proceso.getEstado().equals("Eliminado")) {
             // Ponemos el tiempo máximo de ejecución
             proceso.setTiempoEjecucion(proceso.getTiempoMaxEjecucion());
@@ -382,8 +394,8 @@ public class Controller {
                 }
             }
         }
-        
-        if(colaMemoriaPrincipal.contains(proceso)){
+
+        if (colaMemoriaPrincipal.contains(proceso)) {
             colaMemoriaPrincipal.remove(proceso);
         }
 
@@ -471,6 +483,11 @@ public class Controller {
         int marcosDispon = this.memoriaPrincipal.length - this.cantMarcosOcupados;
         int cantPagsNecesitoEnMP = procesoNuevo.getMitad();
         int cantPagsNecesitoEnMS = procesoNuevo.getPaginas().length - cantPagsNecesitoEnMP;
+        
+        // Como los valores de arriba siempre se van a cumplir, actualizamos los valores
+        procesoNuevo.setCantPagMP(cantPagsNecesitoEnMP);
+        procesoNuevo.setCantPagMS(cantPagsNecesitoEnMS);
+        actualizarMemorias();
         // Verificamos si hay espacio en memoria virtual para meter el proceso
         if (procesoNuevo.getPaginas().length > (marcosDispon + (memoriaSecundaria.length - cantEspaciosOcupadosMS))) {
             JOptionPane.showMessageDialog(null, "No hay espacio para crear ese proceso.");
@@ -492,7 +509,6 @@ public class Controller {
                     if (memoriaPrincipal[j].getPagina() == null) {
                         memoriaPrincipal[j].setPagina(procesoNuevo.getPaginas()[numPag]);
                         procesoNuevo.getPaginas()[numPag].crearSetInMemoriaP(true);
-                        procesoNuevo.setCantPagMP(procesoNuevo.getCantPagMP() + 1);
                         cantPagsNecesitoEnMP--;
                         cantMarcosOcupados++;
                         break;
@@ -552,32 +568,105 @@ public class Controller {
                 numPagg++;
                 cantEspaciosOcupadosMS++;
             }
-            if(cantPagsNecesitoEnMS == 0){
+            if (cantPagsNecesitoEnMS == 0) {
                 break;
             }
         }
         actualizarMemorias();
     }
-    
-    public void putFirst(Proceso nuevo){
+
+    public void putFirst(Proceso nuevo) {
         changing = true;
         Queue<Proceso> colaAux = new LinkedList<>();
-        
+
         colaAux.offer(nuevo);
-                
-        while(!colaProcesos.isEmpty()){
+
+        while (!colaProcesos.isEmpty()) {
             Proceso proceso = colaProcesos.peek();
-            if(proceso.getEstado().equals("Ejecución")){
-                if(proceso.getCantPagMP() < proceso.getMitad()){
+            if (proceso.getEstado().equals("Ejecución")) {
+                if (proceso.isSuspendido()) {
                     proceso.setEstado("Suspendido/Listo");
-                }else{
+                } else {
                     proceso.setEstado("Listo");
                 }
             }
             colaAux.offer(colaProcesos.poll());
         }
-        
+
         colaProcesos = colaAux;
         changing = false;
+    }
+
+    public void bloquearProceso(ControlPanel controlP) {
+        // Verificamos si se seleccionó algun proceso
+        if (controlP.tableLista.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(controlP, "Seleccione el proceso que desea bloquear/desbloquear", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Obtenemos el ID del proceso
+        int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
+        Proceso proceso = this.procesos.get(ID);
+
+        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede bloquear un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (proceso.getEstado().endsWith("Listo")) {
+            colaProcesos.remove(proceso);
+        } else if (proceso.getEstado().endsWith("Bloqueado")) {
+            putFirst(proceso);
+        }
+
+        if (proceso.getEstado().equals("Bloqueado")) {
+            proceso.setEstado("Listo");
+        } else if (proceso.getEstado().equals("Suspendido/Bloqueado")) {
+            proceso.setEstado("Suspendido/Listo");
+        } else if (proceso.getEstado().equals("Suspendido/Listo")) {
+            proceso.setEstado("Suspendido/Bloqueado");
+        } else if (proceso.getEstado().equals("Listo")) {
+            proceso.setEstado("Bloqueado");
+        }
+
+        actualizarMemorias();
+    }
+
+    public void suspenderProceso(ControlPanel controlP) {
+        // Verificamos si se seleccionó algun proceso
+        if (controlP.tableLista.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(controlP, "Seleccione el proceso que desea suspender/recuperar ", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Obtenemos el ID del proceso
+        int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
+        Proceso proceso = this.procesos.get(ID);
+
+        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede suspender un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Bloqueado")) {
+            System.out.println("Listo o bloqueado");
+            if (proceso.getEstado().equals("Listo")) {
+                proceso.setEstado("Suspendido/Listo");
+            } else {
+                proceso.setEstado("Suspendido/Bloqueado");
+                System.out.println("Me bloquié XD");
+            }
+            // Se suspenden las páginas en MP
+            // REEMPLAZAR
+        } else if (proceso.getEstado().equals("Suspendido/Bloqueado")) {
+            proceso.setEstado("Bloqueado");
+            // Meter páginas en MP
+        } else if (proceso.getEstado().equals("Suspendido/Listo")) {
+            // Lo saco de la cola y lo pongo de primero
+            colaProcesos.remove(proceso);
+            putFirst(proceso);
+        }
+        
+        actualizarMemorias();
     }
 }

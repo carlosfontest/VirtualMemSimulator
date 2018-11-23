@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 0.5;
+    private final double clockTime = 1;
     private int ID;
     private String nombre;
     private String estado;
@@ -143,7 +143,7 @@ public class Proceso {
             for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
                 // Si se encuentra una página del proceso en MS
                 if(Controller.memoriaSecundaria[j].getPagina() != null) {
-                    if (Controller.procesos.get(Controller.memoriaSecundaria[j].getPagina().getIDProceso()).getID() == Controller.procesos.get(this.getID()).getID()) {
+                    if (Controller.memoriaSecundaria[j].getPagina().getIDProceso() == this.getID()) {
                         Controller.memoriaSecundaria[j].setPagina(null);
                         Controller.actualizarMemorias();
                     }
@@ -159,6 +159,7 @@ public class Proceso {
                     if (Controller.memoriaPrincipal[i].getPagina() == null) {
                         for (int j = 0; j < this.paginas.length; j++) {
                             if (!this.paginas[j].isInMemoriaPrincipal()) {
+                                this.eliminarPagina(this.paginas[j]);
                                 Controller.memoriaPrincipal[i].setPagina(this.paginas[j]);
                                 this.paginas[j].setInMemoriaPrincipal(true);
                                 numPags.add(j);
@@ -190,6 +191,9 @@ public class Proceso {
             boolean ready = false;
             // Recorro todos los procesos que están en la cola de MP
             for (Proceso pro : Controller.colaMemoriaPrincipal) {
+                if(pro.equals(this)){
+                    continue;
+                }
                 // Verifico si ya se pusieron todas las páginas en MP
                 if (ready) {
                     break;
@@ -198,11 +202,6 @@ public class Proceso {
                 for (int i = 0; i < pro.getPaginas().length; i++) {
                     // Si la página está en MP la saco y meto la del proceso nuevo
                     if (pro.getPaginas()[i].isInMemoriaPrincipal()) {
-                        if (pagsMetereEnMP <= 0) {
-                            ready = true;
-                            break;
-                        }
-                        pagsMetereEnMP--;
                         // Meto la página en MS y la saco de MP
                         for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
                             if (Controller.memoriaSecundaria[j].getPagina() == null) {
@@ -218,6 +217,7 @@ public class Proceso {
                             if (Controller.memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && Controller.memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
                                 for (int k = 0; k < this.getPaginas().length; k++) {
                                     if (!this.getPaginas()[k].isInMemoriaPrincipal()) {
+                                        this.eliminarPagina(this.getPaginas()[k]);
                                         Controller.memoriaPrincipal[j].setPagina(this.paginas[k]);
                                         this.paginas[k].setInMemoriaPrincipal(true);
                                         pagsMetereEnMP--;
@@ -226,6 +226,11 @@ public class Proceso {
                                     }
                                 }
                             }
+                        }
+                        pagsMetereEnMP--;
+                        if (pagsMetereEnMP <= 0) {
+                            ready = true;
+                            break;
                         }
                     }
                 }
@@ -388,5 +393,16 @@ public class Proceso {
         }
         Controller.actualizarMemorias();
     }
-
+    
+    public boolean isSuspendido(){
+        return this.getCantPagMP() < this.getMitad();
+    }
+    
+    public void eliminarPagina(Pagina pagina){
+        for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
+            if(pagina.equals(Controller.memoriaSecundaria[i])){
+                Controller.memoriaSecundaria[i].setPagina(null);
+            }
+        }
+    }
 }
