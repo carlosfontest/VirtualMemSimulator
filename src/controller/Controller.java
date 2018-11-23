@@ -417,7 +417,7 @@ public class Controller {
             for (int i = 0; i < memoriaSecundaria.length; i++) {
                 if (memoriaSecundaria[i].getPagina() == null && cantPagsNecesitoEnMS > 0) {
                     memoriaSecundaria[i].setPagina(procesoNuevo.getPaginas()[numPagg]);
-                    procesoNuevo.getPaginas()[numPagg - 1].setInMemoriaPrincipal(false);
+                    procesoNuevo.getPaginas()[numPagg].setInMemoriaPrincipal(false);
                     cantPagsNecesitoEnMS--;
                     numPagg++;
                     cantEspaciosOcupadosMS++;
