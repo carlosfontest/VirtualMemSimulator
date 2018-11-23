@@ -11,7 +11,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 500;
+    private final double clockTime = 2;
     private int ID;
     private String nombre;
     private String estado;
@@ -29,7 +29,7 @@ public class Proceso {
         this.tiempoMaxEjecucion = tiempoMaxEjecucion;
         this.tiempoEjecucion = 0.0;
         this.tamaño = tamaño;
-        this.estado = "Ejecución";
+        this.estado = "Listo";
         this.cantPaginas = (int) Math.ceil((float) this.tamaño / Controller.tamañoPagina);
         this.paginas = new Pagina[cantPaginas];
         this.cantPagMP = 0;
@@ -55,15 +55,31 @@ public class Proceso {
                     if (proceso.getEstado().equals("Suspendido/Listo")) {
                         // Hay que reemplazar del primero de MP
                         proceso.reemplazar();
-                    } else {
-                        System.out.println("Error, el proceso " + proceso.getID() + " entra sin estar listo/suspendido timer-proceso");
+                    } else if (!proceso.getEstado().equals("Listo") || !proceso.getEstado().equals("Ejecución")) {
+                        System.out.println("ERROR: El proceso " + proceso.getID() + " entra en timer-proceso en el estado " + proceso.getEstado());
                     }
+
+                    // Si pasa acá, estaba listo o suspendido/listo, se ejecuta el proceso
                     proceso.setEstado("Ejecución");
                     Controller.actualizarMemorias();
-                }
 
-                if (proceso.getEstado().equals("Ejecución")) {
+                    // Se aumenta un ciclo del tiempo de Ejecución
+                    proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + clockTime);
+                    System.out.println("Se ejecuta el proceso " + proceso.getID());
 
+                    if (proceso.getTiempoEjecucion() >= proceso.getTiempoMaxEjecucion()) {
+                        // Eliminar Proceso
+                        Controller.colaProcesos.poll();
+                        proceso.setEstado("Eliminado");
+                        Controller.eliminarProceso(proceso);
+                        proceso.setCantPagMP(0);
+                        proceso.setCantPagMS(0);
+                        System.out.println("Se terminó el tiempo de ejecución de " + proceso.getNombre());
+                        return;
+                    } else {
+                        // Se pone de último el primero de la cola, es decir, este proceso se encola
+                        Controller.colaProcesos.offer(Controller.colaProcesos.poll());
+                    }
                 }
 
             }

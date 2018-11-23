@@ -382,6 +382,10 @@ public class Controller {
                 }
             }
         }
+        
+        if(colaMemoriaPrincipal.contains(proceso)){
+            colaMemoriaPrincipal.remove(proceso);
+        }
 
         actualizarMemorias();
     }
