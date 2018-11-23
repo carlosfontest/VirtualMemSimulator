@@ -31,7 +31,7 @@ import view.ControlPanel;
 public class Controller {
 
     private JLabel labelInfo;
-    private static HashMap<Integer, Proceso> procesos;
+    public static HashMap<Integer, Proceso> procesos;
     public static Queue<Proceso> colaMemoriaPrincipal;
     public static Queue<Proceso> colaProcesos;
     public static Marco[] memoriaSecundaria;

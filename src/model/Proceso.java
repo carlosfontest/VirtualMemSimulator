@@ -3,6 +3,7 @@ package model;
 import controller.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
@@ -72,7 +73,7 @@ public class Proceso {
                     } else {
                         // Se pone de último el primero de la cola, es decir, este proceso se encola
                         Controller.colaProcesos.offer(Controller.colaProcesos.poll());
-                        if(Controller.colaProcesos.size() != 1){                        
+                        if (Controller.colaProcesos.size() != 1) {
                             proceso.setEstado("Listo");
                         }
                     }
@@ -119,6 +120,7 @@ public class Proceso {
         }
         // Si hay espacio para meter las páginas sin tener que reemplazar
         if (marcosDispon >= pagsMetereEnMP) {
+            // Metemos las páginas en MP
             for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
                 if (Controller.memoriaPrincipal[i].getPagina() == null) {
                     for (int j = 0; j < this.paginas.length; j++) {
@@ -137,16 +139,29 @@ public class Proceso {
                     break;
                 }
             }
+            // Las sacamos de la MS
+            for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
+                // Si se encuentra una página del proceso en MS
+                if(Controller.memoriaSecundaria[j].getPagina() != null) {
+                    if (Controller.procesos.get(Controller.memoriaSecundaria[j].getPagina().getIDProceso()).getID() == Controller.procesos.get(this.getID()).getID()) {
+                        Controller.memoriaSecundaria[j].setPagina(null);
+                        Controller.actualizarMemorias();
+                    }
+                }
+            }
         } else {
             // Si hay que reemplazar
             // Verificar si hay algun marco disponible, pero sin ser todos los que se necesitan
             if (marcosDispon > 0) {
+                // Buscamos el marco disponible y metemos la página en el marco de MP
+                ArrayList<Integer> numPags = new ArrayList<>();
                 for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
                     if (Controller.memoriaPrincipal[i].getPagina() == null) {
                         for (int j = 0; j < this.paginas.length; j++) {
                             if (!this.paginas[j].isInMemoriaPrincipal()) {
                                 Controller.memoriaPrincipal[i].setPagina(this.paginas[j]);
                                 this.paginas[j].setInMemoriaPrincipal(true);
+                                numPags.add(j);
                                 pagsMetereEnMP--;
                                 marcosDispon--;
                                 // Modificamos variables
@@ -158,6 +173,15 @@ public class Proceso {
                     }
                     if (marcosDispon <= 0) {
                         break;
+                    }
+                }
+                // Sacamos la página de MS
+                for (Integer numPag : numPags) {
+                    for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
+                        if(numPag == Controller.memoriaSecundaria[i].getPagina().getNumPagina() && this.ID == Controller.memoriaSecundaria[i].getPagina().getIDProceso()) {
+                            Controller.memoriaSecundaria[i].setPagina(null);
+                            Controller.actualizarMemorias();
+                        }
                     }
                 }
             }
