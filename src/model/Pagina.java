@@ -69,6 +69,15 @@ public class Pagina {
     }
 
     public void setInMemoriaPrincipal(boolean inMemoriaPrincipal) {
+        if(inMemoriaPrincipal){
+            Controller.cantMarcosOcupados++;
+            Controller.cantEspaciosOcupadosMS--;
+        } else {
+            Controller.cantMarcosOcupados--;
+            Controller.cantEspaciosOcupadosMS++;
+        }
+        Controller.actualizarMemorias();
+        Controller.modificarProceso(this.IDProceso, inMemoriaPrincipal);
         this.inMemoriaPrincipal = inMemoriaPrincipal;
     }
 
@@ -78,10 +87,7 @@ public class Pagina {
     
     
     
-    
-    
-    
-
-    
-    
+    public void crearSetInMemoriaP(boolean inMemoriaP){
+        this.inMemoriaPrincipal = inMemoriaP;
+    }
 }
