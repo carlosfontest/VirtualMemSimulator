@@ -94,7 +94,6 @@ public class ControlPanel extends javax.swing.JFrame {
         botonAcceder5 = new javax.swing.JButton();
         botonAcceder8 = new javax.swing.JButton();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 600));
@@ -851,15 +850,6 @@ public class ControlPanel extends javax.swing.JFrame {
         panelContenido.add(jToggleButton2);
         jToggleButton2.setBounds(10, 0, 20, 0);
 
-        jButton1.setText("XD");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        panelContenido.add(jButton1);
-        jButton1.setBounds(290, 190, 46, 32);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -983,10 +973,6 @@ public class ControlPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-               
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAcceder10;
     private javax.swing.JButton botonAcceder5;
@@ -1000,7 +986,6 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JLabel botonMinimizar;
     public javax.swing.JTextField fieldNombreProceso;
     public javax.swing.JTextField fieldTamañoProceso;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

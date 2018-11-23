@@ -11,7 +11,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 1.5;
+    private final double clockTime = 500;
     private int ID;
     private String nombre;
     private String estado;
@@ -52,9 +52,8 @@ public class Proceso {
                 // Si me toca ejecutarme
                 if (!Controller.colaProcesos.isEmpty() && Controller.colaProcesos.peek().ID == proceso.ID) {
                     // Se ejecuta
-                    if (proceso.getEstado().equals("Suspendido/Listo")){
+                    if (proceso.getEstado().equals("Suspendido/Listo")) {
                         // Hay que reemplazar del primero de MP
-                        Proceso reemplazo = Controller.colaMemoriaPrincipal.peek();
                         proceso.reemplazar();
                     } else {
                         System.out.println("Error, el proceso " + proceso.getID() + " entra sin estar listo/suspendido timer-proceso");
@@ -91,88 +90,106 @@ public class Proceso {
             this.paginas[this.cantPaginas - 1] = new Pagina(this.cantPaginas, tamañoPagIncompleta, this.ID);
         }
     }
-    
-    public void reemplazar(){
+
+    public void reemplazar() {
         int marcosDispon = Controller.memoriaPrincipal.length - Controller.cantMarcosOcupados;
         int cantPagsNecesitoEnMP = this.getMitad();
         int cantPagsNecesitoEnMS = this.getPaginas().length - cantPagsNecesitoEnMP;
-        // Se verifica en la cola de MP los procesos y se ve cuantas páginas de cada uno de los procesos hay que quitar para que entren las que necesito en MP
-        // Verificar si hay espacios vacios en MP y meter las páginas que se puedan
-        int numPagg = 0;
-        // Si hay espacio en MP
-        if (Controller.cantMarcosOcupados < Controller.memoriaPrincipal.length) {
-            System.out.println("cantMarcosOcupados : " + Controller.cantMarcosOcupados);
-            int espaciosVacios = Controller.memoriaPrincipal.length - Controller.cantMarcosOcupados;
-            int numPag = 0;
-            for (numPag = 0; numPag < espaciosVacios; numPag++) {
-                for (int j = 0; j < Controller.memoriaPrincipal.length; j++) {
-                    if (Controller.memoriaPrincipal[j].getPagina() == null) {
-                        Controller.memoriaPrincipal[j].setPagina(this.getPaginas()[numPag]);
-                        this.getPaginas()[numPag].crearSetInMemoriaP(true);
-                        this.setCantPagMP(this.getCantPagMP() + 1);
-                        cantPagsNecesitoEnMP--;
-                        Controller.cantMarcosOcupados++;
-                        break;
-                    }
-                }
-            }
-            System.out.println("numPag original es : " + numPag);
-            numPagg = numPag;
+        int pagsMetereEnMP = this.getMitad() - this.getCantPagMP();
+        if (pagsMetereEnMP <= 0) {
+            System.out.println("Errorcito leve xD");
         }
-
-        // Verifico que procesos voy a quitar
-        boolean ready = false;
-        // Recorro todos los procesos que están en la cola de MP
-        for (Proceso pro : Controller.colaMemoriaPrincipal) {
-            // Verifico si ya se pusieron todas las páginas en MP
-            if (ready) {
-                break;
-            }
-            // Recorro todas las páginas de el proceso
-            for (int i = 0; i < pro.getPaginas().length; i++) {
-                // Si la página está en MP la saco y meto la del proceso nuevo
-                if (pro.getPaginas()[i].isInMemoriaPrincipal()) {
-                    if (cantPagsNecesitoEnMP <= 0) {
-                        ready = true;
-                        break;
-                    }
-                    cantPagsNecesitoEnMP--;
-                    pro.getPaginas()[i].setInMemoriaPrincipal(false);
-                    // Meto la página en MS y la saco de MP
-                    for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
-                        if (Controller.memoriaSecundaria[j].getPagina() == null) {
-                            Controller.memoriaSecundaria[j].setPagina(pro.getPaginas()[i]);
+        // Si hay espacio para meter las páginas sin tener que reemplazar
+        if (marcosDispon >= pagsMetereEnMP) {
+            for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
+                if (Controller.memoriaPrincipal[i].getPagina() == null) {
+                    for (int j = 0; j < this.paginas.length; j++) {
+                        if (!this.paginas[j].isInMemoriaPrincipal()) {
+                            Controller.memoriaPrincipal[i].setPagina(this.paginas[j]);
+                            this.paginas[j].setInMemoriaPrincipal(true);
+                            pagsMetereEnMP--;
+                            // Modificamos variables
+                            Controller.cantEspaciosOcupadosMS--;
+                            Controller.cantMarcosOcupados++;
                             break;
                         }
                     }
-                    for (int j = 0; j < Controller.memoriaPrincipal.length; j++) {
-                        // Si son del mismo proceso y el mismo numero de pagina
-                        // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
-                        if (Controller.memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && Controller.memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
-                            Controller.memoriaPrincipal[j].setPagina(this.getPaginas()[numPagg]);
-                            this.getPaginas()[numPagg].crearSetInMemoriaP(true);
-                            numPagg++;
-                            Controller.actualizarMemorias();
-                        }
-                    }
-
+                }
+                if (pagsMetereEnMP <= 0) {
+                    break;
                 }
             }
-        }
-
-        for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
-            if (Controller.memoriaSecundaria[i].getPagina() == null && cantPagsNecesitoEnMS > 0) {
-                Controller.memoriaSecundaria[i].setPagina(this.getPaginas()[numPagg]);
-                this.getPaginas()[numPagg - 1].crearSetInMemoriaP(false);
-                cantPagsNecesitoEnMS--;
-                numPagg++;
-                Controller.cantEspaciosOcupadosMS++;
+        } else {
+            // Si hay que reemplazar
+            // Verificar si hay algun marco disponible, pero sin ser todos los que se necesitan
+            if (marcosDispon > 0) {
+                for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
+                    if (Controller.memoriaPrincipal[i].getPagina() == null) {
+                        for (int j = 0; j < this.paginas.length; j++) {
+                            if (!this.paginas[j].isInMemoriaPrincipal()) {
+                                Controller.memoriaPrincipal[i].setPagina(this.paginas[j]);
+                                this.paginas[j].setInMemoriaPrincipal(true);
+                                pagsMetereEnMP--;
+                                marcosDispon--;
+                                // Modificamos variables
+                                Controller.cantEspaciosOcupadosMS--;
+                                Controller.cantMarcosOcupados++;
+                                break;
+                            }
+                        }
+                    }
+                    if (marcosDispon <= 0) {
+                        break;
+                    }
+                }
             }
-            if(cantPagsNecesitoEnMS == 0){
-                break;
+            // Se meten las páginas que faltan por meter en MP (o en su defecto, todas las que tengan que estar)
+            // Verifico que procesos voy a quitar
+            boolean ready = false;
+            // Recorro todos los procesos que están en la cola de MP
+            for (Proceso pro : Controller.colaMemoriaPrincipal) {
+                // Verifico si ya se pusieron todas las páginas en MP
+                if (ready) {
+                    break;
+                }
+                // Recorro todas las páginas del proceso
+                for (int i = 0; i < pro.getPaginas().length; i++) {
+                    // Si la página está en MP la saco y meto la del proceso nuevo
+                    if (pro.getPaginas()[i].isInMemoriaPrincipal()) {
+                        if (pagsMetereEnMP <= 0) {
+                            ready = true;
+                            break;
+                        }
+                        pagsMetereEnMP--;
+                        // Meto la página en MS y la saco de MP
+                        for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
+                            if (Controller.memoriaSecundaria[j].getPagina() == null) {
+                                Controller.memoriaSecundaria[j].setPagina(pro.getPaginas()[i]);
+                                pro.getPaginas()[i].setInMemoriaPrincipal(false);
+                                Controller.actualizarMemorias();
+                                break;
+                            }
+                        }
+                        for (int j = 0; j < Controller.memoriaPrincipal.length; j++) {
+                            // Si son del mismo proceso y el mismo numero de pagina
+                            // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
+                            if (Controller.memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && Controller.memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
+                                for (int k = 0; k < this.getPaginas().length; k++) {
+                                    if (!this.getPaginas()[k].isInMemoriaPrincipal()) {
+                                        Controller.memoriaPrincipal[j].setPagina(this.paginas[k]);
+                                        this.paginas[k].setInMemoriaPrincipal(true);
+                                        pagsMetereEnMP--;
+                                        Controller.actualizarMemorias();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Controller.actualizarMemorias();
             }
         }
-        Controller.actualizarMemorias();
     }
 
     public void verPaginas() {

@@ -69,9 +69,9 @@ public class Pagina {
     }
 
     public void setInMemoriaPrincipal(boolean inMemoriaPrincipal) {
-        Controller.actualizarMemorias();
         Controller.modificarProceso(this.IDProceso, inMemoriaPrincipal);
         this.inMemoriaPrincipal = inMemoriaPrincipal;
+        Controller.actualizarMemorias();
     }
 
     public void setIDProceso(int IDProceso) {

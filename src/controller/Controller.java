@@ -269,6 +269,8 @@ public class Controller {
         modelo.addRow(new Object[]{
             procesoNuevo.getID(), procesoNuevo.getNombre(), formatea.format(procesoNuevo.getTamaño()), procesoNuevo.getCantPaginas(), procesoNuevo.getEstado(), procesoNuevo.getCantPagMP(), procesoNuevo.getCantPagMS()
         });
+        
+        System.out.println("ESPACIOS OCUPADOS " + cantEspaciosOcupadosMS);
     }
 
     public static void actualizarMemorias() {
@@ -519,6 +521,7 @@ public class Controller {
                     for (int j = 0; j < memoriaSecundaria.length; j++) {
                         if (memoriaSecundaria[j].getPagina() == null) {
                             memoriaSecundaria[j].setPagina(pro.getPaginas()[i]);
+                            cantEspaciosOcupadosMS++;
                             break;
                         }
                     }

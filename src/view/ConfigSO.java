@@ -279,7 +279,7 @@ public class ConfigSO extends javax.swing.JFrame {
         fieldTamSecundaria.setBackground(new java.awt.Color(51, 51, 51));
         fieldTamSecundaria.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
         fieldTamSecundaria.setForeground(new java.awt.Color(255, 255, 255));
-        fieldTamSecundaria.setText("61440");
+        fieldTamSecundaria.setText("102400");
         fieldTamSecundaria.setBorder(null);
         fieldTamSecundaria.setSelectionColor(new java.awt.Color(102, 102, 102));
         fieldTamSecundaria.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -452,10 +452,10 @@ public class ConfigSO extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
         
-        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("")) ) {
+        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("102400") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("102400") && this.fieldTamPaginas.getText().equals("")) ) {
             this.fieldTamPaginas.setText("1024");
             this.fieldTamPrincipal.setText("25600");
-            this.fieldTamSecundaria.setText("61440");
+            this.fieldTamSecundaria.setText("102400");
         }
         
         this.botonAux.requestFocus();
@@ -506,14 +506,14 @@ public class ConfigSO extends javax.swing.JFrame {
 
     private void fieldTamSecundariaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamSecundariaFocusGained
         System.out.println("asd");
-        if(fieldTamSecundaria.getText().equals("61440") == true){
+        if(fieldTamSecundaria.getText().equals("102400") == true){
             fieldTamSecundaria.setText("");
         }
     }//GEN-LAST:event_fieldTamSecundariaFocusGained
 
     private void fieldTamSecundariaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldTamSecundariaFocusLost
         if(fieldTamSecundaria.getText().trim().equals("") == true){
-            fieldTamSecundaria.setText("61440");
+            fieldTamSecundaria.setText("102400");
         }
     }//GEN-LAST:event_fieldTamSecundariaFocusLost
 
@@ -552,10 +552,10 @@ public class ConfigSO extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldTamPaginasKeyTyped
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("61440") && this.fieldTamPaginas.getText().equals("")) ) {
+        if( (this.fieldTamPrincipal.getText().equals("") && this.fieldTamSecundaria.getText().equals("102400") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("") && this.fieldTamPaginas.getText().equals("1024")) || (this.fieldTamPrincipal.getText().equals("25600") && this.fieldTamSecundaria.getText().equals("102400") && this.fieldTamPaginas.getText().equals("")) ) {
             this.fieldTamPaginas.setText("1024");
             this.fieldTamPrincipal.setText("25600");
-            this.fieldTamSecundaria.setText("61440");
+            this.fieldTamSecundaria.setText("102400");
         }
         
         this.botonAux.requestFocus();
