@@ -244,6 +244,11 @@ public class Controller {
             JOptionPane.showMessageDialog(controlP, "Ingrese datos correctamente", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        if( ((int) Math.ceil((double) Integer.parseInt(controlP.fieldTamañoProceso.getText()) / 2)) > memoriaPrincipal.length ) {
+            JOptionPane.showMessageDialog(controlP, "La mitad del tamaño del proceso no puede ser más grande que la cantidad de espacios de la Memoria Principal", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         this.aparecerTablaProcesos(controlP);
         // Obtenemos el nombre y el tamaño de los textFields
         String nombreProceso = controlP.fieldNombreProceso.getText();
