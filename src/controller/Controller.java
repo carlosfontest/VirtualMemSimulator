@@ -656,7 +656,7 @@ public class Controller {
         changing = true;
 
         if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Bloqueado")) {
-            if (cantEspaciosOcupadosMS > proceso.getCantPagMP()) {
+            if (memoriaSecundaria.length - cantEspaciosOcupadosMS < proceso.getCantPagMP()) {
                 JOptionPane.showMessageDialog(controlP, "No se puede suspender porque no hay espacio en MS", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -712,7 +712,7 @@ public class Controller {
         System.out.println("Cant meteré en MP " + pagsMetereEnMP);
         // Si hay espacio para meter las páginas sin tener que reemplazar
 
-        if (marcosDispon >= proceso.getPaginas().length) {
+        if (marcosDispon >= proceso.getCantPagMS()) {
             pagsMetereEnMP = proceso.getCantPagMS();
         }
 

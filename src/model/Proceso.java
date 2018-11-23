@@ -123,6 +123,11 @@ public class Proceso {
         }
         System.out.println("mitad " + this.getMitad() + " cantMP: " + this.getCantPagMP()) ;
         System.out.println("Cant meteré en MP " + pagsMetereEnMP);
+        
+        if (marcosDispon >= this.cantPagMS) {
+            pagsMetereEnMP = this.getCantPagMS();
+        }
+        
         // Si hay espacio para meter las páginas sin tener que reemplazar
         if (marcosDispon >= pagsMetereEnMP) {
             // Metemos las páginas en MP
