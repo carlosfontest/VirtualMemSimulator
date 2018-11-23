@@ -667,6 +667,9 @@ public class Controller {
             // Meter páginas en MP
         } else if (proceso.getEstado().equals("Suspendido/Listo")) {
             // Lo saco de la cola y lo pongo de primero
+            controlP.tableLista.setValueAt("Listo", controlP.tableLista.getSelectedRow(), 4);
+            controlP.tableLista.setValueAt(proceso.getMitad(), controlP.tableLista.getSelectedRow(), 5);
+            controlP.tableLista.setValueAt(proceso.getPaginas().length - proceso.getMitad(), controlP.tableLista.getSelectedRow(), 6);
             colaProcesos.remove(proceso);
             putFirst(proceso);
         }
