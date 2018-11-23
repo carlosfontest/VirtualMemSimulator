@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 0.1;
+    private final double clockTime = 0.5;
     private int ID;
     private String nombre;
     private String estado;
@@ -30,11 +30,6 @@ public class Proceso {
         this.tiempoMaxEjecucion = tiempoMaxEjecucion;
         this.tiempoEjecucion = 0.0;
         this.tamaño = tamaño;
-        if (Controller.colaProcesos.isEmpty()) {
-            this.estado = "Ejecución";
-        } else {
-            this.estado = "Listo";
-        }
         this.cantPaginas = (int) Math.ceil((float) this.tamaño / Controller.tamañoPagina);
         this.paginas = new Pagina[cantPaginas];
         this.cantPagMP = 0;
@@ -44,6 +39,13 @@ public class Proceso {
         this.crearPaginas();
         //this.verPaginas();
 
+        if (Controller.colaProcesos.isEmpty()) {
+            this.estado = "Ejecución";
+        } else {
+            this.estado = "Nuevo";
+        }
+        
+        
         // Creamos el timer para saber los ciclos de ejecución
         System.out.println("\nSoy " + this.nombre + " y tengo " + this.tiempoMaxEjecucion + " para ejecutarme. Deberia aparecer " + this.tiempoMaxEjecucion / 0.5);
     }
@@ -359,7 +361,7 @@ public class Proceso {
         this.cantPagMS++;
 
         // Si las paginas en MP < mitad => suspendido
-        if (this.cantPagMP < this.getMitad()) {
+        if (this.isSuspendido()) {
             if (Controller.colaProcesos.contains(this)) {
                 this.setEstado("Suspendido/Listo");
                 Controller.actualizarMemorias();

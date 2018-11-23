@@ -549,10 +549,11 @@ public class Controller {
                             break;
                         }
                     }
+                    
                     for (int j = 0; j < memoriaPrincipal.length; j++) {
                         // Si son del mismo proceso y el mismo numero de pagina
                         // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
-                        if (memoriaPrincipal[j].getPagina() == null && memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
+                        if (memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
                             memoriaPrincipal[j].setPagina(procesoNuevo.getPaginas()[numPagg]);
                             procesoNuevo.getPaginas()[numPagg].crearSetInMemoriaP(true);
                             numPagg++;
