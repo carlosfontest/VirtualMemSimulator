@@ -92,12 +92,12 @@ public class Controller {
     }
 
     public void instalarSO(ConfigSO frame) {
-        System.out.println("                                        _                       _                \n" +
-" ___  _____  _____     __ _ _ __   __ _| |   ___ ___  _ __     (_) ___  ___  ___ \n" +
-"/ __|/ _ \\ \\/ / _ \\   / _` | '_ \\ / _` | |  / __/ _ \\| '_ \\    | |/ _ \\/ __|/ _ \\\n" +
-"\\__ \\  __/>  < (_) | | (_| | | | | (_| | | | (_| (_) | | | |   | | (_) \\__ \\  __/\n" +
-"|___/\\___/_/\\_\\___/   \\__,_|_| |_|\\__,_|_|  \\___\\___/|_| |_|  _/ |\\___/|___/\\___|\n" +
-"                                                             |__/                ");
+        System.out.println("                                        _                       _                \n"
+                + " ___  _____  _____     __ _ _ __   __ _| |   ___ ___  _ __     (_) ___  ___  ___ \n"
+                + "/ __|/ _ \\ \\/ / _ \\   / _` | '_ \\ / _` | |  / __/ _ \\| '_ \\    | |/ _ \\/ __|/ _ \\\n"
+                + "\\__ \\  __/>  < (_) | | (_| | | | | (_| | | | (_| (_) | | | |   | | (_) \\__ \\  __/\n"
+                + "|___/\\___/_/\\_\\___/   \\__,_|_| |_|\\__,_|_|  \\___\\___/|_| |_|  _/ |\\___/|___/\\___|\n"
+                + "                                                             |__/                ");
         int tamPrincipal = 0, tamSecundaria = 0, tamPaginas = 0;
         try {
             tamPrincipal = Integer.parseInt(frame.fieldTamPrincipal.getText());
@@ -483,7 +483,7 @@ public class Controller {
         int marcosDispon = this.memoriaPrincipal.length - this.cantMarcosOcupados;
         int cantPagsNecesitoEnMP = procesoNuevo.getMitad();
         int cantPagsNecesitoEnMS = procesoNuevo.getPaginas().length - cantPagsNecesitoEnMP;
-        
+
         // Como los valores de arriba siempre se van a cumplir, actualizamos los valores
         procesoNuevo.setCantPagMP(cantPagsNecesitoEnMP);
         procesoNuevo.setCantPagMS(cantPagsNecesitoEnMS);
@@ -548,7 +548,7 @@ public class Controller {
                     for (int j = 0; j < memoriaPrincipal.length; j++) {
                         // Si son del mismo proceso y el mismo numero de pagina
                         // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
-                        if (memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
+                        if (memoriaPrincipal[j].getPagina() == null && memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
                             memoriaPrincipal[j].setPagina(procesoNuevo.getPaginas()[numPagg]);
                             procesoNuevo.getPaginas()[numPagg].crearSetInMemoriaP(true);
                             numPagg++;
@@ -612,7 +612,8 @@ public class Controller {
             JOptionPane.showMessageDialog(controlP, "No se puede bloquear un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
+        changing = true;
         if (proceso.getEstado().endsWith("Listo")) {
             colaProcesos.remove(proceso);
         } else if (proceso.getEstado().endsWith("Bloqueado")) {
@@ -628,7 +629,7 @@ public class Controller {
         } else if (proceso.getEstado().equals("Listo")) {
             proceso.setEstado("Bloqueado");
         }
-
+        changing = false;
         actualizarMemorias();
     }
 
@@ -647,26 +648,178 @@ public class Controller {
             JOptionPane.showMessageDialog(controlP, "No se puede suspender un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        changing = true;
 
         if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Bloqueado")) {
+            if (cantEspaciosOcupadosMS > proceso.getCantPagMP()) {
+                JOptionPane.showMessageDialog(controlP, "No se puede suspender porque no hay espacio en MS", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             System.out.println("Listo o bloqueado");
             if (proceso.getEstado().equals("Listo")) {
                 proceso.setEstado("Suspendido/Listo");
             } else {
                 proceso.setEstado("Suspendido/Bloqueado");
-                System.out.println("Me bloquié XD");
             }
-            // Se suspenden las páginas en MP
-            // REEMPLAZAR
+            // Se suspenden las páginas de MP a MS
+
+            for (int i = 0; i < memoriaPrincipal.length; i++) {
+                if (memoriaPrincipal[i].getPagina() != null && memoriaPrincipal[i].getPagina().getIDProceso() == proceso.getID()) {
+                    for (int j = 0; j < memoriaSecundaria.length; j++) {
+                        if (memoriaSecundaria[j].getPagina() == null) {
+                            cantEspaciosOcupadosMS++;
+                            cantMarcosOcupados--;
+                            memoriaPrincipal[i].getPagina().setInMemoriaPrincipal(false);
+                            memoriaSecundaria[j].setPagina(memoriaPrincipal[i].getPagina());
+                            memoriaPrincipal[i].setPagina(null);
+                            break;
+                        }
+                    }
+                }
+
+                if (proceso.getCantPagMP() <= 0) {
+                    break;
+                }
+            }
         } else if (proceso.getEstado().equals("Suspendido/Bloqueado")) {
             proceso.setEstado("Bloqueado");
+
+            this.reemplazarAlRecuperar(proceso);
             // Meter páginas en MP
         } else if (proceso.getEstado().equals("Suspendido/Listo")) {
             // Lo saco de la cola y lo pongo de primero
             colaProcesos.remove(proceso);
             putFirst(proceso);
         }
-        
+        changing = false;
         actualizarMemorias();
+    }
+
+    void reemplazarAlRecuperar(Proceso proceso) {
+        int marcosDispon = Controller.memoriaPrincipal.length - Controller.cantMarcosOcupados;
+        int cantPagsNecesitoEnMP = proceso.getMitad();
+        int cantPagsNecesitoEnMS = proceso.getPaginas().length - cantPagsNecesitoEnMP;
+        int pagsMetereEnMP = proceso.getMitad() - proceso.getCantPagMP();
+        if (pagsMetereEnMP <= 0) {
+            System.out.println("Errorcito leve xD");
+        }
+        System.out.println("mitad " + proceso.getMitad() + " cantMP: " + proceso.getCantPagMP());
+        System.out.println("Cant meteré en MP " + pagsMetereEnMP);
+        // Si hay espacio para meter las páginas sin tener que reemplazar
+
+        if (marcosDispon >= proceso.getPaginas().length) {
+            pagsMetereEnMP = proceso.getCantPagMS();
+        }
+
+        if (marcosDispon >= pagsMetereEnMP) {
+            // Metemos las páginas en MP
+            for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
+                if (Controller.memoriaPrincipal[i].getPagina() == null) {
+                    for (int j = 0; j < proceso.getPaginas().length; j++) {
+                        if (!proceso.getPaginas()[j].isInMemoriaPrincipal()) {
+                            Controller.memoriaPrincipal[i].setPagina(proceso.getPaginas()[j]);
+                            proceso.getPaginas()[j].setInMemoriaPrincipal(true);
+                            pagsMetereEnMP--;
+                            // Modificamos variables
+                            Controller.cantEspaciosOcupadosMS--;
+                            Controller.cantMarcosOcupados++;
+                            break;
+                        }
+                    }
+                }
+                if (pagsMetereEnMP <= 0) {
+                    break;
+                }
+            }
+            // Las sacamos de la MS
+            for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
+                // Si se encuentra una página del proceso en MS
+                if (Controller.memoriaSecundaria[j].getPagina() != null) {
+                    if (Controller.memoriaSecundaria[j].getPagina().getIDProceso() == proceso.getID()) {
+                        Controller.memoriaSecundaria[j].setPagina(null);
+                        Controller.actualizarMemorias();
+                    }
+                }
+            }
+        } else {
+            // Si hay que reemplazar
+            // Verificar si hay algun marco disponible, pero sin ser todos los que se necesitan
+            if (marcosDispon > 0) {
+                // Buscamos el marco disponible y metemos la página en el marco de MP
+                ArrayList<Integer> numPags = new ArrayList<>();
+                for (int i = 0; i < Controller.memoriaPrincipal.length; i++) {
+                    if (Controller.memoriaPrincipal[i].getPagina() == null) {
+                        for (int j = 0; j < proceso.getPaginas().length; j++) {
+                            if (!proceso.getPaginas()[j].isInMemoriaPrincipal()) {
+                                proceso.eliminarPagina(proceso.getPaginas()[j]);
+                                Controller.memoriaPrincipal[i].setPagina(proceso.getPaginas()[j]);
+                                proceso.getPaginas()[j].setInMemoriaPrincipal(true);
+                                numPags.add(j);
+                                pagsMetereEnMP--;
+                                marcosDispon--;
+                                // Modificamos variables
+                                Controller.cantEspaciosOcupadosMS--;
+                                Controller.cantMarcosOcupados++;
+                                Controller.actualizarMemorias();
+                                break;
+                            }
+                        }
+                    }
+                    if (marcosDispon <= 0) {
+                        break;
+                    }
+                }
+            }
+            // Se meten las páginas que faltan por meter en MP (o en su defecto, todas las que tengan que estar)
+            // Verifico que procesos voy a quitar
+            boolean ready = false;
+            // Recorro todos los procesos que están en la cola de MP
+            for (Proceso pro : Controller.colaMemoriaPrincipal) {
+                if (pro.equals(proceso)) {
+                    continue;
+                }
+                // Verifico si ya se pusieron todas las páginas en MP
+                if (ready) {
+                    break;
+                }
+                // Recorro todas las páginas del proceso
+                for (int i = 0; i < pro.getPaginas().length; i++) {
+                    // Si la página está en MP la saco y meto la del proceso nuevo
+                    if (pro.getPaginas()[i].isInMemoriaPrincipal()) {
+                        // Meto la página en MS y la saco de MP
+                        for (int j = 0; j < Controller.memoriaSecundaria.length; j++) {
+                            if (Controller.memoriaSecundaria[j].getPagina() == null) {
+                                Controller.memoriaSecundaria[j].setPagina(pro.getPaginas()[i]);
+                                pro.getPaginas()[i].setInMemoriaPrincipal(false);
+                                Controller.actualizarMemorias();
+                                break;
+                            }
+                        }
+                        for (int j = 0; j < Controller.memoriaPrincipal.length; j++) {
+                            // Si son del mismo proceso y el mismo numero de pagina
+                            // System.out.println("Estoy en el " + pro.getNombre() + " y voy a sacar a la pag " + pro.getPaginas()[i].getNumPagina());
+                            if (Controller.memoriaPrincipal[j].getPagina().getNumPagina() == pro.getPaginas()[i].getNumPagina() && Controller.memoriaPrincipal[j].getPagina().getIDProceso() == pro.getPaginas()[i].getIDProceso()) {
+                                for (int k = 0; k < proceso.getPaginas().length; k++) {
+                                    if (!proceso.getPaginas()[k].isInMemoriaPrincipal()) {
+                                        proceso.eliminarPagina(proceso.getPaginas()[k]);
+                                        Controller.memoriaPrincipal[j].setPagina(proceso.getPaginas()[k]);
+                                        proceso.getPaginas()[k].setInMemoriaPrincipal(true);
+                                        pagsMetereEnMP--;
+                                        Controller.actualizarMemorias();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        pagsMetereEnMP--;
+                        if (pagsMetereEnMP <= 0) {
+                            ready = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        Controller.actualizarMemorias();
     }
 }

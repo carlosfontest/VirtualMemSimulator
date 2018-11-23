@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 1;
+    private final double clockTime = 0.1;
     private int ID;
     private String nombre;
     private String estado;
