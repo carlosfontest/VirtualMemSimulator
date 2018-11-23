@@ -56,6 +56,7 @@ public class Proceso {
             public void actionPerformed(ActionEvent ae) {
                 // Si me toca ejecutarme
                 if (proceso.estado.equals("Ejecución") && !Controller.changing) {
+                    Controller.actualizarMemorias();
                     // Se aumenta un ciclo del tiempo de Ejecución
                     proceso.setTiempoEjecucion(proceso.getTiempoEjecucion() + 0.5);
                     System.out.println("Se ejecuta el proceso " + proceso.getID());
@@ -228,9 +229,9 @@ public class Proceso {
                         }
                     }
                 }
-                Controller.actualizarMemorias();
             }
         }
+        Controller.actualizarMemorias();
     }
 
     public void verPaginas() {
