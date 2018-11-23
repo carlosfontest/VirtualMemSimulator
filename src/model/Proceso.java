@@ -118,6 +118,8 @@ public class Proceso {
         if (pagsMetereEnMP <= 0) {
             System.out.println("Errorcito leve xD");
         }
+        System.out.println("mitad " + this.getMitad() + " cantMP: " + this.getCantPagMP()) ;
+        System.out.println("Cant meteré en MP " + pagsMetereEnMP);
         // Si hay espacio para meter las páginas sin tener que reemplazar
         if (marcosDispon >= pagsMetereEnMP) {
             // Metemos las páginas en MP
@@ -168,21 +170,13 @@ public class Proceso {
                                 // Modificamos variables
                                 Controller.cantEspaciosOcupadosMS--;
                                 Controller.cantMarcosOcupados++;
+                                Controller.actualizarMemorias();
                                 break;
                             }
                         }
                     }
                     if (marcosDispon <= 0) {
                         break;
-                    }
-                }
-                // Sacamos la página de MS
-                for (Integer numPag : numPags) {
-                    for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
-                        if(numPag == Controller.memoriaSecundaria[i].getPagina().getNumPagina() && this.ID == Controller.memoriaSecundaria[i].getPagina().getIDProceso()) {
-                            Controller.memoriaSecundaria[i].setPagina(null);
-                            Controller.actualizarMemorias();
-                        }
                     }
                 }
             }
@@ -400,7 +394,8 @@ public class Proceso {
     
     public void eliminarPagina(Pagina pagina){
         for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
-            if(pagina.equals(Controller.memoriaSecundaria[i])){
+            if(pagina.equals(Controller.memoriaSecundaria[i].getPagina())){
+                System.out.println("ELIMINANDO JLSABNDKJASBNDKJLNSABDLJKASD");
                 Controller.memoriaSecundaria[i].setPagina(null);
             }
         }
