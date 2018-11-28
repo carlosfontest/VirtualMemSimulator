@@ -92,12 +92,12 @@ public class Controller {
     }
 
     public void instalarSO(ConfigSO frame) {
-        System.out.println("                                        _                       _                \n"
-                + " ___  _____  _____     __ _ _ __   __ _| |   ___ ___  _ __     (_) ___  ___  ___ \n"
-                + "/ __|/ _ \\ \\/ / _ \\   / _` | '_ \\ / _` | |  / __/ _ \\| '_ \\    | |/ _ \\/ __|/ _ \\\n"
-                + "\\__ \\  __/>  < (_) | | (_| | | | | (_| | | | (_| (_) | | | |   | | (_) \\__ \\  __/\n"
-                + "|___/\\___/_/\\_\\___/   \\__,_|_| |_|\\__,_|_|  \\___\\___/|_| |_|  _/ |\\___/|___/\\___|\n"
-                + "                                                             |__/                ");
+        System.out.println(" _   _ _      _               ____  ___               _____ _                 _       _             \n" +
+"| | | (_)    | |             | |  \\/  |              /  ___(_)               | |     | |            \n" +
+"| | | |_ _ __| |_ _   _  __ _| | .  . | ___ _ __ ___ \\ `--. _ _ __ ___  _   _| | __ _| |_ ___  _ __ \n" +
+"| | | | | '__| __| | | |/ _` | | |\\/| |/ _ \\ '_ ` _ \\ `--. \\ | '_ ` _ \\| | | | |/ _` | __/ _ \\| '__|\n" +
+"\\ \\_/ / | |  | |_| |_| | (_| | | |  | |  __/ | | | | /\\__/ / | | | | | | |_| | | (_| | || (_) | |   \n" +
+" \\___/|_|_|   \\__|\\__,_|\\__,_|_\\_|  |_/\\___|_| |_| |_\\____/|_|_| |_| |_|\\__,_|_|\\__,_|\\__\\___/|_| ");
         int tamPrincipal = 0, tamSecundaria = 0, tamPaginas = 0;
         try {
             tamPrincipal = Integer.parseInt(frame.fieldTamPrincipal.getText());
@@ -245,7 +245,7 @@ public class Controller {
             return;
         }
         
-        if( ((int) Math.ceil((double) Integer.parseInt(controlP.fieldTamañoProceso.getText()) / 2)) > memoriaPrincipal.length ) {
+        if( (Double.parseDouble(controlP.fieldTamañoProceso.getText()) / (double)tamañoPagina ) / 2 > memoriaPrincipal.length || Integer.parseInt(controlP.fieldTamañoProceso.getText()) == 0) {
             JOptionPane.showMessageDialog(controlP, "La mitad del tamaño del proceso no puede ser más grande que la cantidad de espacios de la Memoria Principal", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -270,7 +270,6 @@ public class Controller {
 
         // Meter en la memoria principal para que se ejecute
         // Si la mitad de las paginas del proceso entran en MP
-        System.out.println(procesoNuevo.getMitad() + " " + this.cantMarcosOcupados);
         if (procesoNuevo.getMitad() <= this.memoriaPrincipal.length - this.cantMarcosOcupados) {
             this.crearSiMitad(procesoNuevo);
         } else {
@@ -285,7 +284,6 @@ public class Controller {
             procesoNuevo.getID(), procesoNuevo.getNombre(), formatea.format(procesoNuevo.getTamaño()), procesoNuevo.getCantPaginas(), procesoNuevo.getEstado(), procesoNuevo.getCantPagMP(), procesoNuevo.getCantPagMS()
         });
 
-        System.out.println("ESPACIOS OCUPADOS " + cantEspaciosOcupadosMS);
     }
 
     public static void actualizarMemorias() {
@@ -369,8 +367,8 @@ public class Controller {
         int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
         Proceso proceso = this.procesos.get(ID);
 
-        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
-            JOptionPane.showMessageDialog(controlP, "No se puede eliminar un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+        if (proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede eliminar un proceso en Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -424,7 +422,6 @@ public class Controller {
         int cantPagsMP = 0, cantPagsMS = 0;
         // Si no caben todas en MP
         if (marcosDispon - procesoNuevo.getPaginas().length < 0) {
-            System.out.println("No caben todas en MP las páginas del " + procesoNuevo.getNombre());
             cantPagsMS = procesoNuevo.getPaginas().length - marcosDispon;
             cantPagsMP = procesoNuevo.getPaginas().length - cantPagsMS;
             // Aumentamos los marcos ocupados
@@ -450,7 +447,6 @@ public class Controller {
             for (int i = 0; i < this.memoriaSecundaria.length; i++) {
                 if (this.memoriaSecundaria[i].getPagina() == null && (procesoNuevo.getPaginas().length - contAux - cantPagsMS) < cantPagsMS) {
                     // Si encontramos el espacio vacío de la MS y aun tengo paginas que meter
-                    System.out.println("----------------------------");
                     this.memoriaSecundaria[i].setPagina(procesoNuevo.getPaginas()[contPaginasPuestas]);
                     this.memoriaSecundaria[i].getPagina().setIDProceso(procesoNuevo.getID());
                     this.memoriaSecundaria[i].getPagina().crearSetInMemoriaP(false);
@@ -463,7 +459,6 @@ public class Controller {
 
         } else {
             // Caben todas en MP
-            System.out.println("Caben todas en MP las páginas del " + procesoNuevo.getNombre());
             cantPagsMS = 0;
             cantPagsMP = procesoNuevo.getPaginas().length;
             // Seteamos la cantidad de paginas en cada memoria
@@ -510,7 +505,6 @@ public class Controller {
         int numPagg = 0;
         // Si hay espacio en MP
         if (cantMarcosOcupados < this.memoriaPrincipal.length) {
-            System.out.println("cantMarcosOcupados : " + cantMarcosOcupados);
             int espaciosVacios = this.memoriaPrincipal.length - cantMarcosOcupados;
             int numPag = 0;
             for (numPag = 0; numPag < espaciosVacios; numPag++) {
@@ -524,7 +518,6 @@ public class Controller {
                     }
                 }
             }
-            System.out.println("numPag original es : " + numPag);
             numPagg = numPag;
         }
 
@@ -618,13 +611,13 @@ public class Controller {
         int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
         Proceso proceso = this.procesos.get(ID);
 
-        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
-            JOptionPane.showMessageDialog(controlP, "No se puede bloquear un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+        if (proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede bloquear un proceso en Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         changing = true;
-        if (proceso.getEstado().endsWith("Listo")) {
+        if (proceso.getEstado().endsWith("Listo") || proceso.getEstado().equals("Ejecución") ) {
             colaProcesos.remove(proceso);
         } else if (proceso.getEstado().endsWith("Bloqueado")) {
             putFirst(proceso);
@@ -636,7 +629,7 @@ public class Controller {
             proceso.setEstado("Suspendido/Listo");
         } else if (proceso.getEstado().equals("Suspendido/Listo")) {
             proceso.setEstado("Suspendido/Bloqueado");
-        } else if (proceso.getEstado().equals("Listo")) {
+        } else if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Ejecución") ) {
             proceso.setEstado("Bloqueado");
         }
         changing = false;
@@ -654,19 +647,18 @@ public class Controller {
         int ID = Integer.parseInt(String.valueOf(controlP.tableLista.getValueAt(controlP.tableLista.getSelectedRow(), 0)));
         Proceso proceso = this.procesos.get(ID);
 
-        if (proceso.getEstado().equals("Ejecución") || proceso.getEstado().equals("Eliminado")) {
-            JOptionPane.showMessageDialog(controlP, "No se puede suspender un proceso en Ejecución/Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+        if (proceso.getEstado().equals("Eliminado")) {
+            JOptionPane.showMessageDialog(controlP, "No se puede suspender un proceso en Eliminado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         changing = true;
 
-        if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Bloqueado")) {
+        if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Bloqueado") || proceso.getEstado().equals("Ejecución")) {
             if (memoriaSecundaria.length - cantEspaciosOcupadosMS < proceso.getCantPagMP()) {
                 JOptionPane.showMessageDialog(controlP, "No se puede suspender porque no hay espacio en MS", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            System.out.println("Listo o bloqueado");
-            if (proceso.getEstado().equals("Listo")) {
+            if (proceso.getEstado().equals("Listo") || proceso.getEstado().equals("Ejecución")) {
                 proceso.setEstado("Suspendido/Listo");
             } else {
                 proceso.setEstado("Suspendido/Bloqueado");
@@ -713,8 +705,6 @@ public class Controller {
         if (pagsMetereEnMP <= 0) {
             System.out.println("Errorcito leve xD");
         }
-        System.out.println("mitad " + proceso.getMitad() + " cantMP: " + proceso.getCantPagMP());
-        System.out.println("Cant meteré en MP " + pagsMetereEnMP);
         // Si hay espacio para meter las páginas sin tener que reemplazar
 
         if (marcosDispon >= proceso.getCantPagMS()) {

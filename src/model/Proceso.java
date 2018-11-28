@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 public class Proceso {
 
-    private final double clockTime = 0.5;
+    private final double clockTime = 1.5;
     private int ID;
     private String nombre;
     private String estado;
@@ -121,8 +121,6 @@ public class Proceso {
         if (pagsMetereEnMP <= 0) {
             System.out.println("Errorcito leve xD");
         }
-        System.out.println("mitad " + this.getMitad() + " cantMP: " + this.getCantPagMP()) ;
-        System.out.println("Cant meteré en MP " + pagsMetereEnMP);
         
         if (marcosDispon >= this.cantPagMS) {
             pagsMetereEnMP = this.getCantPagMS();
@@ -403,7 +401,6 @@ public class Proceso {
     public void eliminarPagina(Pagina pagina){
         for (int i = 0; i < Controller.memoriaSecundaria.length; i++) {
             if(pagina.equals(Controller.memoriaSecundaria[i].getPagina())){
-                System.out.println("ELIMINANDO JLSABNDKJASBNDKJLNSABDLJKASD");
                 Controller.memoriaSecundaria[i].setPagina(null);
             }
         }
